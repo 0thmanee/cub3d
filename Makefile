@@ -1,0 +1,47 @@
+parsing_files = parsing.c
+libft_files = ft_atoi.c ft_char.c ft_malloc.c ft_split.c ft_str_1.c ft_str_2.c ft_str_2.c
+raycasting_files = raycasting.c
+main_files = main.c
+
+parsing_srcs = $(addprefix parsing/,$(parsing_files))
+libft_srcs = $(addprefix libft/,$(libft_files))
+raycasting_srcs = $(addprefix raycasting/,$(raycasting_files))
+main_srcs = main.c
+
+parsing_objects = $(addprefix object_files/,$(parsing_srcs:.c=.o))
+libft_objects = $(addprefix object_files/,$(libft_srcs:.c=.o))
+raycasting_objects = $(addprefix object_files/,$(raycasting_srcs:.c=.o))
+main_objects = $(addprefix object_files/main/,$(main_srcs:.c=.o))
+
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+NAME = cub3d
+
+all: $(NAME)
+$(NAME): $(parsing_objects) $(libft_objects) $(raycasting_objects) $(main_objects)
+	@cc $(CFLAGS) $^ -o $(NAME)
+	@printf "\033[32m[ ✔ ] %s\n\033[0m" "Program Created"
+
+object_files/parsing/%.o: parsing/%.c cub3d.h
+	@mkdir -p object_files/parsing
+	@cc $(CFLAGS) -c $< -I . -o $@
+
+object_files/libft/%.o: libft/%.c cub3d.h
+	@mkdir -p object_files/libft
+	@cc $(CFLAGS) -c $< -I . -o $@
+
+object_files/raycasting/%.o: raycasting/%.c cub3d.h
+	@mkdir -p object_files/raycasting
+	@cc $(CFLAGS) -c $< -I . -o $@
+
+object_files/main/%.o: main.c cub3d.h
+	@mkdir -p object_files/main
+	@cc $(CFLAGS) -c $< -I . -o $@
+
+clean:
+	@rm -rf  object_files
+
+fclean: clean
+	@rm -rf $(NAME)
+	@printf "\033[32m[ ✔ ] %s\n\033[0m" "Cleaning Done"
+
+re: fclean all
