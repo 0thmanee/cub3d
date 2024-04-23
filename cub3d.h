@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/04/22 11:57:23 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/04/22 21:10:38 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
+# include "MLX42/include/MLX42/MLX42.h"
+
+# ifndef WIDTH
+#  define WIDTH 320
+# endif
+
+# ifndef HEIGHT
+#  define HEIGHT 200
+# endif
 
 typedef struct s_map
 {
@@ -28,6 +37,15 @@ typedef struct s_map
 	char	**map;
 	int		map_height;
 }	t_map;
+
+typedef struct s_mlx
+{
+	void		*mlx_ptr;
+	void		*win_ptr;
+	void		*img_ptr;
+	char		*pxls_ptr;
+	int			bpp;
+}	t_mlx;
 
 typedef struct s_free
 {
@@ -59,6 +77,6 @@ void	ft_free_all(t_free **list_aloc);
 t_map	parsing(t_free **ptrs);
 
 // raycasting
-void	ray_casting(t_map cub3d_map, t_free **ptrs);
+void	ray_casting(t_map cub3d_map, t_mlx *mlx_data, t_free **ptrs);
 
 #endif

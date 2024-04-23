@@ -15,27 +15,31 @@ main_objects = $(addprefix object_files/main/,$(main_srcs:.c=.o))
 
 CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 NAME = cub3d
+LIBMLX = ./MLX42
+HEADERS = -I$(LIBMLX)/include
+LIBS = $(LIBMLX)/build/libmlx42.a -ldl -lglfw -lm -L"/Users/$(USER)/homebrew/Cellar/glfw/3.4/lib/"
 
 all: $(NAME)
+
 $(NAME): $(parsing_objects) $(libft_objects) $(raycasting_objects) $(main_objects)
-	@cc $(CFLAGS) $^ -o $(NAME)
+	@cc $(CFLAGS) $^ $(LIBS) $(HEADERS) -o $(NAME)
 	@printf "\033[32m[ ✔ ] %s\n\033[0m" "Program Created"
 
 object_files/parsing/%.o: parsing/%.c cub3d.h
 	@mkdir -p object_files/parsing
-	@cc $(CFLAGS) -c $< -I . -o $@
+	@cc $(CFLAGS) -c $< -I . -o $@ $(HEADERS)
 
 object_files/libft/%.o: libft/%.c cub3d.h
 	@mkdir -p object_files/libft
-	@cc $(CFLAGS) -c $< -I . -o $@
+	@cc $(CFLAGS) -c $< -I . -o $@ $(HEADERS)
 
 object_files/raycasting/%.o: raycasting/%.c cub3d.h
 	@mkdir -p object_files/raycasting
-	@cc $(CFLAGS) -c $< -I . -o $@
+	@cc $(CFLAGS) -c $< -I . -o $@ $(HEADERS)
 
 object_files/main/%.o: main.c cub3d.h
 	@mkdir -p object_files/main
-	@cc $(CFLAGS) -c $< -I . -o $@
+	@cc $(CFLAGS) -c $< -I . -o $@ $(HEADERS)
 
 clean:
 	@rm -rf  object_files
