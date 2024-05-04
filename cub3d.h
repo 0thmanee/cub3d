@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/04/22 21:10:38 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/04 16:15:24 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 # include "MLX42/include/MLX42/MLX42.h"
 
 # ifndef WIDTH
-#  define WIDTH 320
+#  define WIDTH 500
 # endif
 
 # ifndef HEIGHT
-#  define HEIGHT 200
+#  define HEIGHT 500
 # endif
 
 typedef struct s_map
@@ -40,10 +40,10 @@ typedef struct s_map
 
 typedef struct s_mlx
 {
-	void		*mlx_ptr;
-	void		*win_ptr;
-	void		*img_ptr;
-	char		*pxls_ptr;
+	mlx_t		*mlx;
+	void		*win;
+	mlx_image_t	*img;
+	char		*pxls;
 	int			bpp;
 }	t_mlx;
 
@@ -70,7 +70,6 @@ int		ft_isdigit(int c);
 int		ft_strchr(char *str, char c);
 void	ft_putstr_fd(char *s, int fd);
 void	*ft_malloc(t_free **list_aloc, size_t size);
-void	ft_free_ptr(t_free **list_aloc, void *ptr);
 void	ft_free_all(t_free **list_aloc);
 
 // parsing
