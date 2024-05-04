@@ -1,5 +1,5 @@
 parsing_files = parsing.c
-libft_files = ft_atoi.c ft_char.c ft_malloc.c ft_split.c ft_str_1.c ft_str_2.c ft_str_2.c
+libft_files = ft_atoi.c ft_char_1.c ft_char_2.c ft_malloc.c ft_split.c ft_str_1.c ft_str_2.c ft_str_2.c
 raycasting_files = raycasting.c
 main_files = main.c
 

@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/04 16:15:24 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/04 22:53:27 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,6 @@
 # include <math.h>
 # include "MLX42/include/MLX42/MLX42.h"
 
-# ifndef WIDTH
-#  define WIDTH 500
-# endif
-
-# ifndef HEIGHT
-#  define HEIGHT 500
-# endif
-
 typedef struct s_map
 {
 	char	*north_texture;
@@ -36,12 +28,15 @@ typedef struct s_map
 	int		ceiling_color[3];
 	char	**map;
 	int		map_height;
+	int		map_width;
 }	t_map;
 
 typedef struct s_mlx
 {
 	mlx_t		*mlx;
 	void		*win;
+	int			win_height;
+	int			win_width;
 	mlx_image_t	*img;
 	char		*pxls;
 	int			bpp;
@@ -71,6 +66,8 @@ int		ft_strchr(char *str, char c);
 void	ft_putstr_fd(char *s, int fd);
 void	*ft_malloc(t_free **list_aloc, size_t size);
 void	ft_free_all(t_free **list_aloc);
+int		is_player(char c);
+void	*ft_memset(void *ptr, int value, size_t num);
 
 // parsing
 t_map	parsing(t_free **ptrs);
