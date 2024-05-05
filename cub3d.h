@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/04 22:53:27 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/05 14:50:47 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,41 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <unistd.h>
 # include <math.h>
 # include "MLX42/include/MLX42/MLX42.h"
 
+typedef struct s_player
+{
+	int	x;
+	int	y;
+	int	angle;
+	int	pos_direc; // looking to the left or roght
+	int	mov_direc; // moving forward or backward
+}	t_player;
+
 typedef struct s_map
 {
-	char	*north_texture;
-	char	*south_texture;
-	char	*west_texture;
-	char	*east_texture;
-	int		floor_color[3];
-	int		ceiling_color[3];
-	char	**map;
-	int		map_height;
-	int		map_width;
+	char		*north_texture;
+	char		*south_texture;
+	char		*west_texture;
+	char		*east_texture;
+	int			floor_color[3];
+	int			ceiling_color[3];
+	char		**map;
+	int			map_height;
+	int			map_width;
+	t_player	player;
 }	t_map;
+
+typedef enum s_directs
+{
+	NORTH,
+	SOUTH,
+	WEST,
+	EAST
+}	t_directs;
+
 
 typedef struct s_mlx
 {
@@ -38,8 +58,6 @@ typedef struct s_mlx
 	int			win_height;
 	int			win_width;
 	mlx_image_t	*img;
-	char		*pxls;
-	int			bpp;
 }	t_mlx;
 
 typedef struct s_free
@@ -68,6 +86,7 @@ void	*ft_malloc(t_free **list_aloc, size_t size);
 void	ft_free_all(t_free **list_aloc);
 int		is_player(char c);
 void	*ft_memset(void *ptr, int value, size_t num);
+int		get_rgb(int r, int g, int b);
 
 // parsing
 t_map	parsing(t_free **ptrs);
