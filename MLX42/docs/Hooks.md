@@ -160,7 +160,7 @@ Here are some simple examples on how to implement each one of the hooks in a sim
 #define WIDTH 720
 #define HEIGHT 480
 
-void my_keyhook(mlx_key_data_t keydata, void* param)
+void handle_key_hooks(mlx_key_data_t keydata, void* param)
 {
 	// If we PRESS the 'J' key, print "Hello".
 	if (keydata.key == MLX_KEY_J && keydata.action == MLX_PRESS)
@@ -182,7 +182,7 @@ int32_t	main(void)
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 		return (EXIT_FAILURE);
 
-	mlx_key_hook(mlx, &my_keyhook, NULL);
+	mlx_key_hook(mlx, &handle_key_hooks, NULL);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/05 14:50:47 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:37:30 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ typedef struct s_player
 	int	x;
 	int	y;
 	int	angle;
-	int	pos_direc; // looking to the left or roght
-	int	mov_direc; // moving forward or backward
+	int	direction;
 }	t_player;
 
 typedef struct s_map
@@ -39,6 +38,7 @@ typedef struct s_map
 	char		**map;
 	int			map_height;
 	int			map_width;
+	int			tile_val;
 	t_player	player;
 }	t_map;
 
@@ -87,6 +87,7 @@ void	ft_free_all(t_free **list_aloc);
 int		is_player(char c);
 void	*ft_memset(void *ptr, int value, size_t num);
 int		get_rgb(int r, int g, int b);
+void 	handle_key_hooks(mlx_key_data_t keydata, void* param);
 
 // parsing
 t_map	parsing(t_free **ptrs);

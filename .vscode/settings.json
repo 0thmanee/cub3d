@@ -1,0 +1,9 @@
+{
+	"files.associations": {
+		"mlx42.h": "c",
+		"math.h": "c",
+		"unistd.h": "c",
+		"stdlib.h": "c",
+		"algorithm": "c"
+	}
+}

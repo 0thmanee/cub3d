@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:51:20 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/05 14:55:22 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/05 15:42:57 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,18 @@ t_map	parsing(t_free **ptrs)
 		"1011000001110000000000001",
 		"1001000000000000000000001",
 		"111111111011000001110000011111111",
-		
+		"100000000011000001110111111111111",
+		"11110111111111011100000010001",
+		"11110111111111011101010010001",
+		"11000000110101011100000010001",
+		"10000000000000001100000010001",
+		"10000000000000000000000000001",
+		"100000E0000000000000000000001",
+		"10000000000000000000000000001",
+		"11111111111111111111111111111"
 	};
 	i = 0;
+	cub3d_map.tile_val = 32;
 	cub3d_map.map_height = sizeof(map_data) / sizeof(map_data[0]);
 	cub3d_map.map_width = calc_width(map_data, cub3d_map.map_height);
 	printf("width: %d, height: %d\n",cub3d_map.map_width, cub3d_map.map_height);
@@ -70,7 +79,7 @@ t_map	parsing(t_free **ptrs)
 			{
 				cub3d_map.player.x = j;
 				cub3d_map.player.y = i;
-				cub3d_map.player.pos_direc = get_player_pos(cub3d_map.map[i][j]);
+				cub3d_map.player.direction = get_player_pos(cub3d_map.map[i][j]);
 				cub3d_map.map[i][j] = 'P';
 			}
 			else
