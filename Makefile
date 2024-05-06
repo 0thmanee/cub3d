@@ -1,6 +1,6 @@
 parsing_files = parsing.c
 libft_files = ft_atoi.c ft_char_1.c ft_char_2.c ft_malloc.c ft_split.c ft_str_1.c ft_str_2.c ft_str_3.c get_color.c
-raycasting_files = raycasting.c hooks_1.c
+raycasting_files = raycasting.c hooks_1.c move_player.c
 main_files = main.c
 
 parsing_srcs = $(addprefix parsing/,$(parsing_files))

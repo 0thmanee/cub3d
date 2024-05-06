@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/05 16:37:30 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/05 19:27:56 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_map
 	t_player	player;
 }	t_map;
 
+
 typedef enum s_directs
 {
 	NORTH,
@@ -59,6 +60,12 @@ typedef struct s_mlx
 	int			win_width;
 	mlx_image_t	*img;
 }	t_mlx;
+
+typedef struct	s_data
+{
+	t_mlx	*mlx_data;
+	t_map	*cub3d_map;
+}	t_data;
 
 typedef struct s_free
 {
@@ -93,6 +100,10 @@ void 	handle_key_hooks(mlx_key_data_t keydata, void* param);
 t_map	parsing(t_free **ptrs);
 
 // raycasting
-void	ray_casting(t_map cub3d_map, t_mlx *mlx_data, t_free **ptrs);
+void	mlx_init_data(t_mlx *mlx_data, t_map cub3d_map, t_free **ptrs);
+void	ray_casting(t_data *data, t_free **ptrs);
+void	draw_square(t_data *data, int x, int y, int color);
+void	draw_2d_map(t_data *data);
+void	move_player(t_data *data, int key);
 
 #endif

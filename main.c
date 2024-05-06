@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:31:13 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/05 16:36:24 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/05 18:21:43 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,16 @@ int main()
 {
 	t_map	cub3d_map;
 	t_mlx	mlx_data;
+	t_data	data;
 	t_free	*ptrs;
 
-	cub3d_map = parsing(&ptrs);
 	ptrs = NULL;
-	ray_casting(cub3d_map, &mlx_data, &ptrs);
-	mlx_key_hook(mlx_data.mlx, &handle_key_hooks, &mlx_data);
+	cub3d_map = parsing(&ptrs);
+	mlx_init_data(&mlx_data, cub3d_map, &ptrs);
+	data.mlx_data = &mlx_data;
+	data.cub3d_map = &cub3d_map;
+	ray_casting(&data, &ptrs);
+	mlx_key_hook(mlx_data.mlx, &handle_key_hooks, &data);
 	mlx_loop(mlx_data.mlx);
 	mlx_terminate(mlx_data.mlx);
 }
