@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:49:57 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/08 01:20:09 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/08 03:34:23 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,42 +36,44 @@ void	mlx_init_data(t_mlx *mlx_data, t_map cub3d_map, t_free **ptrs)
 		ft_error(mlx_data, ptrs);
 }
 
-void	draw_player(t_data *data, int x, int y, int color)
+void	draw_player(t_data *data)
 {
-	int		k;
-	int		l;
-	int		i_side;
-	int		j_side;
+	int		i;
+	int		j;
+	int		color;
 
-	(1) && (i_side = x * data->cub3d_map->tile_val + data->cub3d_map->tile_val / 2,
-			j_side = y * data->cub3d_map->tile_val + data->cub3d_map->tile_val / 2,
-			k = i_side - 1);
-	while (++k < i_side + data->cub3d_map->tile_val - data->cub3d_map->tile_val / 2)
+	color = get_rgb(255, 151, 51);
+	i = data->cub3d_map->player.y;
+	while (i < data->cub3d_map->player.y + data->cub3d_map->tile_val / 4)
 	{
-		l = j_side;
-		while (l < j_side + data->cub3d_map->tile_val - data->cub3d_map->tile_val / 2)
-			if (k >= 0 && k < data->mlx_data->win_height
-				&& l >= 0 && l < data->mlx_data->win_width)
-				mlx_put_pixel(data->mlx_data->img, l++, k, color);
+		j = data->cub3d_map->player.x;
+		while (j < data->cub3d_map->player.x + data->cub3d_map->tile_val / 4)
+		{
+			if (i >= 0 && i < data->mlx_data->win_height
+				&& j >= 0 && j < data->mlx_data->win_width)
+				mlx_put_pixel(data->mlx_data->img, j, i, color);
+			j++;
+		}
+		i++;
 	}
 }
 
 void	draw_square(t_data *data, int x, int y, int color)
 {
-	int		k;
-	int		l;
+	int		i;
+	int		j;
 	int		i_side;
 	int		j_side;
 
-	(1) && (i_side = x * data->cub3d_map->tile_val, j_side = y * data->cub3d_map->tile_val,
-			k = i_side - 1);
-	while (++k < i_side + data->cub3d_map->tile_val)
+	(1) && (i_side = x * data->cub3d_map->tile_val,
+		j_side = y * data->cub3d_map->tile_val,	i = i_side - 1);
+	while (++i < i_side + data->cub3d_map->tile_val)
 	{
-		l = j_side;
-		while (l < j_side + data->cub3d_map->tile_val)
-			if (k >= 0 && k < data->mlx_data->win_height
-				&& l >= 0 && l < data->mlx_data->win_width)
-				mlx_put_pixel(data->mlx_data->img, l++, k, color);
+		j = j_side;
+		while (j < j_side + data->cub3d_map->tile_val)
+			if (i >= 0 && i < data->mlx_data->win_height
+				&& j >= 0 && j < data->mlx_data->win_width)
+				mlx_put_pixel(data->mlx_data->img, j++, i, color);
 	}
 }
 
@@ -85,9 +87,7 @@ void	draw_2d_map(t_data *data)
 		j = 0;
 		while (j < data->cub3d_map->map_width)
 		{
-			if (data->cub3d_map->map[i][j] == 'P')
-				draw_player(data, i, j, get_rgb(255, 151, 51));
-			else if (data->cub3d_map->map[i][j] == '1')
+			if (data->cub3d_map->map[i][j] == '1')
 				draw_square(data, i, j, get_rgb(0, 0, 0));
 			else
 				draw_square(data, i, j, get_rgb(255, 255, 255));
