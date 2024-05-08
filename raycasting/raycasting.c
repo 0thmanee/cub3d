@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:49:57 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/06 15:13:21 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/08 01:20:09 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,25 @@ void	mlx_init_data(t_mlx *mlx_data, t_map cub3d_map, t_free **ptrs)
 		ft_error(mlx_data, ptrs);
 }
 
-// void	draw_player(t_data *data, int x, int y, int color)
-// {
-// 	int		k;
-// 	int		l;
-// 	int		i_side;
-// 	int		j_side;
+void	draw_player(t_data *data, int x, int y, int color)
+{
+	int		k;
+	int		l;
+	int		i_side;
+	int		j_side;
 
-// 	(1) && (i_side = x * data->cub3d_map->tile_val + data->cub3d_map->tile_val / 2,
-// 			j_side = y * data->cub3d_map->tile_val + data->cub3d_map->tile_val / 2,
-// 			k = i_side - 1);
-// 	while (++k < i_side + data->cub3d_map->tile_val - data->cub3d_map->tile_val / 2)
-// 	{
-// 		l = j_side;
-// 		while (l < j_side + data->cub3d_map->tile_val - data->cub3d_map->tile_val / 2)
-// 			if (k >= 0 && k < data->mlx_data->win_height
-// 				&& l >= 0 && l < data->mlx_data->win_width)
-// 				mlx_put_pixel(data->mlx_data->img, l++, k, color);
-// 	}
-// }
+	(1) && (i_side = x * data->cub3d_map->tile_val + data->cub3d_map->tile_val / 2,
+			j_side = y * data->cub3d_map->tile_val + data->cub3d_map->tile_val / 2,
+			k = i_side - 1);
+	while (++k < i_side + data->cub3d_map->tile_val - data->cub3d_map->tile_val / 2)
+	{
+		l = j_side;
+		while (l < j_side + data->cub3d_map->tile_val - data->cub3d_map->tile_val / 2)
+			if (k >= 0 && k < data->mlx_data->win_height
+				&& l >= 0 && l < data->mlx_data->win_width)
+				mlx_put_pixel(data->mlx_data->img, l++, k, color);
+	}
+}
 
 void	draw_square(t_data *data, int x, int y, int color)
 {
@@ -79,7 +79,6 @@ void	draw_2d_map(t_data *data)
 {
 	int		i;
 	int		j;
-	int		color;
 	i = 0;
 	while (i < data->cub3d_map->map_height)
 	{
@@ -87,12 +86,11 @@ void	draw_2d_map(t_data *data)
 		while (j < data->cub3d_map->map_width)
 		{
 			if (data->cub3d_map->map[i][j] == 'P')
-				color = get_rgb(255, 151, 51);
+				draw_player(data, i, j, get_rgb(255, 151, 51));
 			else if (data->cub3d_map->map[i][j] == '1')
-				color = get_rgb(0, 0, 0);
+				draw_square(data, i, j, get_rgb(0, 0, 0));
 			else
-				color = get_rgb(255, 255, 255);
-			draw_square(data, i, j, color);
+				draw_square(data, i, j, get_rgb(255, 255, 255));
 			j++;
 		}
 		i++;
@@ -102,5 +100,5 @@ void	draw_2d_map(t_data *data)
 void	ray_casting(t_data *data, t_free **ptrs)
 {
 	(void)ptrs;
-	draw_2d_map(data);
+	(void)data;
 }
