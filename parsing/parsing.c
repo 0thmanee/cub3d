@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:51:20 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/08 04:42:28 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/09 20:57:41 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ t_map	parsing(t_free **ptrs)
 				cub3d_map.player.x = j * cub3d_map.tile_val;
 				cub3d_map.player.mv_ud = 0;
 				cub3d_map.player.mv_lr = 0;
+				cub3d_map.player.player_size = cub3d_map.tile_val / 4;
 				cub3d_map.player.direction = get_player_pos(cub3d_map.map[i][j]);
 				cub3d_map.map[i][j] = 'P';
 			}

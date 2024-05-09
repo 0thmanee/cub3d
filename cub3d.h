@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/08 02:11:44 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/09 20:57:15 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_player
 	int	mv_lr;
 	int	angle;
 	int	direction;
+	int	player_size;
 }	t_player;
 
 typedef struct s_map
@@ -102,11 +103,12 @@ t_map	parsing(t_free **ptrs);
 
 // raycasting
 void	mlx_init_data(t_mlx *mlx_data, t_map cub3d_map, t_free **ptrs);
-void	ray_casting(t_data *data, t_free **ptrs);
 void	draw_square(t_data *data, int x, int y, int color);
 void	draw_2d_map(t_data *data);
 void	draw_player(t_data *data);
+void 	move_player(t_data *data, int key);
 void 	handle_key_hooks(mlx_key_data_t keydata, void* param);
 void	loop_hook_func(void *param);
+void	ray_casting(t_data *data, t_free **ptrs);
 
 #endif
