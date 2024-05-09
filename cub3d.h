@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/09 20:57:15 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/09 22:27:27 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,24 @@ typedef struct s_player
 {
 	int	x;
 	int	y;
-	int	mv_ud;
-	int	mv_lr;
-	int	angle;
 	int	direction;
+	int	turn_speed;
 	int	player_size;
+	int	fov;
+	int	distance;
 }	t_player;
+
+typedef	struct s_fov_rad
+{
+	double	direction;
+	double	fov;
+	double	left_angle;
+	double	right_angle;
+	int		left_x;
+	int		left_y;
+	int		right_x;
+	int		right_y;
+}	t_fov_rad;
 
 typedef struct s_map
 {
@@ -48,10 +60,10 @@ typedef struct s_map
 
 typedef enum s_directs
 {
-	NORTH,
-	SOUTH,
-	WEST,
-	EAST
+	EAST = 0,
+	NORTH = 90,
+	WEST = 180,
+	SOUTH = 270,
 }	t_directs;
 
 

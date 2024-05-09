@@ -6,11 +6,23 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:44:09 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/09 21:01:27 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/09 22:29:47 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void draw_view_lines(t_player *player, t_fov_rad *fov_rad)
+{
+	fov_rad->direction = player->direction * M_PI / 180.0;
+	fov_rad->fov = player->fov * M_PI / 180.0;
+	fov_rad->left_angle = fov_rad->direction - fov_rad->fov / 2.0;
+	fov_rad->right_angle = fov_rad->direction + fov_rad->fov / 2.0;
+	fov_rad->left_x = player->x + player->distance * cos(fov_rad->left_angle);
+	fov_rad->left_y = player->y + player->distance * sin(fov_rad->left_angle);
+	fov_rad->right_x = player->x + player->distance * cos(fov_rad->right_angle);
+	fov_rad->right_y = player->y + player->distance * sin(fov_rad->right_angle);
+}
 
 void	draw_player(t_data *data)
 {
