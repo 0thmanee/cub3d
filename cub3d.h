@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/09 22:27:27 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/10 08:14:04 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,28 @@
 
 typedef struct s_player
 {
-	int	x;
-	int	y;
-	int	direction;
-	int	turn_speed;
+	int		x;
+	int		y;
+	int		turn_direction; // -1 for left, 1 for right and 0 for no turn
+	int		walk_direction; // -1 for back, 1 for front and 0 for no walk
+	double	rotation_angle; // in degrees
+	int		move_speed; // in pixels per frame
+	double	rotation_speed; // in degrees per frame, the speed of the rotation
+
 	int	player_size;
-	int	fov;
-	int	distance;
 }	t_player;
 
-typedef	struct s_fov_rad
+typedef	struct s_fov
 {
 	double	direction;
-	double	fov;
+	double	fov_angle;
 	double	left_angle;
 	double	right_angle;
 	int		left_x;
 	int		left_y;
 	int		right_x;
 	int		right_y;
-}	t_fov_rad;
+}	t_fov;
 
 typedef struct s_map
 {
@@ -54,7 +56,6 @@ typedef struct s_map
 	int			map_height;
 	int			map_width;
 	int			tile_val;
-	t_player	player;
 }	t_map;
 
 
@@ -76,17 +77,29 @@ typedef struct s_mlx
 	mlx_image_t	*img;
 }	t_mlx;
 
-typedef struct	s_data
-{
-	t_mlx	*mlx_data;
-	t_map	*cub3d_map;
-}	t_data;
-
 typedef struct s_free
 {
 	void			*ptr;
 	struct s_free	*next;
 }	t_free;
+
+typedef struct	s_data
+{
+	t_mlx		mlx_data;
+	t_map		cub3d_map;
+	t_player	player;
+	t_fov		fov;
+	t_free		**ptrs;
+}	t_data;
+
+typedef struct	s_line
+{
+	int	x1;
+	int	y1;
+	int	x2;
+	int	y2;
+}	t_line;
+
 
 // libft
 char	*ft_strcpy(char *dest, const char *src);
@@ -111,14 +124,15 @@ void	*ft_memset(void *ptr, int value, size_t num);
 int		get_rgb(int r, int g, int b);
 
 // parsing
-t_map	parsing(t_free **ptrs);
+t_data	map_init(t_free **ptrs);
 
 // raycasting
 void	mlx_init_data(t_mlx *mlx_data, t_map cub3d_map, t_free **ptrs);
 void	draw_square(t_data *data, int x, int y, int color);
 void	draw_2d_map(t_data *data);
 void	draw_player(t_data *data);
-void 	move_player(t_data *data, int key);
+void	draw_fov(t_data *data);
+void	move_player(t_data *data, int key);
 void 	handle_key_hooks(mlx_key_data_t keydata, void* param);
 void	loop_hook_func(void *param);
 void	ray_casting(t_data *data, t_free **ptrs);
