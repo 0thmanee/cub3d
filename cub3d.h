@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/10 08:14:04 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/11 23:41:38 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ typedef struct s_player
 {
 	int		x;
 	int		y;
+	int		line_len;
+	int		body_color;
+	int		line_color;
 	int		turn_direction; // -1 for left, 1 for right and 0 for no turn
 	int		walk_direction; // -1 for back, 1 for front and 0 for no walk
 	double	rotation_angle; // in degrees
@@ -42,6 +45,8 @@ typedef	struct s_fov
 	int		left_y;
 	int		right_x;
 	int		right_y;
+	int		wall_width;
+	int		nbr_rays;
 }	t_fov;
 
 typedef struct s_map
@@ -55,7 +60,7 @@ typedef struct s_map
 	char		**map;
 	int			map_height;
 	int			map_width;
-	int			tile_val;
+	int			tile_size;
 }	t_map;
 
 
@@ -131,10 +136,11 @@ void	mlx_init_data(t_mlx *mlx_data, t_map cub3d_map, t_free **ptrs);
 void	draw_square(t_data *data, int x, int y, int color);
 void	draw_2d_map(t_data *data);
 void	draw_player(t_data *data);
-void	draw_fov(t_data *data);
+void	draw_angle(t_data *data);
 void	move_player(t_data *data, int key);
 void 	handle_key_hooks(mlx_key_data_t keydata, void* param);
 void	loop_hook_func(void *param);
-void	ray_casting(t_data *data, t_free **ptrs);
+void	draw_rays(t_data *data);
+void	draw_line(t_data *data, t_line line, int color);
 
 #endif

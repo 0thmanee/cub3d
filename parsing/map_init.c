@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 05:16:31 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/10 08:13:38 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/11 23:41:38 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,18 @@ t_directs	get_player_pos(char c)
 
 void	init_player(t_data *data, int i, int j)
 {
-	data->player.y = i * data->cub3d_map.tile_val;
-	data->player.x = j * data->cub3d_map.tile_val;
+	data->player.y = i * data->cub3d_map.tile_size;
+	data->player.x = j * data->cub3d_map.tile_size;
 	data->cub3d_map.map[i][j] = 'P';
 	data->player.rotation_angle = M_PI / 2;
 	data->player.turn_direction = 0;
 	data->player.walk_direction = 0;
-	data->player.move_speed = 2;
+	data->player.move_speed = 3;
 	data->player.rotation_speed = 5 * (M_PI / 180);
-	data->player.player_size = data->cub3d_map.tile_val / 6;
+	data->player.line_len = 100;
+	data->player.body_color = get_rgb(255, 151, 51);
+	data->player.line_color = get_rgb(0, 151, 51);
+	data->player.player_size = data->cub3d_map.tile_size / 4;
 }
 
 t_data	map_init(t_free **ptrs)
@@ -77,7 +80,7 @@ t_data	map_init(t_free **ptrs)
 	};
 	
 	i = 0;
-	data.cub3d_map.tile_val = 32;
+	data.cub3d_map.tile_size = 32;
 	data.cub3d_map.map_height = sizeof(map_data) / sizeof(map_data[0]);
 	data.cub3d_map.map_width = calc_width(map_data, data.cub3d_map.map_height);
 	data.cub3d_map.map = ft_malloc(ptrs, data.cub3d_map.map_height * sizeof(char *));

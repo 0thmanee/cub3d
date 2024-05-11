@@ -6,14 +6,8 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:49:57 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/08 18:46:22 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/11 14:53:04 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	ray_casting(t_data *data, t_free **ptrs)
-{
-	(void)ptrs;
-	(void)data;
-}
