@@ -21,7 +21,8 @@ void move_player(t_data *data, int key)
 
 	(void)key;
 	(1) && (new_x = data->player.x, new_y = data->player.y);
-	(1) && (new_x_size = data->player.x + data->player.player_size, new_y_size = data->player.y + data->player.player_size);
+	(1) && (new_x_size = data->player.x + data->player.player_size,
+		new_y_size = data->player.y + data->player.player_size);
 	data->player.rotation_angle += (data->player.turn_direction
 		* data->player.rotation_speed);
 	new_x += (data->player.walk_direction * data->player.move_speed
@@ -32,14 +33,9 @@ void move_player(t_data *data, int key)
 		* sin(data->player.rotation_angle));
 	new_y_size += (data->player.walk_direction * data->player.move_speed
 		* sin(data->player.rotation_angle));
-	if (data->cub3d_map.map[new_y / data->cub3d_map.tile_size]
-		[new_x / data->cub3d_map.tile_size] != '1'
-		&& data->cub3d_map.map[new_y_size / data->cub3d_map.tile_size]
-		[new_x_size / data->cub3d_map.tile_size] != '1')
-	{
-		data->player.x = new_x;
-		data->player.y = new_y;
-	}
+	if (!wall_hitted(data, new_x, new_y)
+		&& !wall_hitted(data, new_x_size, new_y_size))
+		(1) && (data->player.x = new_x, data->player.y = new_y);
 }
 
 void	press_and_release(mlx_key_data_t keydata, int *data, int value)
@@ -82,5 +78,5 @@ void	loop_hook_func(void *param)
 	draw_2d_map(data);
 	draw_player(data);
 	draw_angle(data);
-	// draw_rays(data);
+	cast_rays(data);
 }

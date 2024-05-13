@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 05:16:31 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/11 23:41:38 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:58:19 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ void	init_player(t_data *data, int i, int j)
 {
 	data->player.y = i * data->cub3d_map.tile_size;
 	data->player.x = j * data->cub3d_map.tile_size;
+	data->player.rotation_angle =
+		get_player_pos(data->cub3d_map.map[i][j]) * (M_PI / 180);
 	data->cub3d_map.map[i][j] = 'P';
-	data->player.rotation_angle = M_PI / 2;
 	data->player.turn_direction = 0;
 	data->player.walk_direction = 0;
 	data->player.move_speed = 3;
@@ -55,6 +56,7 @@ void	init_player(t_data *data, int i, int j)
 	data->player.body_color = get_rgb(255, 151, 51);
 	data->player.line_color = get_rgb(0, 151, 51);
 	data->player.player_size = data->cub3d_map.tile_size / 4;
+	data->player.player_head = data->player.player_size / 2;
 }
 
 t_data	map_init(t_free **ptrs)
@@ -73,8 +75,8 @@ t_data	map_init(t_free **ptrs)
 		"11110111111111011101010010001",
 		"11000000110000011100000010001",
 		"10000000000000000000000010001",
-		"10000000000000000000N00000001",
 		"10000000000000000000000000001",
+		"10000000000000E00000000000001",
 		"10000000000000000000000000001",
 		"11111111111111111111111111111"
 	};

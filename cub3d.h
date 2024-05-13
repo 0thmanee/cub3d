@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/11 23:41:38 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:38:00 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,30 @@ typedef struct s_player
 	double	rotation_speed; // in degrees per frame, the speed of the rotation
 
 	int	player_size;
+	int	player_head;
 }	t_player;
 
 typedef	struct s_fov
 {
-	double	direction;
 	double	fov_angle;
-	double	left_angle;
-	double	right_angle;
-	int		left_x;
-	int		left_y;
-	int		right_x;
-	int		right_y;
 	int		wall_width;
 	int		nbr_rays;
+	int		x_interc;
+	int		y_interc;
+	int		h_x_step;
+	int		h_y_step;
+	int		v_x_step;
+	int		v_y_step;
+	int		hitwall_x;
+	int		hitwall_y;
+	int		distance;
+	int		faces[4];
 }	t_fov;
+
+typedef struct	s_ray
+{
+	double	angle;
+}	t_ray;
 
 typedef struct s_map
 {
@@ -67,9 +76,9 @@ typedef struct s_map
 typedef enum s_directs
 {
 	EAST = 0,
-	NORTH = 90,
+	NORTH = 270,
 	WEST = 180,
-	SOUTH = 270,
+	SOUTH = 90,
 }	t_directs;
 
 
@@ -140,7 +149,9 @@ void	draw_angle(t_data *data);
 void	move_player(t_data *data, int key);
 void 	handle_key_hooks(mlx_key_data_t keydata, void* param);
 void	loop_hook_func(void *param);
-void	draw_rays(t_data *data);
+void	cast_rays(t_data *data);
 void	draw_line(t_data *data, t_line line, int color);
+void	cast_ray(t_data *data, double ray_angle, int col);
+int		wall_hitted(t_data *data, int x, int y);
 
 #endif
