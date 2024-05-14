@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 05:16:31 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/13 20:58:19 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/14 05:39:31 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	init_player(t_data *data, int i, int j)
 	data->player.move_speed = 3;
 	data->player.rotation_speed = 5 * (M_PI / 180);
 	data->player.line_len = 100;
-	data->player.body_color = get_rgb(255, 151, 51);
-	data->player.line_color = get_rgb(0, 151, 51);
+	data->player.body_color = get_rgb(255, 0, 0);
+	data->player.line_color = get_rgb(255, 0, 0);
 	data->player.player_size = data->cub3d_map.tile_size / 4;
 	data->player.player_head = data->player.player_size / 2;
 }
@@ -76,7 +76,7 @@ t_data	map_init(t_free **ptrs)
 		"11000000110000011100000010001",
 		"10000000000000000000000010001",
 		"10000000000000000000000000001",
-		"10000000000000E00000000000001",
+		"10000000000000N00000000000001",
 		"10000000000000000000000000001",
 		"11111111111111111111111111111"
 	};

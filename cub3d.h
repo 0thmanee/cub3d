@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/13 20:38:00 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/05/14 05:21:10 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ typedef	struct s_fov
 	double	fov_angle;
 	int		wall_width;
 	int		nbr_rays;
+}	t_fov;
+
+typedef struct	s_ray
+{
+	double	ray_angle;
 	int		x_interc;
 	int		y_interc;
 	int		h_x_step;
@@ -51,11 +56,6 @@ typedef	struct s_fov
 	int		hitwall_y;
 	int		distance;
 	int		faces[4];
-}	t_fov;
-
-typedef struct	s_ray
-{
-	double	angle;
 }	t_ray;
 
 typedef struct s_map
@@ -151,7 +151,7 @@ void 	handle_key_hooks(mlx_key_data_t keydata, void* param);
 void	loop_hook_func(void *param);
 void	cast_rays(t_data *data);
 void	draw_line(t_data *data, t_line line, int color);
-void	cast_ray(t_data *data, double ray_angle, int col);
+void	cast_ray(t_data *data, t_ray *ray);
 int		wall_hitted(t_data *data, int x, int y);
 
 #endif

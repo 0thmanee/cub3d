@@ -77,6 +77,6 @@ void	loop_hook_func(void *param)
 	data = (t_data*)param;
 	draw_2d_map(data);
 	draw_player(data);
-	draw_angle(data);
+	// draw_angle(data);
 	cast_rays(data);
 }
