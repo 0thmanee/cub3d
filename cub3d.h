@@ -45,17 +45,26 @@ typedef	struct s_fov
 
 typedef struct	s_ray
 {
-	double	ray_angle;
-	int		x_interc;
-	int		y_interc;
-	int		h_x_step;
-	int		h_y_step;
-	int		v_x_step;
-	int		v_y_step;
-	int		hitwall_x;
-	int		hitwall_y;
-	int		distance;
-	int		faces[4];
+	float		ray_angle;
+	float		h_x_interc;
+	float		h_y_interc;
+	float		h_x_step;
+	float		h_y_step;
+	float		h_wall_hit_x;
+	float		h_wall_hit_y;
+	float		h_distance;
+	float		v_x_interc;
+	float		v_y_interc;
+	float		v_x_step;
+	float		v_y_step;
+	float		v_wall_hit_x;
+	float		v_wall_hit_y;
+	float		v_distance;
+	int			faces[4];
+	float		wall_hit_x;
+	float		wall_hit_y;
+	float		distance;
+	float		hit_vertical;
 }	t_ray;
 
 typedef struct s_map

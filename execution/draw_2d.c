@@ -55,18 +55,18 @@ void	draw_player(t_data *data)
 
 void draw_line(t_data *data, t_line line, int color)
 {
-	double dx = abs(line.x2 - line.x1);
-	double dy = abs(line.y2 - line.y1);
-	double sx = (line.x1 < line.x2) ? 1 : -1;
-	double sy = (line.y1 < line.y2) ? 1 : -1;
-	double err = dx - dy;
+	float dx = abs(line.x2 - line.x1);
+	float dy = abs(line.y2 - line.y1);
+	float sx = (line.x1 < line.x2) ? 1 : -1;
+	float sy = (line.y1 < line.y2) ? 1 : -1;
+	float err = dx - dy;
 
 	while (line.x1 != line.x2 || line.y1 != line.y2)
 	{
 		if (line.y1 >= 0 && line.y1 < data->mlx_data.win_height
 			&& line.x1 >= 0 && line.x1 < data->mlx_data.win_width)
 			mlx_put_pixel(data->mlx_data.img, line.x1, line.y1, color);
-		double err2 = 2 * err;
+		float err2 = 2 * err;
 		if (err2 > -dy)
 		{
 			err -= dy;
@@ -91,19 +91,6 @@ void	draw_angle(t_data *data)
 	draw_line(data, line, data->player.body_color);
 }
 
-void	init_fov(t_data *data)
-{
-	data->fov.fov_angle = 60 * (M_PI / 180);
-	data->fov.wall_width = 1;
-	data->fov.nbr_rays = data->mlx_data.win_width / data->fov.wall_width;
-}
-
-// determine the f_h_y of the first horizontal line
-// f_h_y = p_y /32
-
-// determine the f_h_x of this point:
-// tan(r_a) = = (p_y - f_h_y) / (f_h_x - p_x)
-// f_h_x = p_x + (p_y - f_h_y) / tan(r_a) 
 void	init_faces_dirs(t_ray *ray)
 {
 	ray->faces[0] = ray->ray_angle > 0
@@ -116,6 +103,12 @@ void	init_faces_dirs(t_ray *ray)
 
 void	init_h_ray(t_data *data, t_ray *ray)
 {
+	ray->h_y_interc = floor(data->player.y / data->cub3d_map.tile_size)
+		* data->cub3d_map.tile_size;
+	if (ray->faces[0])
+		ray->h_y_interc += data->cub3d_map.tile_size;
+	ray->h_x_interc = data->player.x
+		+ (ray->h_y_interc - data->player.y) / tan(ray->ray_angle);
 	ray->h_y_step = data->cub3d_map.tile_size;
 	if (ray->faces[1])
 		ray->h_y_step *= -1;
@@ -126,32 +119,31 @@ void	init_h_ray(t_data *data, t_ray *ray)
 		ray->h_x_step *= -1;
 }
 
-void	init_ray(t_data *data, t_ray *ray)
+void	init_v_ray(t_data *data, t_ray *ray)
 {
-	if (ray->ray_angle)
-		ray->ray_angle = fmod(ray->ray_angle, 2 * M_PI);
-	if (ray->ray_angle < 0)
-		ray->ray_angle = 2 * M_PI + ray->ray_angle;
-	init_faces_dirs(ray);
-	ray->y_interc = floor(data->player.y / data->cub3d_map.tile_size)
+	ray->v_x_interc = floor(data->player.x / data->cub3d_map.tile_size)
 		* data->cub3d_map.tile_size;
-	if (ray->faces[0])
-		ray->y_interc += data->cub3d_map.tile_size;
-	ray->x_interc = data->player.x
-		+ (ray->y_interc - data->player.y) / tan(ray->ray_angle);
-	init_h_ray(data, ray);
+	if (ray->faces[2])
+		ray->v_x_interc += data->cub3d_map.tile_size;
+	ray->v_y_interc = data->player.y
+		+ (ray->v_x_interc - data->player.x) * tan(ray->ray_angle);
+	ray->v_x_step = data->cub3d_map.tile_size;
+	if (ray->faces[3])
+		ray->v_x_step *= -1;
+	ray->v_y_step = data->cub3d_map.tile_size * tan(ray->ray_angle);
+	if (ray->v_y_step > 0 && ray->faces[1])
+		ray->v_y_step *= -1;
+	if (ray->v_y_step < 0 && ray->faces[0])
+		ray->v_y_step *= -1;
 }
 
 void	detect_h_wall(t_data *data, t_ray *ray)
 {
-	int	next_h_hit_x;
-	int	next_h_hit_y;
-	int	wall_hit_x;
-	int	wall_hit_y;
-	int	h_wall_found;
+	float	next_h_hit_x;
+	float	next_h_hit_y;
 
-	(1) && (next_h_hit_x = ray->x_interc, next_h_hit_y = ray->y_interc);
-	(1) && (h_wall_found = 0, wall_hit_x = 0, wall_hit_y = 0);
+	(1) && (next_h_hit_x = ray->h_x_interc, next_h_hit_y = ray->h_y_interc);
+	(1) && (ray->h_wall_hit_x = 0, ray->h_wall_hit_y = 0);
 	if (ray->faces[1])
 		next_h_hit_y--;
 	while (next_h_hit_x >= 0 && next_h_hit_x < data->mlx_data.win_width
@@ -159,10 +151,7 @@ void	detect_h_wall(t_data *data, t_ray *ray)
 	{
 		if (wall_hitted(data, next_h_hit_x, next_h_hit_y))
 		{
-			(1) && (wall_hit_x = next_h_hit_x, wall_hit_y = next_h_hit_y);
-			h_wall_found = 1;
-			draw_line(data, create_line(data->player.x + data->player.player_head, data->player.y,
-				wall_hit_x, wall_hit_y), data->player.body_color);
+			(1) && (ray->h_wall_hit_x = next_h_hit_x, ray->h_wall_hit_y = next_h_hit_y);
 			break ;
 		}
 		next_h_hit_x += ray->h_x_step;
@@ -170,20 +159,69 @@ void	detect_h_wall(t_data *data, t_ray *ray)
 	}
 }
 
+void	detect_v_wall(t_data *data, t_ray *ray)
+{
+	float	next_v_hit_x;
+	float	next_v_hit_y;
+
+	(1) && (next_v_hit_x = ray->v_x_interc, next_v_hit_y = ray->v_y_interc);
+	(1) && (ray->v_wall_hit_x = 0, ray->v_wall_hit_y = 0);
+	if (ray->faces[3])
+		next_v_hit_x--;
+	while (next_v_hit_x >= 0 && next_v_hit_x < data->mlx_data.win_width
+		&& next_v_hit_y >= 0 && next_v_hit_y < data->mlx_data.win_height)
+	{
+		if (wall_hitted(data, next_v_hit_x, next_v_hit_y))
+		{
+			(1) && (ray->v_wall_hit_x = next_v_hit_x, ray->v_wall_hit_y = next_v_hit_y);
+			break ;
+		}
+		next_v_hit_x += ray->v_x_step;
+		next_v_hit_y += ray->v_y_step;
+	}
+}
+
 void	cast_ray(t_data *data, t_ray *ray)
 {
-	init_ray(data, ray);
+	if (ray->ray_angle)
+		ray->ray_angle = fmod(ray->ray_angle, 2 * M_PI);
+	if (ray->ray_angle < 0)
+		ray->ray_angle = 2 * M_PI + ray->ray_angle;
+	init_faces_dirs(ray);
+	init_h_ray(data, ray);
 	detect_h_wall(data, ray);
+	init_v_ray(data, ray);
+	detect_v_wall(data, ray);
+	ray->h_distance = sqrt(pow(ray->h_wall_hit_x - data->player.x, 2)
+		+ pow(ray->h_wall_hit_y - data->player.y, 2));
+	ray->v_distance = sqrt(pow(ray->v_wall_hit_x - data->player.x, 2)
+		+ pow(ray->v_wall_hit_y - data->player.y, 2));
+	if (ray->h_distance < ray->v_distance)
+	{
+		ray->wall_hit_x = ray->h_wall_hit_x;
+		ray->wall_hit_y = ray->h_wall_hit_y;
+		ray->distance = ray->h_distance;
+		ray->hit_vertical = 0;
+	}
+	else
+	{
+		ray->wall_hit_x = ray->v_wall_hit_x;
+		ray->wall_hit_y = ray->v_wall_hit_y;
+		ray->distance = ray->v_distance;
+		ray->hit_vertical = 1;
+	}
+	draw_line(data, create_line(data->player.x + data->player.player_head, data->player.y,
+			ray->wall_hit_x, ray->wall_hit_y), data->player.body_color);
 }
 
 void	cast_rays(t_data *data)
 {
-	double	ray_angle;
+	float	ray_angle;
 	int		i;
-	t_ray	*rays;
+	t_ray	rays[data->mlx_data.win_width];
 
-	init_fov(data);
-	rays = ft_malloc(data->ptrs, data->fov.nbr_rays * sizeof(t_ray));
+	data->fov.fov_angle = 60 * (M_PI / 180);
+	data->fov.nbr_rays = data->mlx_data.win_width;
 	i = 0;
 	ray_angle = data->player.rotation_angle - (data->fov.fov_angle / 2);
 	while (i < data->fov.nbr_rays)
@@ -194,12 +232,6 @@ void	cast_rays(t_data *data)
 		i++;
 	}
 }
-// t_line	line;
-// line.x1 = data->player.x + data->player.player_head;
-// line.y1 = data->player.y;
-// line.x2 = line.x1 + cos(ray_angle) * data->player.line_len;
-// line.y2 = line.y1 + sin(ray_angle) * data->player.line_len;
-// draw_line(data, line, data->player.line_color);
 
 void	draw_square(t_data *data, int x, int y, int color)
 {
