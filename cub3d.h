@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
+# include <fcntl.h>
 # include "MLX42/include/MLX42/MLX42.h"
 
 typedef struct s_player
@@ -147,6 +148,8 @@ void	*ft_memset(void *ptr, int value, size_t num);
 int		get_rgb(int r, int g, int b);
 
 // parsing
+void	parse_map(int ac, char *file, t_free **ptrs);
+void	ft_error(char *error_msg, t_free **ptrs);
 t_data	map_init(t_free **ptrs);
 
 // raycasting
