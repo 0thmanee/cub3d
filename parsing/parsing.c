@@ -24,5 +24,4 @@ void	parse_map(int ac, char *file, t_free **ptrs)
 	map_fd = open(file, O_RDONLY);
 	if (map_fd == -1)
 		ft_error("error opening the file\n", ptrs);
-	
 }
