@@ -42,3 +42,25 @@ void	*ft_memset(void *ptr, int value, size_t num)
 	}
 	return (ptr);
 }
+
+char	*ft_strjoin_line(char *total_str, char *buffer)
+{
+	char	*s3;
+	size_t	total_len;
+
+	if (!total_str)
+	{
+		total_str = (char *)malloc(1);
+		if (!total_str)
+			return (free(buffer), NULL);
+		total_str[0] = '\0';
+	}
+	total_len = ft_strlen(total_str) + ft_strlen(buffer);
+	s3 = (char *)malloc(total_len + 1);
+	if (!s3)
+		return (free_total(&total_str), free(buffer), NULL);
+	ft_strcpy(s3, total_str);
+	ft_strcpy(s3 + ft_strlen(total_str), buffer);
+	free_total(&total_str);
+	return (s3);
+}

@@ -124,6 +124,15 @@ typedef struct	s_line
 	int	y2;
 }	t_line;
 
+typedef struct s_next_line
+{
+	char	*total_str;
+	int		end_file;
+}	t_next_line;
+
+# define ARGS_ERR "invalid number of arguments\n"
+# define EXTN_ERR "invalid file extension\n"
+# define FILE_ERR "error opening the file\n"
 
 // libft
 char	*ft_strcpy(char *dest, const char *src);
@@ -146,6 +155,16 @@ void	ft_free_all(t_free **list_aloc);
 int		is_player(char c);
 void	*ft_memset(void *ptr, int value, size_t num);
 int		get_rgb(int r, int g, int b);
+
+//get_next_line
+
+char	*get_next_line(int fd);
+char	*new_total(t_next_line *total_data);
+char	*extract_line(char *total_str);
+char	*read_file(char *total_str, int fd);
+char	*ft_strjoin_line(char *total_str, char *buffer);
+void	free_total(char **total_str);
+
 
 // parsing
 void	parse_map(int ac, char *file, t_free **ptrs);

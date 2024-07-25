@@ -17,11 +17,11 @@ void	parse_map(int ac, char *file, t_free **ptrs)
 	int	map_fd;
 
 	if (ac != 2)
-		ft_error("invalid number of arguments\n", ptrs);
+		ft_error(ARGS_ERR, ptrs);
 	if (ft_strlen(file) < 4 || \
 		ft_strcmp(ft_substr(file, ft_strlen(file) - 4, 4, ptrs), ".cub"))
-		ft_error("invalid file extension\n", ptrs);
+		ft_error(EXTN_ERR, ptrs);
 	map_fd = open(file, O_RDONLY);
 	if (map_fd == -1)
-		ft_error("error opening the file\n", ptrs);
+		ft_error(FILE_ERR, ptrs);
 }
