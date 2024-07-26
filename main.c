@@ -31,7 +31,7 @@ int main(int ac, char **av)
 	t_free		*ptrs;
 
 	ptrs = NULL;
-	parse_map(ac, av[1], &ptrs);
+	parse_map(ac, av[1], &ptrs, &data);
 	data = map_init(&ptrs);
 	// mlx_init_data(&data.mlx_data, data.cub3d_map, &ptrs);
 	// data.ptrs = &ptrs;

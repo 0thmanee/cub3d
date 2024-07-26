@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	parse_map(int ac, char *file, t_free **ptrs)
+void	parse_map(int ac, char *file, t_free **ptrs, t_data *data)
 {
 	int	map_fd;
 
