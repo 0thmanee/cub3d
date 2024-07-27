@@ -27,6 +27,7 @@ void	set_texture_path(t_data *data, int direction, char *texture_path)
 void parse_texture(char *line, t_data *data, int direction, t_free **collector)
 {
 	int i;
+	int	fd;
 
 	i = 0;
 	while (line[i] == ' ')
@@ -39,12 +40,15 @@ void parse_texture(char *line, t_data *data, int direction, t_free **collector)
 		if (ft_strlen(texture_path) < 4 || ft_strcmp(ft_substr(texture_path,
 			ft_strlen(texture_path) - 4, 4, collector), ".xpm"))
 				ft_error(TEXTURE_ERR, collector);
-		if (access(texture_path, F_OK) == -1)
+		fd = open(texture_path, O_RDONLY);
+		if (fd == -1)
 			ft_error(TEXTURE_ERR, collector);
+		close(fd);
 		set_texture_path(data, direction, texture_path);
 		data->cub3d_map.infos_presence[direction] = 1;
 	}
 }
+
 static	int		check_rgb_range(int n)
 {
 	return (n >= 0 && n <= 255);
@@ -113,6 +117,7 @@ void read_data(int map_fd, t_data *data, t_free **collector)
 	{
 		i = 0;
 		line = ft_strtrim(line, collector);
+		printf("line = {%s}\n", line);
 		if (line)
 		{
 			if (line[i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')

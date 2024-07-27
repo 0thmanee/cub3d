@@ -67,16 +67,20 @@ char	*ft_strjoin_line(char *total_str, char *buffer)
 
 char	*ft_strtrim(char *s, t_free **collector)
 {
+	int		i;
 	int		j;
 	char	*new_line;
 
 	if (!s || !s[0])
 		return (NULL);
+	i = 0;
+	while (s[i] == ' ')
+		i++;
 	j = ft_strlen(s) - 1;
 	while (j >= 0 && (s[j] == ' ' || s[j] == '\n'))
 		j--;
 	if (j < 0)
 		return (NULL);
-	new_line = ft_substr(s, 0, j + 1, collector);
+	new_line = ft_substr(s, i, j + 1, collector);
 	return (new_line);
 }
