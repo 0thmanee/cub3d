@@ -70,11 +70,13 @@ char	*ft_strtrim(char *s, t_free **collector)
 	int		j;
 	char	*new_line;
 
-	if (!s)
+	if (!s || !s[0])
 		return (NULL);
 	j = ft_strlen(s) - 1;
-	while ((s)[j] == ' ' || (s)[j] == '\n')
+	while (j >= 0 && (s[j] == ' ' || s[j] == '\n'))
 		j--;
+	if (j < 0)
+		return (NULL);
 	new_line = ft_substr(s, 0, j + 1, collector);
 	return (new_line);
 }

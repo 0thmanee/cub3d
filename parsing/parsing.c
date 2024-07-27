@@ -27,21 +27,15 @@ void	set_texture_path(t_data *data, int direction, char *texture_path)
 void parse_texture(char *line, t_data *data, int direction, t_free **collector)
 {
 	int i;
-	char *tmp_line;
 
 	i = 0;
 	while (line[i] == ' ')
 		i++;
-	tmp_line = line;
-	line = ft_strtrim(line, collector);
-	free(tmp_line);
 	if (data->cub3d_map.infos_presence[direction])
 		ft_error(REPETED_ERR, collector);
 	if (line[i])
 	{
-		tmp_line = line;
 		char *texture_path = ft_strdup(line + i, collector);
-		free(tmp_line);
 		if (ft_strlen(texture_path) < 4 || ft_strcmp(ft_substr(texture_path,
 			ft_strlen(texture_path) - 4, 4, collector), ".xpm"))
 				ft_error(TEXTURE_ERR, collector);
@@ -78,27 +72,35 @@ void	set_grb(t_data *data, int direction, char **splited, t_free **collector)
 		}
 	}
 	else
+	{
+		printf("ERROR HERE\n");
 		ft_error(COLOR_ERR, collector);
+	}
 }
 
 void parse_color(char *line, t_data *data, int direction, t_free **collector)
 {
-	int i;
+	int		i;
 	char	**splited;
 
 	i = 0;
 	if (data->cub3d_map.infos_presence[direction])
 		ft_error(REPETED_ERR, collector);
-	line = ft_strtrim(line, collector);
 	while (line[i] == ' ')
 		i++;
 	if (line[i])
 	{
-		splited = ft_split(line, ',', collector);
-		if (!splited || sizeof(splited) / 8 != 3)
+		splited = ft_split(line + i, ',', collector);
+		if (!splited || words_counts(line + i, ',') != 3)
 			ft_error(COLOR_ERR, collector);
 		set_grb(data, direction, splited, collector);
 	}
+}
+
+int invalid_order(int infos_presence[])
+{
+	return (!infos_presence[NO] || !infos_presence[SO] || !infos_presence[WE] ||
+		!infos_presence[EA] || !infos_presence[FL] || !infos_presence[CE]);
 }
 
 void read_data(int map_fd, t_data *data, t_free **collector)
@@ -110,9 +112,8 @@ void read_data(int map_fd, t_data *data, t_free **collector)
 	while (line)
 	{
 		i = 0;
-		while (line[i] == ' ')
-			i++;
-		if (line[i])
+		line = ft_strtrim(line, collector);
+		if (line)
 		{
 			if (line[i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
 				parse_texture(line + i + 2, data, NO, collector);
@@ -126,18 +127,49 @@ void read_data(int map_fd, t_data *data, t_free **collector)
 				parse_color(line + i + 1, data, FL, collector);
 			else if (line[i] == 'C' && line[i + 1] == ' ')
 				parse_color(line + i + 1, data, CE, collector);
+			else if (line[i] == '1' || line[i] == '0')
+			{
+				if (invalid_order(data->cub3d_map.infos_presence))
+					ft_error(ORDER_ERR, collector);
+			}
 			else
 				ft_error("INVALID_ERR", collector);
 		}
-		free(line);
+		ft_free_ptr(collector, line);
 		line = get_next_line(map_fd);
 	}
 }
 
-void	parse_map(int ac, char *file, t_free **collector, t_data *data)
+void	display_error(int infos_presence[], t_free **collector)
 {
-	(void)data;
+	if (!infos_presence[NO])
+		ft_error(MISSING_NO_TEXT_ERR, collector);
+	if (!infos_presence[SO])
+		ft_error(MISSING_SO_TEXT_ERR, collector);
+	if (!infos_presence[WE])
+		ft_error(MISSING_WE_TEXT_ERR, collector);
+	if (!infos_presence[EA])
+		ft_error(MISSING_EA_TEXT_ERR, collector);
+	if (!infos_presence[FL])
+		ft_error(MISSING_F_COLOR_ERR, collector);
+	if (!infos_presence[CE])
+		ft_error(MISSING_C_COLOR_ERR, collector);
+}
+
+void	display_infos(t_map cub3d_map)
+{
+	printf("NO = {%s}\n", cub3d_map.no_texture);
+	printf("SO = {%s}\n", cub3d_map.so_texture);
+	printf("WE = {%s}\n", cub3d_map.we_texture);
+	printf("EA = {%s}\n", cub3d_map.ea_texture);
+	printf("F = {%d, %d, %d}\n", cub3d_map.floor_color[0], cub3d_map.floor_color[1], cub3d_map.floor_color[2]);
+	printf("C = {%d, %d, %d}\n", cub3d_map.ceiling_color[0], cub3d_map.ceiling_color[1], cub3d_map.ceiling_color[2]);
+}
+
+void	parse_map(int ac, char *file, t_data *data, t_free **collector)
+{
 	int	map_fd;
+	int	i;
 
 	ft_memset(data->cub3d_map.infos_presence, 0, sizeof(data->cub3d_map.infos_presence));
 	if (ac != 2)
@@ -149,4 +181,7 @@ void	parse_map(int ac, char *file, t_free **collector, t_data *data)
 	if (map_fd == -1)
 		ft_error(FILE_ERR, collector);
 	read_data(map_fd, data, collector);
+	i = 0;
+	display_error(data->cub3d_map.infos_presence, collector);
+	display_infos(data->cub3d_map);
 }
