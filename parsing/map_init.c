@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int	calc_width(char **map_data, int height)
 {
@@ -59,7 +59,7 @@ void	init_player(t_data *data, int i, int j)
 	data->player.player_head = data->player.player_size / 2;
 }
 
-t_data	map_init(t_free **ptrs)
+t_data	map_init(t_free **collector)
 {
 	t_data		data;
 	int		i;
@@ -85,11 +85,11 @@ t_data	map_init(t_free **ptrs)
 	data.cub3d_map.tile_size = 32;
 	data.cub3d_map.map_height = sizeof(map_data) / sizeof(map_data[0]);
 	data.cub3d_map.map_width = calc_width(map_data, data.cub3d_map.map_height);
-	data.cub3d_map.map = ft_malloc(ptrs, data.cub3d_map.map_height * sizeof(char *));
+	data.cub3d_map.map = ft_malloc(collector, data.cub3d_map.map_height * sizeof(char *));
 	while (i < data.cub3d_map.map_height)
 	{
 		j = 0;
-		data.cub3d_map.map[i] = ft_malloc(ptrs, data.cub3d_map.map_width + 1);
+		data.cub3d_map.map[i] = ft_malloc(collector, data.cub3d_map.map_width + 1);
 		while (j < ft_strlen(map_data[i]))
 		{
 			data.cub3d_map.map[i][j] = map_data[i][j];

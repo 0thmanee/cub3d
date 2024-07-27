@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 size_t	words_counts(char const *s, char c)
 {
@@ -52,7 +52,7 @@ static size_t	next_len(char const *s, char c)
 	return (count);
 }
 
-static char	*next_word(char const **s, char c, t_free **ptrs)
+static char	*next_word(char const **s, char c, t_free **collector)
 {
 	size_t	i;
 	char	*p;
@@ -61,7 +61,7 @@ static char	*next_word(char const **s, char c, t_free **ptrs)
 	while (**s && **s == c)
 		(*s)++;
 	next_lens = next_len(*s, c);
-	p = ft_malloc(ptrs, next_lens + 1);
+	p = ft_malloc(collector, next_lens + 1);
 	i = 0;
 	while (i < next_lens)
 	{
@@ -73,7 +73,7 @@ static char	*next_word(char const **s, char c, t_free **ptrs)
 	return (p);
 }
 
-char	**ft_split(char const *s, char c, t_free **ptrs)
+char	**ft_split(char const *s, char c, t_free **collector)
 {
 	size_t	n_words;
 	char	**p;
@@ -83,15 +83,15 @@ char	**ft_split(char const *s, char c, t_free **ptrs)
 	if (!s)
 		return (NULL);
 	n_words = words_counts(s, c);
-	p = ft_malloc(ptrs, sizeof(char *) * (n_words + 1));
+	p = ft_malloc(collector, sizeof(char *) * (n_words + 1));
 	while (i < n_words)
 	{
-		*(p + i) = next_word(&s, c, ptrs);
+		*(p + i) = next_word(&s, c, collector);
 		if (!p[i])
 		{
 			while (i > 0)
-				ft_free_ptr(ptrs, p[--i]);
-			ft_free_ptr(ptrs, p);
+				ft_free_ptr(collector, p[--i]);
+			ft_free_ptr(collector, p);
 			return (NULL);
 		}
 		i++;

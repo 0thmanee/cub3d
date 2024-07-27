@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void move_player(t_data *data, int key)
 {
@@ -61,7 +61,7 @@ void handle_key_hooks(mlx_key_data_t keydata, void *param)
 		press_and_release(keydata, &data->player.turn_direction, -1);
 	else if (keydata.key == MLX_KEY_ESCAPE)
 	{
-		ft_free_all(data->ptrs);
+		ft_free_all(data->collector);
 		mlx_terminate(data->mlx_data.mlx);
 		exit(0);
 	}

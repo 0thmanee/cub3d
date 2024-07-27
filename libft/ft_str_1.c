@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int	ft_strlen(char *s)
 {
@@ -62,7 +62,7 @@ char	*ft_strcpy(char *dest, const char *src)
 	return (dest);
 }
 
-char	*ft_strjoin(char *s1, char *s2, t_free **ptrs)
+char	*ft_strjoin(char *s1, char *s2, t_free **collector)
 {
 	size_t	len_s1;
 	size_t	len_s2;
@@ -74,7 +74,7 @@ char	*ft_strjoin(char *s1, char *s2, t_free **ptrs)
 	j = 0;
 	len_s1 = ft_strlen(s1);
 	len_s2 = ft_strlen (s2);
-	s3 = ft_malloc(ptrs, len_s1 + len_s2 + 1);
+	s3 = ft_malloc(collector, len_s1 + len_s2 + 1);
 	while (i < len_s1 && s1[i])
 	{
 		s3[i] = s1[i];

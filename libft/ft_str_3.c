@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	ft_putstr_fd(char *s, int fd)
 {
@@ -63,4 +63,18 @@ char	*ft_strjoin_line(char *total_str, char *buffer)
 	ft_strcpy(s3 + ft_strlen(total_str), buffer);
 	free_total(&total_str);
 	return (s3);
+}
+
+char	*ft_strtrim(char *s, t_free **collector)
+{
+	int		j;
+	char	*new_line;
+
+	if (!s)
+		return (NULL);
+	j = ft_strlen(s) - 1;
+	while ((s)[j] == ' ' || (s)[j] == '\n')
+		j--;
+	new_line = ft_substr(s, 0, j + 1, collector);
+	return (new_line);
 }

@@ -13,7 +13,7 @@
 #include "cub3d.h"
 
 
-void	ft_error(char *error_msg, t_free **ptrs)
+void	ft_error(char *error_msg, t_free **collector)
 {
 	int	i;
 
@@ -21,20 +21,20 @@ void	ft_error(char *error_msg, t_free **ptrs)
 	i = 0;
 	while (error_msg[i])
 		write (2, &error_msg[i++], 1);
-	ft_free_all(ptrs);
+	ft_free_all(collector);
 	exit(1);
 }
 
 int main(int ac, char **av)
 {
 	t_data		data;
-	t_free		*ptrs;
+	t_free		*collector;
 
-	ptrs = NULL;
-	parse_map(ac, av[1], &ptrs, &data);
-	data = map_init(&ptrs);
-	// mlx_init_data(&data.mlx_data, data.cub3d_map, &ptrs);
-	// data.ptrs = &ptrs;
+	collector = NULL;
+	parse_map(ac, av[1], &collector, &data);
+	data = map_init(&collector);
+	// mlx_init_data(&data.mlx_data, data.cub3d_map, &collector);
+	// data.collector = &collector;
 	// mlx_key_hook(data.mlx_data.mlx, &handle_key_hooks, &data);
 	// mlx_loop_hook(data.mlx_data.mlx, loop_hook_func, &data);
 	// mlx_loop(data.mlx_data.mlx);

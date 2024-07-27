@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <math.h>
 # include <fcntl.h>
+# include <limits.h>
 # include "MLX42/include/MLX42/MLX42.h"
 
 typedef struct s_player
@@ -70,16 +71,17 @@ typedef struct	s_ray
 
 typedef struct s_map
 {
-	char		*north_texture;
-	char		*south_texture;
-	char		*west_texture;
-	char		*east_texture;
+	char		*no_texture;
+	char		*so_texture;
+	char		*we_texture;
+	char		*ea_texture;
 	int			floor_color[3];
 	int			ceiling_color[3];
 	char		**map;
 	int			map_height;
 	int			map_width;
 	int			tile_size;
+	int 		infos_presence[7];
 }	t_map;
 
 
@@ -90,6 +92,16 @@ typedef enum s_directs
 	WEST = 180,
 	SOUTH = 90,
 }	t_directs;
+
+typedef enum s_map_infos
+{
+	NO,
+	SO,
+	WE,
+	EA,
+	FL,
+	CE,
+}	t_map_infos;
 
 
 typedef struct s_mlx
@@ -113,7 +125,7 @@ typedef struct	s_data
 	t_map		cub3d_map;
 	t_player	player;
 	t_fov		fov;
-	t_free		**ptrs;
+	t_free		**collector;
 }	t_data;
 
 typedef struct	s_line
@@ -133,16 +145,21 @@ typedef struct s_next_line
 # define ARGS_ERR "invalid number of arguments\n"
 # define EXTN_ERR "invalid file extension\n"
 # define FILE_ERR "error opening the file\n"
+# define PATH_ERR "invalid texture path\n"
+# define TEXTURE_EXT_ERR "invalid texture extension\n"
+# define TEXTURE_ERR "texture missing\n"
+# define COLOR_ERR "invalid color\n"
+# define REPETED_ERR "repeated map info\n"
 
 // libft
 char	*ft_strcpy(char *dest, const char *src);
-char	*ft_strjoin(char *s1, char *s2, t_free **ptrs);
+char	*ft_strjoin(char *s1, char *s2, t_free **collector);
 int		ft_strlen(char *s);
 int		ft_strlcat(char *dest, char *src, int dstsize);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-char	*ft_substr(char const *s, int start, int len, t_free **ptrs);
-char	*ft_strdup(char *str, t_free **ptrs);
+char	*ft_substr(char const *s, int start, int len, t_free **collector);
+char	*ft_strdup(char *str, t_free **collector);
 int		is_whitespace(char c);
 void	*ft_malloc(t_free **list_aloc, size_t size);
 void	ft_free_ptr(t_free **list_aloc, void *ptr);
@@ -155,6 +172,9 @@ void	ft_free_all(t_free **list_aloc);
 int		is_player(char c);
 void	*ft_memset(void *ptr, int value, size_t num);
 int		get_rgb(int r, int g, int b);
+char	*ft_strtrim(char *s, t_free **collector);
+long	ft_atoi(const char *str);
+char	**ft_split(char const *s, char c, t_free **collector);
 
 //get_next_line
 
@@ -167,12 +187,12 @@ void	free_total(char **total_str);
 
 
 // parsing
-void	parse_map(int ac, char *file, t_free **ptrs, t_data *data);
-void	ft_error(char *error_msg, t_free **ptrs);
-t_data	map_init(t_free **ptrs);
+void	parse_map(int ac, char *file, t_free **collector, t_data *data);
+void	ft_error(char *error_msg, t_free **collector);
+t_data	map_init(t_free **collector);
 
 // raycasting
-void	mlx_init_data(t_mlx *mlx_data, t_map cub3d_map, t_free **ptrs);
+void	mlx_init_data(t_mlx *mlx_data, t_map cub3d_map, t_free **collector);
 void	draw_square(t_data *data, int x, int y, int color);
 void	draw_2d_map(t_data *data);
 void	draw_player(t_data *data);

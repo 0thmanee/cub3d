@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
@@ -24,7 +24,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-char	*ft_substr(char const *s, int start, int len, t_free **ptrs)
+char	*ft_substr(char const *s, int start, int len, t_free **collector)
 {
 	int		i;
 	char	*subs;
@@ -33,7 +33,7 @@ char	*ft_substr(char const *s, int start, int len, t_free **ptrs)
 		return (NULL);
 	if (!len)
 		return (NULL);
-	subs = ft_malloc(ptrs, len + 1);
+	subs = ft_malloc(collector, len + 1);
 	i = 0;
 	while (i < len && s[start])
 	{
@@ -45,7 +45,7 @@ char	*ft_substr(char const *s, int start, int len, t_free **ptrs)
 	return (subs);
 }
 
-char	*ft_strdup(char *str, t_free **ptrs)
+char	*ft_strdup(char *str, t_free **collector)
 {
 	char	*dest;
 	size_t	srclen;
@@ -54,7 +54,7 @@ char	*ft_strdup(char *str, t_free **ptrs)
 	if (!str)
 		return (NULL);
 	srclen = ft_strlen(str);
-	dest = ft_malloc(ptrs, srclen + 1);
+	dest = ft_malloc(collector, srclen + 1);
 	i = 0;
 	while (str[i])
 	{
