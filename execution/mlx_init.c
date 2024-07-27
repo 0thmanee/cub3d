@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:45:05 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/11 23:41:38 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:55:01 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,10 @@ void	mlx_init_data(t_mlx *mlx_data, t_map cub3d_map, t_free **ptrs)
 {
 	mlx_data->win_height = cub3d_map.map_height * cub3d_map.tile_size;
 	mlx_data->win_width = cub3d_map.map_width * cub3d_map.tile_size;
-	mlx_data->mlx = mlx_init(mlx_data->win_width, mlx_data->win_height,
-			"CUB3D", false);
+	mlx_data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "CUB3D", false);
 	if (!mlx_data->mlx)
 		(mlx_terminate(mlx_data->mlx), ft_error("mlx error\n", ptrs));
-	mlx_data->img = mlx_new_image(mlx_data->mlx, mlx_data->win_width,
-			mlx_data->win_height);
+	mlx_data->img = mlx_new_image(mlx_data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!mlx_data->img || (mlx_image_to_window(mlx_data->mlx,
 				mlx_data->img, 0, 0) < 0))
 		(mlx_terminate(mlx_data->mlx), ft_error("mlx error\n", ptrs));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/14 05:21:10 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/07/26 22:46:19 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 # include <math.h>
 # include <fcntl.h>
 # include "MLX42/include/MLX42/MLX42.h"
+
+
+# define WINDOW_WIDTH 2560
+# define WINDOW_HEIGHT 1390
+# define MINI_MAP_SCALE 1
 
 typedef struct s_player
 {
@@ -80,6 +85,7 @@ typedef struct s_map
 	int			map_height;
 	int			map_width;
 	int			tile_size;
+	int			mini_map_scale; 
 }	t_map;
 
 
@@ -107,12 +113,20 @@ typedef struct s_free
 	struct s_free	*next;
 }	t_free;
 
+typedef struct s_shift
+{
+	int x;
+	int y;
+}	t_shift;
+
 typedef struct	s_data
 {
 	t_mlx		mlx_data;
 	t_map		cub3d_map;
 	t_player	player;
 	t_fov		fov;
+	t_shift		shift;
+	t_ray		*rays;
 	t_free		**ptrs;
 }	t_data;
 
@@ -166,4 +180,7 @@ void	draw_line(t_data *data, t_line line, int color);
 void	cast_ray(t_data *data, t_ray *ray);
 int		wall_hitted(t_data *data, int x, int y);
 
+// wall_projection
+
+void	wall_projection(t_data *data);
 #endif

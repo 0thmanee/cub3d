@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 05:16:31 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/14 05:39:31 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/07/26 22:46:48 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	init_player(t_data *data, int i, int j)
 	data->cub3d_map.map[i][j] = 'P';
 	data->player.turn_direction = 0;
 	data->player.walk_direction = 0;
-	data->player.move_speed = 3;
+	data->player.move_speed = 10;
 	data->player.rotation_speed = 5 * (M_PI / 180);
 	data->player.line_len = 100;
 	data->player.body_color = get_rgb(255, 0, 0);
@@ -82,6 +82,8 @@ t_data	map_init(t_free **ptrs)
 	};
 	
 	i = 0;
+	data.shift.x = 0;
+	data.shift.y = 0;
 	data.cub3d_map.tile_size = 32;
 	data.cub3d_map.map_height = sizeof(map_data) / sizeof(map_data[0]);
 	data.cub3d_map.map_width = calc_width(map_data, data.cub3d_map.map_height);

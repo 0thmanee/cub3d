@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_2d.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:44:09 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/14 05:41:05 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/07/26 23:44:01 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	wall_hitted(t_data *data, int x, int y)
 {
-	if (data->cub3d_map.map[y / data->cub3d_map.tile_size]
+	if (data->cub3d_map.map[(y / data->cub3d_map.tile_size)]
 			[x / data->cub3d_map.tile_size] == '1')
 		return (1);
 	return (0);
@@ -46,7 +46,7 @@ void	draw_player(t_data *data)
 		{
 			if (i >= 0 && i < data->mlx_data.win_height
 				&& j >= 0 && j < data->mlx_data.win_width)
-				mlx_put_pixel(data->mlx_data.img, j, i, color);
+				mlx_put_pixel(data->mlx_data.img, MINI_MAP_SCALE * j, MINI_MAP_SCALE * i, color);
 			j++;
 		}
 		i++;
@@ -65,7 +65,7 @@ void draw_line(t_data *data, t_line line, int color)
 	{
 		if (line.y1 >= 0 && line.y1 < data->mlx_data.win_height
 			&& line.x1 >= 0 && line.x1 < data->mlx_data.win_width)
-			mlx_put_pixel(data->mlx_data.img, line.x1, line.y1, color);
+			mlx_put_pixel(data->mlx_data.img, MINI_MAP_SCALE * line.x1, MINI_MAP_SCALE * line.y1, color);
 		float err2 = 2 * err;
 		if (err2 > -dy)
 		{
@@ -151,7 +151,8 @@ void	detect_h_wall(t_data *data, t_ray *ray)
 	{
 		if (wall_hitted(data, next_h_hit_x, next_h_hit_y))
 		{
-			(1) && (ray->h_wall_hit_x = next_h_hit_x, ray->h_wall_hit_y = next_h_hit_y);
+			ray->h_wall_hit_x = next_h_hit_x;
+			 ray->h_wall_hit_y = next_h_hit_y;
 			break ;
 		}
 		next_h_hit_x += ray->h_x_step;
@@ -209,25 +210,26 @@ void	cast_ray(t_data *data, t_ray *ray)
 		ray->wall_hit_y = ray->v_wall_hit_y;
 		ray->distance = ray->v_distance;
 		ray->hit_vertical = 1;
-	}
+	}	
 	draw_line(data, create_line(data->player.x + data->player.player_head, data->player.y,
 			ray->wall_hit_x, ray->wall_hit_y), data->player.body_color);
 }
+
 
 void	cast_rays(t_data *data)
 {
 	float	ray_angle;
 	int		i;
-	t_ray	rays[data->mlx_data.win_width];
 
+	data->rays = ft_malloc(data->ptrs, WINDOW_WIDTH * sizeof(t_ray));
 	data->fov.fov_angle = 60 * (M_PI / 180);
 	data->fov.nbr_rays = data->mlx_data.win_width;
-	i = 0;
 	ray_angle = data->player.rotation_angle - (data->fov.fov_angle / 2);
+	i = 0;
 	while (i < data->fov.nbr_rays)
 	{
-		rays[i].ray_angle = ray_angle;
-		cast_ray(data, rays + i);
+		data->rays[i].ray_angle = ray_angle;
+		cast_ray(data, &data->rays[i]);
 		ray_angle += (data->fov.fov_angle / data->fov.nbr_rays);
 		i++;
 	}
@@ -240,15 +242,21 @@ void	draw_square(t_data *data, int x, int y, int color)
 	int		i_side;
 	int		j_side;
 
-	(1) && (i_side = x * data->cub3d_map.tile_size,
-		j_side = y * data->cub3d_map.tile_size,	i = i_side - 1);
+	i_side = x * data->cub3d_map.tile_size;
+	j_side = y * data->cub3d_map.tile_size;
+	i = i_side - 1;
 	while (++i < i_side + data->cub3d_map.tile_size)
 	{
 		j = j_side;
 		while (j < j_side + data->cub3d_map.tile_size)
-			if (i >= 0 && i < data->mlx_data.win_height
-				&& j >= 0 && j < data->mlx_data.win_width)
-				mlx_put_pixel(data->mlx_data.img, j++, i, color);
+		{
+			if (i >= 0 && i < data->mlx_data.win_height && j >= 0 && j < data->mlx_data.win_width)
+			{
+				if (pow(j - data->player.x, 2) + pow(i - data->player.y, 2) <= pow(100, 2))
+					mlx_put_pixel(data->mlx_data.img, MINI_MAP_SCALE * (j + data->shift.y), MINI_MAP_SCALE * (i + data->shift.x), color);
+			}
+			j++;
+		}
 	}
 }
 
