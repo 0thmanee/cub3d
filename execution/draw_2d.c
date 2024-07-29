@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_2d.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yasser03 <yasser03@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:44:09 by obouchta          #+#    #+#             */
-/*   Updated: 2024/07/26 23:44:01 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/07/29 15:46:59 by yasser03         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,10 +251,7 @@ void	draw_square(t_data *data, int x, int y, int color)
 		while (j < j_side + data->cub3d_map.tile_size)
 		{
 			if (i >= 0 && i < data->mlx_data.win_height && j >= 0 && j < data->mlx_data.win_width)
-			{
-				if (pow(j - data->player.x, 2) + pow(i - data->player.y, 2) <= pow(100, 2))
-					mlx_put_pixel(data->mlx_data.img, MINI_MAP_SCALE * (j + data->shift.y), MINI_MAP_SCALE * (i + data->shift.x), color);
-			}
+				mlx_put_pixel(data->mlx_data.img, (j + data->shift.y),  (i + data->shift.x), color);
 			j++;
 		}
 	}
