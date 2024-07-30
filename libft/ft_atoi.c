@@ -23,7 +23,7 @@ long	ft_atoi(const char *str)
 	sign = 1;
 	res = 0;
 	tmp = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+	while (is_whitespace(str[i]) || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{

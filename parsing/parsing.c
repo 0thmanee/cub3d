@@ -30,7 +30,7 @@ void parse_texture(char *line, t_data *data, int direction, t_free **collector)
 	int	fd;
 
 	i = 0;
-	while (line[i] == ' ')
+	while (is_whitespace(line[i]))
 		i++;
 	if (data->cub3d_map.infos_presence[direction])
 		ft_error(REPETED_ERR, collector);
@@ -90,7 +90,7 @@ void parse_color(char *line, t_data *data, int direction, t_free **collector)
 	i = 0;
 	if (data->cub3d_map.infos_presence[direction])
 		ft_error(REPETED_ERR, collector);
-	while (line[i] == ' ')
+	while (is_whitespace(line[i]))
 		i++;
 	if (line[i])
 	{
@@ -116,21 +116,21 @@ void read_data(int map_fd, t_data *data, t_free **collector)
 	while (line)
 	{
 		i = 0;
-		line = ft_strtrim(line, collector);
-		printf("line = {%s}\n", line);
+		ft_strtrim(&line, collector);
 		if (line)
 		{
-			if (line[i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
+			printf("LINE = {%s}\n", line);
+			if (line[i] == 'N' && line[i + 1] == 'O' && is_whitespace(line[i + 2]))
 				parse_texture(line + i + 2, data, NO, collector);
-			else if (line[i] == 'S' && line[i + 1] == 'O' && line[i + 2] == ' ')
+			else if (line[i] == 'S' && line[i + 1] == 'O' && is_whitespace(line[i + 2]))
 				parse_texture(line + i + 2, data, SO, collector);
-			else if (line[i] == 'W' && line[i + 1] == 'E' && line[i + 2] == ' ')
+			else if (line[i] == 'W' && line[i + 1] == 'E' && is_whitespace(line[i + 2]))
 				parse_texture(line + i + 2, data, WE, collector);
-			else if (line[i] == 'E' && line[i + 1] == 'A' && line[i + 2] == ' ')
+			else if (line[i] == 'E' && line[i + 1] == 'A' && is_whitespace(line[i + 2]))
 				parse_texture(line + i + 2, data, EA, collector);
-			else if (line[i] == 'F' && line[i + 1] == ' ')
+			else if (line[i] == 'F' && is_whitespace(line[i + 1]))
 				parse_color(line + i + 1, data, FL, collector);
-			else if (line[i] == 'C' && line[i + 1] == ' ')
+			else if (line[i] == 'C' && is_whitespace(line[i + 1]))
 				parse_color(line + i + 1, data, CE, collector);
 			else if (line[i] == '1' || line[i] == '0')
 			{

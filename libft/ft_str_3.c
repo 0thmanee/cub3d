@@ -65,22 +65,33 @@ char	*ft_strjoin_line(char *total_str, char *buffer)
 	return (s3);
 }
 
-char	*ft_strtrim(char *s, t_free **collector)
+void	ft_strtrim(char **input, t_free **collector)
 {
 	int		i;
-	int		j;
-	char	*new_line;
+	int		start;
+	int		new_len;
+	char	*tmp;
 
-	if (!s || !s[0])
-		return (NULL);
 	i = 0;
-	while (s[i] == ' ')
+	new_len = 0;
+	tmp = *input;
+	if (!(*input) || !(*input)[0])
+		return ;
+	while ((*input)[i] && is_whitespace((*input)[i]))
 		i++;
-	j = ft_strlen(s) - 1;
-	while (j >= 0 && (s[j] == ' ' || s[j] == '\n'))
-		j--;
-	if (j < 0)
-		return (NULL);
-	new_line = ft_substr(s, i, j + 1, collector);
-	return (new_line);
+	if (i == ft_strlen(*input))
+	{
+		*input = NULL;
+		ft_free_ptr(collector, tmp);
+		return ;
+	}
+	start = i--;
+	while ((*input)[++i])
+		new_len++;
+	while (--i >= 0 && is_whitespace((*input)[i]))
+		new_len--;
+	if ((*input)[new_len - 1] == '\n')
+		new_len--;
+	*input = ft_substr(*input, start, new_len, collector);
+	ft_free_ptr(collector, tmp);
 }

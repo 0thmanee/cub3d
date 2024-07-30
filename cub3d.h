@@ -179,7 +179,7 @@ void	ft_free_all(t_free **list_aloc);
 int		is_player(char c);
 void	*ft_memset(void *ptr, int value, size_t num);
 int		get_rgb(int r, int g, int b);
-char	*ft_strtrim(char *s, t_free **collector);
+void	ft_strtrim(char **input, t_free **collector);
 long	ft_atoi(const char *str);
 size_t	words_counts(char const *s, char c);
 char	**ft_split(char const *s, char c, t_free **collector);
