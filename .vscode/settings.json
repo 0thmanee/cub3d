@@ -8,7 +8,12 @@
 		"cub3d.h": "c",
 		"string": "cpp",
 		"iostream": "cpp",
-		"ostream": "cpp"
+		"ostream": "cpp",
+		"types.h": "c",
+		"atomic": "c",
+		"*.tcc": "c",
+		"cstdint": "c",
+		"random": "c"
 	},
 	"cmake.configureOnOpen": true
 }

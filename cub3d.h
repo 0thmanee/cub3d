@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yasser03 <yasser03@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/07/30 17:52:01 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/07/31 11:12:23 by yasser03         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,13 @@
 # include <fcntl.h>
 # include "MLX42/include/MLX42/MLX42.h"
 
+#define TEX_WIDTH 61
+#define TEX_HEIGHT 61
 
-# define WINDOW_WIDTH 2560
-# define WINDOW_HEIGHT 1390
+// # define WINDOW_WIDTH 2560
+// # define WINDOW_HEIGHT 1390
+# define WINDOW_WIDTH 1280 
+# define WINDOW_HEIGHT 695
 # define MINI_MAP_SCALE 0.3
 typedef struct s_player
 {
@@ -172,7 +176,7 @@ void	draw_line(t_data *data, t_line line, int color);
 void	cast_ray(t_data *data, t_ray *ray);
 int		wall_hitted(t_data *data, int x, int y);
 
-// wall_projection
-
+// walls ** textures
+uint32_t	*textures(t_data *data);
 void	walls_rendering(t_data *data);
 #endif
