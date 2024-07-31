@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall_rendering.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasser03 <yasser03@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:27:46 by yboutsli          #+#    #+#             */
-/*   Updated: 2024/07/31 11:43:14 by yasser03         ###   ########.fr       */
+/*   Updated: 2024/07/31 21:13:19 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,38 +27,39 @@ int	opacity_calc(int distance)
 
 void walls_rendering(t_data *data)
 {
-	int i;
-	int j;
-	float	distanceProjPlane;
-	float	wallStripHeiht;
-	float	corrected_wall_distance;
-	int 		top;
-	int			bottom;
+	int			i;
+	int			j;
+	float		distanceProjPlane;
+	float		wallStripHeiht;
+	float		corrected_wall_distance;
 	uint32_t	*wall_textures;
 	int			x_offset;
 	int			y_offset;
-	uint32_t			color;
+	uint32_t	color;
+	int 		top;
+	int			bottom;
 
 	distanceProjPlane = (WINDOW_WIDTH / 2) / tan(data->fov.fov_angle);
-	top = (WINDOW_HEIGHT / 2 - wallStripHeiht / 2);
 	bottom = (WINDOW_HEIGHT / 2 + wallStripHeiht / 2);
 	wall_textures = textures(data);
 	j = 0;
 	while (j < data->fov.nbr_rays)
 	{
 		if (data->rays[j].hit_vertical)
-			x_offset = floor((int)data->rays[j].v_wall_hit_y % data->cub3d_map.tile_size);
+			x_offset = (int)((data->rays[j].wall_hit_y)) % data->cub3d_map.tile_size;
 		else
-			x_offset = floor((int)data->rays[j].h_wall_hit_x % data->cub3d_map.tile_size);
+			x_offset = (int)((data->rays[j].wall_hit_x)) % data->cub3d_map.tile_size;
 		corrected_wall_distance = data->rays[j].distance * cos(data->rays[j].ray_angle - data->player.rotation_angle);
 		wallStripHeiht = (data->cub3d_map.tile_size / corrected_wall_distance) * distanceProjPlane;
+		top = (WINDOW_HEIGHT / 2 - wallStripHeiht / 2);
+		bottom = (WINDOW_HEIGHT / 2 + wallStripHeiht / 2);
 		i = 0;
 		while (i < WINDOW_HEIGHT)
 		{
-			if (i > (WINDOW_HEIGHT / 2 - wallStripHeiht / 2) && i < (WINDOW_HEIGHT / 2 + wallStripHeiht / 2))
+			if (i > top && i < bottom)
 			{
 				y_offset = floor((i - top) * (TEX_HEIGHT / wallStripHeiht));
-				color = wall_textures[(TEX_WIDTH * y_offset ) + x_offset];
+				color = wall_textures[(TEX_WIDTH * y_offset) + x_offset];
 				mlx_put_pixel(data->mlx_data.img, j, i, color);
 			}
 			else

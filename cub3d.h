@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasser03 <yasser03@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/07/31 11:12:23 by yasser03         ###   ########.fr       */
+/*   Updated: 2024/07/31 21:04:02 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
 # include <fcntl.h>
 # include "MLX42/include/MLX42/MLX42.h"
 
-#define TEX_WIDTH 61
-#define TEX_HEIGHT 61
+#define TEX_WIDTH 64
+#define TEX_HEIGHT 64
+# define TILE_SIZE 64
 
-// # define WINDOW_WIDTH 2560
-// # define WINDOW_HEIGHT 1390
-# define WINDOW_WIDTH 1280 
-# define WINDOW_HEIGHT 695
+# define WINDOW_WIDTH 2560
+# define WINDOW_HEIGHT 1390
+
 # define MINI_MAP_SCALE 0.3
 typedef struct s_player
 {
@@ -107,6 +107,7 @@ typedef struct s_mlx
 	int			win_height;
 	int			win_width;
 	mlx_image_t	*img;
+	mlx_image_t	*textures_img;
 }	t_mlx;
 
 typedef struct s_free
@@ -179,4 +180,5 @@ int		wall_hitted(t_data *data, int x, int y);
 // walls ** textures
 uint32_t	*textures(t_data *data);
 void	walls_rendering(t_data *data);
+void	textures_img(t_data *data, t_mlx *mlx_data , uint32_t *textures);
 #endif

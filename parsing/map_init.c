@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 05:16:31 by obouchta          #+#    #+#             */
-/*   Updated: 2024/07/30 17:09:54 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/07/31 21:13:51 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ t_data	map_init(t_free **ptrs)
 		"11000000110000011100000010001",
 		"10000000000000000000000010001",
 		"10000000000000000000000000001",
-		"10000000000000N00000000000001",
+		"10000000000000S00000000000001",
 		"10000000000000000000000000001",
 		"11111111111111111111111111111"
 	};
 	
 	i = 0;
-	data.cub3d_map.tile_size = 32;
+	data.cub3d_map.tile_size = TILE_SIZE;
 	data.cub3d_map.map_height = sizeof(map_data) / sizeof(map_data[0]);
 	data.cub3d_map.map_width = calc_width(map_data, data.cub3d_map.map_height);
 	data.cub3d_map.map = ft_malloc(ptrs, data.cub3d_map.map_height * sizeof(char *));
