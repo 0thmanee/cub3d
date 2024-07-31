@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_2d.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasser03 <yasser03@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:44:09 by obouchta          #+#    #+#             */
-/*   Updated: 2024/07/29 15:46:59 by yasser03         ###   ########.fr       */
+/*   Updated: 2024/07/29 19:19:35 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,10 @@ void	detect_h_wall(t_data *data, t_ray *ray)
 	float	next_h_hit_x;
 	float	next_h_hit_y;
 
-	(1) && (next_h_hit_x = ray->h_x_interc, next_h_hit_y = ray->h_y_interc);
-	(1) && (ray->h_wall_hit_x = 0, ray->h_wall_hit_y = 0);
+	next_h_hit_x = ray->h_x_interc;
+	next_h_hit_y = ray->h_y_interc;
+	ray->h_wall_hit_x = 0;
+	ray->h_wall_hit_y = 0;
 	if (ray->faces[1])
 		next_h_hit_y--;
 	while (next_h_hit_x >= 0 && next_h_hit_x < data->mlx_data.win_width
@@ -165,8 +167,10 @@ void	detect_v_wall(t_data *data, t_ray *ray)
 	float	next_v_hit_x;
 	float	next_v_hit_y;
 
-	(1) && (next_v_hit_x = ray->v_x_interc, next_v_hit_y = ray->v_y_interc);
-	(1) && (ray->v_wall_hit_x = 0, ray->v_wall_hit_y = 0);
+	next_v_hit_x = ray->v_x_interc;
+	next_v_hit_y = ray->v_y_interc;
+	ray->v_wall_hit_x = 0;
+	ray->v_wall_hit_y = 0;
 	if (ray->faces[3])
 		next_v_hit_x--;
 	while (next_v_hit_x >= 0 && next_v_hit_x < data->mlx_data.win_width
@@ -223,7 +227,7 @@ void	cast_rays(t_data *data)
 
 	data->rays = ft_malloc(data->ptrs, WINDOW_WIDTH * sizeof(t_ray));
 	data->fov.fov_angle = 60 * (M_PI / 180);
-	data->fov.nbr_rays = data->mlx_data.win_width;
+	data->fov.nbr_rays = WINDOW_WIDTH;
 	ray_angle = data->player.rotation_angle - (data->fov.fov_angle / 2);
 	i = 0;
 	while (i < data->fov.nbr_rays)
@@ -251,7 +255,7 @@ void	draw_square(t_data *data, int x, int y, int color)
 		while (j < j_side + data->cub3d_map.tile_size)
 		{
 			if (i >= 0 && i < data->mlx_data.win_height && j >= 0 && j < data->mlx_data.win_width)
-				mlx_put_pixel(data->mlx_data.img, (j + data->shift.y),  (i + data->shift.x), color);
+				mlx_put_pixel(data->mlx_data.img, MINI_MAP_SCALE * j, MINI_MAP_SCALE * i, color);
 			j++;
 		}
 	}

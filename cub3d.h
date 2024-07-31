@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/07/26 22:46:19 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:52:01 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@
 
 # define WINDOW_WIDTH 2560
 # define WINDOW_HEIGHT 1390
-# define MINI_MAP_SCALE 1
-
+# define MINI_MAP_SCALE 0.3
 typedef struct s_player
 {
 	int		x;
@@ -85,7 +84,6 @@ typedef struct s_map
 	int			map_height;
 	int			map_width;
 	int			tile_size;
-	int			mini_map_scale; 
 }	t_map;
 
 
@@ -113,19 +111,12 @@ typedef struct s_free
 	struct s_free	*next;
 }	t_free;
 
-typedef struct s_shift
-{
-	int x;
-	int y;
-}	t_shift;
-
 typedef struct	s_data
 {
 	t_mlx		mlx_data;
 	t_map		cub3d_map;
 	t_player	player;
 	t_fov		fov;
-	t_shift		shift;
 	t_ray		*rays;
 	t_free		**ptrs;
 }	t_data;
@@ -160,6 +151,7 @@ void	ft_free_all(t_free **list_aloc);
 int		is_player(char c);
 void	*ft_memset(void *ptr, int value, size_t num);
 int		get_rgb(int r, int g, int b);
+int	get_rgb_opacity(int r, int g, int b, int opacity);
 
 // parsing
 void	parse_map(int ac, char *file, t_free **ptrs);
@@ -182,5 +174,5 @@ int		wall_hitted(t_data *data, int x, int y);
 
 // wall_projection
 
-void	wall_projection(t_data *data);
+void	walls_rendering(t_data *data);
 #endif
