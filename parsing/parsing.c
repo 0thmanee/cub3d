@@ -230,7 +230,7 @@ void read_data(int map_fd, t_data *data, t_free **collector)
 				parse_map(line, data, collector);
 			}
 			else
-				ft_error(INVALID_ERR, collector);`
+				ft_error(INVALID_ERR, collector);
 		}
 		ft_free_ptr(collector, line);
 		line = get_next_line(map_fd);
