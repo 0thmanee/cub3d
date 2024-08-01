@@ -31,7 +31,7 @@ int main(int ac, char **av)
 	t_free		*collector;
 
 	collector = NULL;
-	parse_map(ac, av[1], &data, &collector);
+	parse_data(ac, av[1], &data, &collector);
 	data = map_init(&collector);
 	// mlx_init_data(&data.mlx_data, data.cub3d_map, &collector);
 	// data.collector = &collector;

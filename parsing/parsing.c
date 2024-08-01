@@ -76,10 +76,7 @@ void	set_grb(t_data *data, int direction, char **splited, t_free **collector)
 		}
 	}
 	else
-	{
-		printf("ERROR HERE\n");
 		ft_error(COLOR_ERR, collector);
-	}
 }
 
 void parse_color(char *line, t_data *data, int direction, t_free **collector)
@@ -107,6 +104,100 @@ int invalid_order(int infos_presence[])
 		!infos_presence[EA] || !infos_presence[FL] || !infos_presence[CE]);
 }
 
+int full_wall(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != '1' && !is_whitespace(line[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int valid_map_line(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != '1' && line[i] != '0' && !is_whitespace(line[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	update_map_dimens(char *line, t_data *data)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (line[i])
+	{
+		if (line[i] == '0' || line[i] == '1')
+			len++;
+		i++;
+	}
+	if (len > data->cub3d_map.map_width)
+		data->cub3d_map.map_width = len;
+	data->cub3d_map.map_height++;
+}
+
+void	set_player_position(t_data *data, char direc)
+{
+	data->cub3d_map.infos_presence[PLAYER] = 1;
+	if (direc == 'N')
+		data->player.player_direction = NO;
+	else if (direc == 'S')
+		data->player.player_direction = SO;
+	else if (direc == 'W')
+		data->player.player_direction = WE;
+	else if (direc == 'E')
+		data->player.player_direction = EA;
+}
+
+void	parse_map_line(char *line, t_data *data, t_free **collector)
+{
+	int	i;
+
+	data->cub3d_map.infos_presence[BOTTOM_CLOSED] = full_wall(line);
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || line[i] == 'E')
+		{
+			if (data->cub3d_map.infos_presence[PLAYER])
+				ft_error(REP_PLAYER_ERR, collector);
+			set_player_position(data, line[i]);
+		}
+		else if (line[i] != '0' && line[i] != '1' && !is_whitespace(line[i]))
+			ft_error(INVALID_ERR, collector);
+		i++;
+	}
+}
+
+void parse_map(char *line, t_data *data, t_free **collector)
+{
+	data->cub3d_map.map_height = 0;
+	data->cub3d_map.map_width = 0;
+	if (!data->cub3d_map.infos_presence[TOP_CLOSED])
+	{
+		if (!full_wall(line))
+			ft_error(UNCLOSED_ERR, collector);
+		else
+			data->cub3d_map.infos_presence[TOP_CLOSED] = 1;
+	}
+	parse_map_line(line, data, collector);
+	update_map_dimens(line, data);
+}
+
 void read_data(int map_fd, t_data *data, t_free **collector)
 {
 	char *line;
@@ -119,7 +210,6 @@ void read_data(int map_fd, t_data *data, t_free **collector)
 		ft_strtrim(&line, collector);
 		if (line)
 		{
-			printf("LINE = {%s}\n", line);
 			if (line[i] == 'N' && line[i + 1] == 'O' && is_whitespace(line[i + 2]))
 				parse_texture(line + i + 2, data, NO, collector);
 			else if (line[i] == 'S' && line[i + 1] == 'O' && is_whitespace(line[i + 2]))
@@ -136,16 +226,18 @@ void read_data(int map_fd, t_data *data, t_free **collector)
 			{
 				if (invalid_order(data->cub3d_map.infos_presence))
 					ft_error(ORDER_ERR, collector);
+				data->cub3d_map.infos_presence[MAP_FOUND] = 1;
+				parse_map(line, data, collector);
 			}
 			else
-				ft_error("INVALID_ERR", collector);
+				ft_error(INVALID_ERR, collector);`
 		}
 		ft_free_ptr(collector, line);
 		line = get_next_line(map_fd);
 	}
 }
 
-void	display_error(int infos_presence[], t_free **collector)
+void	check_infos_avalable(int *infos_presence, t_free **collector)
 {
 	if (!infos_presence[NO])
 		ft_error(MISSING_NO_TEXT_ERR, collector);
@@ -159,6 +251,12 @@ void	display_error(int infos_presence[], t_free **collector)
 		ft_error(MISSING_F_COLOR_ERR, collector);
 	if (!infos_presence[CE])
 		ft_error(MISSING_C_COLOR_ERR, collector);
+	if (!infos_presence[MAP_FOUND])
+		ft_error(MAP_ERR, collector);
+	if (!infos_presence[PLAYER])
+		ft_error(PLAYER_ERR, collector);
+	if (!infos_presence[BOTTOM_CLOSED])
+		ft_error(UNCLOSED_ERR, collector);
 }
 
 void	display_infos(t_map cub3d_map)
@@ -171,7 +269,7 @@ void	display_infos(t_map cub3d_map)
 	printf("C = {%d, %d, %d}\n", cub3d_map.ceiling_color[0], cub3d_map.ceiling_color[1], cub3d_map.ceiling_color[2]);
 }
 
-void	parse_map(int ac, char *file, t_data *data, t_free **collector)
+void	parse_data(int ac, char *file, t_data *data, t_free **collector)
 {
 	int	map_fd;
 	int	i;
@@ -187,6 +285,6 @@ void	parse_map(int ac, char *file, t_data *data, t_free **collector)
 		ft_error(FILE_ERR, collector);
 	read_data(map_fd, data, collector);
 	i = 0;
-	display_error(data->cub3d_map.infos_presence, collector);
+	check_infos_avalable(data->cub3d_map.infos_presence, collector);
 	display_infos(data->cub3d_map);
 }

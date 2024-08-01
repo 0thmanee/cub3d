@@ -36,6 +36,7 @@ typedef struct s_player
 
 	int	player_size;
 	int	player_head;
+	int	player_direction;
 }	t_player;
 
 typedef	struct s_fov
@@ -81,7 +82,7 @@ typedef struct s_map
 	int			map_height;
 	int			map_width;
 	int			tile_size;
-	int 		infos_presence[7];
+	int 		infos_presence[10];
 }	t_map;
 
 
@@ -101,6 +102,10 @@ typedef enum s_map_infos
 	EA,
 	FL,
 	CE,
+	MAP_FOUND,
+	TOP_CLOSED,
+	BOTTOM_CLOSED,
+	PLAYER
 }	t_map_infos;
 
 
@@ -142,21 +147,26 @@ typedef struct s_next_line
 	int		end_file;
 }	t_next_line;
 
-# define ARGS_ERR "invalid number of arguments\n"
-# define EXTN_ERR "invalid file extension\n"
-# define FILE_ERR "error opening the file\n"
-# define PATH_ERR "invalid texture path\n"
-# define TEXTURE_EXT_ERR "invalid texture extension\n"
-# define TEXTURE_ERR "texture missing\n"
-# define COLOR_ERR "invalid color\n"
-# define REPETED_ERR "repeated map info\n"
-# define MISSING_NO_TEXT_ERR "missing NO texture path\n"
-# define MISSING_SO_TEXT_ERR "missing SO texture path\n"
-# define MISSING_WE_TEXT_ERR "missing WE texture path\n"
-# define MISSING_EA_TEXT_ERR "missing EA texture path\n"
-# define MISSING_F_COLOR_ERR "missing floor color\n"
-# define MISSING_C_COLOR_ERR "missing ceiling color\n"
-# define ORDER_ERR "invalid order or missing informations\n"
+# define ARGS_ERR "invalid number of arguments.\n"
+# define EXTN_ERR "invalid file extension.\n"
+# define FILE_ERR "error opening the file.\n"
+# define PATH_ERR "invalid texture path.\n"
+# define TEXTURE_EXT_ERR "invalid texture extension.\n"
+# define TEXTURE_ERR "texture missing.\n"
+# define COLOR_ERR "invalid color.\n"
+# define REPETED_ERR "repeated map info.\n"
+# define MISSING_NO_TEXT_ERR "missing NO texture path.\n"
+# define MISSING_SO_TEXT_ERR "missing SO texture path.\n"
+# define MISSING_WE_TEXT_ERR "missing WE texture path.\n"
+# define MISSING_EA_TEXT_ERR "missing EA texture path.\n"
+# define MISSING_F_COLOR_ERR "missing floor color.\n"
+# define MISSING_C_COLOR_ERR "missing ceiling color.\n"
+# define ORDER_ERR "invalid order or missing informations.\n"
+# define INVALID_ERR "remove that unclear information from the map.\n"
+# define REP_PLAYER_ERR "Repeated player position.\n"
+# define PLAYER_ERR "missing player.\n"
+# define MAP_ERR "missing map.\n"
+#define UNCLOSED_ERR "map is not closed.\n"
 
 // libft
 char	*ft_strcpy(char *dest, const char *src);
@@ -195,7 +205,7 @@ void	free_total(char **total_str);
 
 
 // parsing
-void	parse_map(int ac, char *file, t_data *data, t_free **collector);
+void	parse_data(int ac, char *file, t_data *data, t_free **collector);
 void	ft_error(char *error_msg, t_free **collector);
 t_data	map_init(t_free **collector);
 
