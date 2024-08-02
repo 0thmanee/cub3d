@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:44:09 by obouchta          #+#    #+#             */
-/*   Updated: 2024/07/29 19:19:35 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:34:24 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	draw_angle(t_data *data)
 	line.y1 = data->player.y;
 	line.x2 = line.x1 + cos(data->player.rotation_angle) * data->player.line_len;
 	line.y2 = line.y1 + sin(data->player.rotation_angle) * data->player.line_len;
-	draw_line(data, line, data->player.body_color);
+	draw_line(data, line, get_rgb(0, 0, 0));
 }
 
 void	init_faces_dirs(t_ray *ray)
@@ -225,7 +225,6 @@ void	cast_rays(t_data *data)
 	float	ray_angle;
 	int		i;
 
-	data->rays = ft_malloc(data->ptrs, WINDOW_WIDTH * sizeof(t_ray));
 	data->fov.fov_angle = 60 * (M_PI / 180);
 	data->fov.nbr_rays = WINDOW_WIDTH;
 	ray_angle = data->player.rotation_angle - (data->fov.fov_angle / 2);

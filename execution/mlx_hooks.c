@@ -14,10 +14,10 @@
 
 void move_player(t_data *data, int key)
 {
-	int	new_x;
-	int	new_y;
-	int	new_x_size;
-	int	new_y_size;
+	float	new_x;
+	float	new_y;
+	float	new_x_size;
+	float	new_y_size;
 
 	(void)key;
 	new_x = data->player.x;
@@ -78,9 +78,9 @@ void	loop_hook_func(void *param)
 	t_data	*data;
 	
 	data = (t_data*)param;
-	// draw_angle(data);
+	// draw_2d_map(data);
 	cast_rays(data);
 	walls_rendering(data, data->wall);
-	draw_2d_map(data);
-	draw_player(data);
+	// draw_angle(data);
+	// draw_player(data);
 }

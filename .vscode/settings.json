@@ -15,5 +15,6 @@
 		"cstdint": "c",
 		"random": "c"
 	},
-	"cmake.configureOnOpen": true
+	"cmake.configureOnOpen": true,
+	"cmake.sourceDirectory": "/Users/yboutsli/Desktop/cub3d/MLX42"
 }

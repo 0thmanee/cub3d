@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:31:13 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/02 10:31:42 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:35:11 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ int main(int ac, char **av)
 {
 	t_data		data;
 	t_free		*ptrs;
+	t_ray	
 
 	(void)ac;
-	(void)av;	
+	(void)av;
 	ptrs = NULL;
 	// parse_map(ac, av[1], &ptrs);
 	data = map_init(&ptrs);
