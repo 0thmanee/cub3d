@@ -65,35 +65,28 @@ char	*ft_strjoin_line(char *total_str, char *buffer)
 	return (s3);
 }
 
-void	ft_strtrim(char **input, t_free **collector)
+char	*ft_strtrim(char *input, t_free **collector)
 {
 	int		i;
 	int		start;
 	int		new_len;
-	char	*tmp;
+	char	*output;
 
 	i = 0;
 	new_len = 0;
-	tmp = *input;
-	if (!(*input) || !(*input)[0])
-		return ;
-	while ((*input)[i] && is_whitespace((*input)[i]))
+	if (!input || !input[0])
+		return (NULL);
+	while (input[i] && input[i] == ' ')
 		i++;
-	if (i == ft_strlen(*input))
-	{
-		*input = NULL;
-		ft_free_ptr(collector, tmp);
-		return ;
-	}
+	if (i == ft_strlen(input))
+		return (NULL);
 	start = i--;
-	while ((*input)[++i])
+	while (input[++i])
 		new_len++;
-	while (--i >= 0 && is_whitespace((*input)[i]))
+	while (--i >= 0 && (input[i] == ' ' || input[i] == '\n'))
 		new_len--;
-	if ((*input)[new_len - 1] == '\n')
-		new_len--;
-	*input = ft_substr(*input, start, new_len, collector);
-	ft_free_ptr(collector, tmp);
+	output = ft_substr(input, start, new_len, collector);
+	return (output);
 }
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)

@@ -32,7 +32,6 @@ int main(int ac, char **av)
 
 	collector = NULL;
 	parse_data(ac, av[1], &data, &collector);
-	data = map_init(&collector);
 	// mlx_init_data(&data.mlx_data, data.cub3d_map, &collector);
 	// data.collector = &collector;
 	// mlx_key_hook(data.mlx_data.mlx, &handle_key_hooks, &data);
