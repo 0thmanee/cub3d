@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/07/31 21:04:02 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/01 19:53:42 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 # include <fcntl.h>
 # include "MLX42/include/MLX42/MLX42.h"
 
-#define TEX_WIDTH 64
-#define TEX_HEIGHT 64
+
 # define TILE_SIZE 64
 
 # define WINDOW_WIDTH 2560
@@ -90,6 +89,22 @@ typedef struct s_map
 	int			tile_size;
 }	t_map;
 
+typedef struct s_wall
+{
+	uint32_t		*wall_textures;
+	mlx_texture_t	*textures;
+	float			distanceProjPlane;
+	float			wallStripHeiht;
+	float			corrected_wall_distance;
+	int				BOTTOM_wall_pixel;
+	int				TOP_wall_pixel;
+	float				x_offset;
+	float				y_offset;
+	float			x_factor;
+	float			y_factor;
+	uint32_t		*buffer;
+}	t_wall;
+
 
 typedef enum s_directs
 {
@@ -107,7 +122,6 @@ typedef struct s_mlx
 	int			win_height;
 	int			win_width;
 	mlx_image_t	*img;
-	mlx_image_t	*textures_img;
 }	t_mlx;
 
 typedef struct s_free
@@ -124,6 +138,7 @@ typedef struct	s_data
 	t_fov		fov;
 	t_ray		*rays;
 	t_free		**ptrs;
+	t_wall		*wall;
 }	t_data;
 
 typedef struct	s_line
@@ -178,7 +193,7 @@ void	cast_ray(t_data *data, t_ray *ray);
 int		wall_hitted(t_data *data, int x, int y);
 
 // walls ** textures
-uint32_t	*textures(t_data *data);
-void	walls_rendering(t_data *data);
+mlx_texture_t	*textures(t_data *data);
+void walls_rendering(t_data *data, t_wall *wall);
 void	textures_img(t_data *data, t_mlx *mlx_data , uint32_t *textures);
 #endif

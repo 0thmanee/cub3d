@@ -80,7 +80,7 @@ void	loop_hook_func(void *param)
 	data = (t_data*)param;
 	// draw_angle(data);
 	cast_rays(data);
-	walls_rendering(data);
+	walls_rendering(data, data->wall);
 	draw_2d_map(data);
 	draw_player(data);
 }
