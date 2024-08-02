@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:31:13 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/02 18:35:11 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/02 19:53:46 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,14 @@ int main(int ac, char **av)
 {
 	t_data		data;
 	t_free		*ptrs;
-	t_ray	
+	t_ray		rays;
 
-	(void)ac;
-	(void)av;
 	ptrs = NULL;
 	// parse_map(ac, av[1], &ptrs);
 	data = map_init(&ptrs);
-	mlx_init_data(&data.mlx_data, data.cub3d_map, &ptrs);
 	data.ptrs = &ptrs;
+	data.rays = ft_malloc(data.ptrs, WINDOW_WIDTH * sizeof(t_ray));
+	mlx_init_data(&data.mlx_data, data.cub3d_map, &ptrs);
 	mlx_key_hook(data.mlx_data.mlx, &handle_key_hooks, &data);
 	mlx_loop_hook(data.mlx_data.mlx, loop_hook_func, &data);
 	mlx_loop(data.mlx_data.mlx);

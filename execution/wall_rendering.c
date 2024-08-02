@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:27:46 by yboutsli          #+#    #+#             */
-/*   Updated: 2024/08/02 18:32:32 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/02 20:04:05 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,9 @@ void walls_rendering(t_data *data, t_wall *wall)
 		{
 			if (y > wall->TOP_wall_pixel && y < wall->BOTTOM_wall_pixel)
 			{
-				set_y_coordinates(wall, y);
-				color = get_color(data, wall);
-				mlx_put_pixel(data->mlx_data.img, x, y, color);
+				// set_y_coordinates(wall, y);
+				// color = get_color(data, wall);
+				mlx_put_pixel(data->mlx_data.img, x, y, 0xFF00FF);
 			}
 			else
 				mlx_put_pixel(data->mlx_data.img, x, y, get_rgb(0, 0, 0));
