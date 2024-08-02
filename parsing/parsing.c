@@ -115,38 +115,6 @@ int full_wall(char *line)
 	return (1);
 }
 
-int valid_map_line(char *line)
-{
-	int i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] != '1' && line[i] != '0' && line[i] != ' ')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void	update_map_dimens(char *line, t_data *data)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = 0;
-	while (line[i])
-	{
-		if (line[i] == '0' || line[i] == '1')
-			len++;
-		i++;
-	}
-	if (len > data->cub3d_map.map_width)
-		data->cub3d_map.map_width = len;
-	data->cub3d_map.map_height++;
-}
-
 void	set_player_position(t_data *data, char direc)
 {
 	data->cub3d_map.infos_presence[PLAYER] = 1;
@@ -163,7 +131,7 @@ void	set_player_position(t_data *data, char direc)
 int	not_closed(t_data *data, int i, int j)
 {
 	return (i == 0 || j == 0 || i == data->cub3d_map.map_height - 1
-		|| i == ft_strlen(data->cub3d_map.map[j]) - 1
+		|| j == ft_strlen(data->cub3d_map.map[i]) - 1
 		|| data->cub3d_map.map[i - 1][j] == ' '
 		|| data->cub3d_map.map[i + 1][j] == ' '
 		|| data->cub3d_map.map[i][j - 1] == ' '
@@ -176,7 +144,6 @@ void	parse_map_line(char *line, int i, t_data *data, t_free **collector)
 
 	data->cub3d_map.infos_presence[BOTTOM_CLOSED] = full_wall(line);
 	j = 0;
-	printf("line: %d\n", i);
 	while (line[j])
 	{
 		if (line[j] == 'N' || line[j] == 'S' || line[j] == 'W' || line[j] == 'E')
@@ -185,10 +152,13 @@ void	parse_map_line(char *line, int i, t_data *data, t_free **collector)
 				ft_error(REP_PLAYER_ERR, collector);
 			set_player_position(data, line[j]);
 			if (not_closed(data, i, j))
-				ft_error("1", collector);
+			{
+				printf("%c\n", line[j]);
+				ft_error(MAP_ERR, collector);
+			}
 		}
 		else if (line[j] == '0' && not_closed(data, i, j))
-				ft_error("2", collector);
+				ft_error(MAP_ERR, collector);
 		else if (line[j] != '0' && line[j] != '1' && line[j] != ' ')
 			ft_error(INVALID_ERR, collector);
 		j++;
@@ -216,6 +186,7 @@ char	**ft_realloc(t_data *data, char *line, t_free **collector)
 	char	**new_ptr;
 	int		len;
 	
+	data->cub3d_map.map_height++;
 	if (!data->cub3d_map.map)
 	{
 		new_ptr = ft_malloc(collector, 2 * sizeof(char *));
@@ -230,7 +201,6 @@ char	**ft_realloc(t_data *data, char *line, t_free **collector)
 	ft_memcpy(new_ptr, data->cub3d_map.map, old_size * sizeof(char *));
 	new_ptr[old_size] = ft_strdup(line, collector);
 	new_ptr[old_size + 1] = NULL;
-	data->cub3d_map.map_height++;
 	len = ft_strlen(line);
 	if (len > data->cub3d_map.map_width)
 		data->cub3d_map.map_width = len;
