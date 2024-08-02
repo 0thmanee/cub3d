@@ -30,16 +30,13 @@ void parse_texture(char *line, t_data *data, int direction, t_free **collector)
 	int	fd;
 
 	i = 0;
-	while (is_whitespace(line[i]))
+	while (line[i] == ' ')
 		i++;
 	if (data->cub3d_map.infos_presence[direction])
 		ft_error(REPETED_ERR, collector);
 	if (line[i])
 	{
 		char *texture_path = ft_strdup(line + i, collector);
-		if (ft_strlen(texture_path) < 4 || ft_strcmp(ft_substr(texture_path,
-			ft_strlen(texture_path) - 4, 4, collector), ".xpm"))
-				ft_error(TEXTURE_ERR, collector);
 		fd = open(texture_path, O_RDONLY);
 		if (fd == -1)
 			ft_error(TEXTURE_ERR, collector);
@@ -87,7 +84,7 @@ void parse_color(char *line, t_data *data, int direction, t_free **collector)
 	i = 0;
 	if (data->cub3d_map.infos_presence[direction])
 		ft_error(REPETED_ERR, collector);
-	while (is_whitespace(line[i]))
+	while (line[i] == ' ')
 		i++;
 	if (line[i])
 	{
@@ -111,7 +108,7 @@ int full_wall(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] != '1' && !is_whitespace(line[i]))
+		if (line[i] != '1' && line[i] != ' ')
 			return (0);
 		i++;
 	}
@@ -125,7 +122,7 @@ int valid_map_line(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] != '1' && line[i] != '0' && !is_whitespace(line[i]))
+		if (line[i] != '1' && line[i] != '0' && line[i] != ' ')
 			return (0);
 		i++;
 	}
@@ -163,39 +160,90 @@ void	set_player_position(t_data *data, char direc)
 		data->player.player_direction = EA;
 }
 
-void	parse_map_line(char *line, t_data *data, t_free **collector)
+int	not_closed(t_data *data, int i, int j)
 {
-	int	i;
+	return (i == 0 || j == 0 || i == data->cub3d_map.map_height - 1
+		|| i == ft_strlen(data->cub3d_map.map[j]) - 1
+		|| data->cub3d_map.map[i - 1][j] == ' '
+		|| data->cub3d_map.map[i + 1][j] == ' '
+		|| data->cub3d_map.map[i][j - 1] == ' '
+		|| data->cub3d_map.map[i][j + 1] == ' ');
+}
+
+void	parse_map_line(char *line, int i, t_data *data, t_free **collector)
+{
+	int	j;
 
 	data->cub3d_map.infos_presence[BOTTOM_CLOSED] = full_wall(line);
-	i = 0;
-	while (line[i])
+	j = 0;
+	printf("line: %d\n", i);
+	while (line[j])
 	{
-		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || line[i] == 'E')
+		if (line[j] == 'N' || line[j] == 'S' || line[j] == 'W' || line[j] == 'E')
 		{
 			if (data->cub3d_map.infos_presence[PLAYER])
 				ft_error(REP_PLAYER_ERR, collector);
-			set_player_position(data, line[i]);
+			set_player_position(data, line[j]);
+			if (not_closed(data, i, j))
+				ft_error("1", collector);
 		}
-		else if (line[i] != '0' && line[i] != '1' && !is_whitespace(line[i]))
+		else if (line[j] == '0' && not_closed(data, i, j))
+				ft_error("2", collector);
+		else if (line[j] != '0' && line[j] != '1' && line[j] != ' ')
 			ft_error(INVALID_ERR, collector);
+		j++;
+	}
+}
+
+void	parse_map(t_data *data, t_free **collector)
+{
+	int	i;
+
+	if (!full_wall(data->cub3d_map.map[0]))
+		ft_error(UNCLOSED_ERR, collector);
+	data->cub3d_map.infos_presence[TOP_CLOSED] = 1;
+	i = 1;
+	while (data->cub3d_map.map[i])
+	{
+		parse_map_line(data->cub3d_map.map[i], i, data, collector);
 		i++;
 	}
 }
 
-void parse_map(char *line, t_data *data, t_free **collector)
+char	**ft_realloc(t_data *data, char *line, t_free **collector)
 {
-	data->cub3d_map.map_height = 0;
-	data->cub3d_map.map_width = 0;
-	if (!data->cub3d_map.infos_presence[TOP_CLOSED])
+	size_t	old_size;
+	char	**new_ptr;
+	int		len;
+	
+	if (!data->cub3d_map.map)
 	{
-		if (!full_wall(line))
-			ft_error(UNCLOSED_ERR, collector);
-		else
-			data->cub3d_map.infos_presence[TOP_CLOSED] = 1;
+		new_ptr = ft_malloc(collector, 2 * sizeof(char *));
+		new_ptr[0] = ft_strdup(line, collector);
+		new_ptr[1] = NULL;
+		return (new_ptr);
 	}
-	parse_map_line(line, data, collector);
-	update_map_dimens(line, data);
+	old_size = 0;
+	while (data->cub3d_map.map[old_size])
+		old_size++;
+	new_ptr = ft_malloc(collector, (old_size + 2) * sizeof(char *));
+	ft_memcpy(new_ptr, data->cub3d_map.map, old_size * sizeof(char *));
+	new_ptr[old_size] = ft_strdup(line, collector);
+	new_ptr[old_size + 1] = NULL;
+	data->cub3d_map.map_height++;
+	len = ft_strlen(line);
+	if (len > data->cub3d_map.map_width)
+		data->cub3d_map.map_width = len;
+	return (new_ptr);
+}
+
+void	add_map_line(t_data *data, char *line, t_free **collector)
+{
+	char	**old_map;
+
+	old_map = data->cub3d_map.map;
+	data->cub3d_map.map = ft_realloc(data, line, collector);
+	ft_free_ptr(collector, old_map);
 }
 
 void read_data(int map_fd, t_data *data, t_free **collector)
@@ -203,6 +251,9 @@ void read_data(int map_fd, t_data *data, t_free **collector)
 	char *line;
 	int i;
 
+	data->cub3d_map.map = NULL;
+	data->cub3d_map.map_height = 0;
+	data->cub3d_map.map_width = 0;
 	line = get_next_line(map_fd);
 	while (line)
 	{
@@ -210,24 +261,24 @@ void read_data(int map_fd, t_data *data, t_free **collector)
 		ft_strtrim(&line, collector);
 		if (line)
 		{
-			if (line[i] == 'N' && line[i + 1] == 'O' && is_whitespace(line[i + 2]))
+			if (line[i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
 				parse_texture(line + i + 2, data, NO, collector);
-			else if (line[i] == 'S' && line[i + 1] == 'O' && is_whitespace(line[i + 2]))
+			else if (line[i] == 'S' && line[i + 1] == 'O' && line[i + 2] == ' ')
 				parse_texture(line + i + 2, data, SO, collector);
-			else if (line[i] == 'W' && line[i + 1] == 'E' && is_whitespace(line[i + 2]))
+			else if (line[i] == 'W' && line[i + 1] == 'E' && line[i + 2] == ' ')
 				parse_texture(line + i + 2, data, WE, collector);
-			else if (line[i] == 'E' && line[i + 1] == 'A' && is_whitespace(line[i + 2]))
+			else if (line[i] == 'E' && line[i + 1] == 'A' && line[i + 2] == ' ')
 				parse_texture(line + i + 2, data, EA, collector);
-			else if (line[i] == 'F' && is_whitespace(line[i + 1]))
+			else if (line[i] == 'F' && line[i + 1] == ' ')
 				parse_color(line + i + 1, data, FL, collector);
-			else if (line[i] == 'C' && is_whitespace(line[i + 1]))
+			else if (line[i] == 'C' && line[i + 1] == ' ')
 				parse_color(line + i + 1, data, CE, collector);
 			else if (line[i] == '1' || line[i] == '0')
 			{
 				if (invalid_order(data->cub3d_map.infos_presence))
 					ft_error(ORDER_ERR, collector);
 				data->cub3d_map.infos_presence[MAP_FOUND] = 1;
-				parse_map(line, data, collector);
+				add_map_line(data, line, collector);
 			}
 			else
 				ft_error(INVALID_ERR, collector);
@@ -237,22 +288,26 @@ void read_data(int map_fd, t_data *data, t_free **collector)
 	}
 }
 
-void	check_infos_avalable(int *infos_presence, t_free **collector)
+void	check_infos_avalable(int *infos_presence, int bef, t_free **collector)
 {
-	if (!infos_presence[NO])
-		ft_error(MISSING_NO_TEXT_ERR, collector);
-	if (!infos_presence[SO])
-		ft_error(MISSING_SO_TEXT_ERR, collector);
-	if (!infos_presence[WE])
-		ft_error(MISSING_WE_TEXT_ERR, collector);
-	if (!infos_presence[EA])
-		ft_error(MISSING_EA_TEXT_ERR, collector);
-	if (!infos_presence[FL])
-		ft_error(MISSING_F_COLOR_ERR, collector);
-	if (!infos_presence[CE])
-		ft_error(MISSING_C_COLOR_ERR, collector);
-	if (!infos_presence[MAP_FOUND])
-		ft_error(MAP_ERR, collector);
+	if (bef)
+	{
+		if (!infos_presence[NO])
+			ft_error(MISSING_NO_TEXT_ERR, collector);
+		if (!infos_presence[SO])
+			ft_error(MISSING_SO_TEXT_ERR, collector);
+		if (!infos_presence[WE])
+			ft_error(MISSING_WE_TEXT_ERR, collector);
+		if (!infos_presence[EA])
+			ft_error(MISSING_EA_TEXT_ERR, collector);
+		if (!infos_presence[FL])
+			ft_error(MISSING_F_COLOR_ERR, collector);
+		if (!infos_presence[CE])
+			ft_error(MISSING_C_COLOR_ERR, collector);
+		if (!infos_presence[MAP_FOUND])
+			ft_error(MISSING_MAP_ERR, collector);
+		return ;
+	}
 	if (!infos_presence[PLAYER])
 		ft_error(PLAYER_ERR, collector);
 	if (!infos_presence[BOTTOM_CLOSED])
@@ -267,6 +322,16 @@ void	display_infos(t_map cub3d_map)
 	printf("EA = {%s}\n", cub3d_map.ea_texture);
 	printf("F = {%d, %d, %d}\n", cub3d_map.floor_color[0], cub3d_map.floor_color[1], cub3d_map.floor_color[2]);
 	printf("C = {%d, %d, %d}\n", cub3d_map.ceiling_color[0], cub3d_map.ceiling_color[1], cub3d_map.ceiling_color[2]);
+	printf("Map:\n");
+	int i = 0;
+	if (cub3d_map.map)
+	{
+		while (cub3d_map.map[i])
+		{
+			printf("%s\n", cub3d_map.map[i]);
+			i++;
+		}
+	}
 }
 
 void	parse_data(int ac, char *file, t_data *data, t_free **collector)
@@ -285,6 +350,8 @@ void	parse_data(int ac, char *file, t_data *data, t_free **collector)
 		ft_error(FILE_ERR, collector);
 	read_data(map_fd, data, collector);
 	i = 0;
-	check_infos_avalable(data->cub3d_map.infos_presence, collector);
+	check_infos_avalable(data->cub3d_map.infos_presence, 1, collector);
+	parse_map(data, collector);
+	check_infos_avalable(data->cub3d_map.infos_presence, 0, collector);
 	display_infos(data->cub3d_map);
 }

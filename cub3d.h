@@ -165,7 +165,8 @@ typedef struct s_next_line
 # define INVALID_ERR "remove that unclear information from the map.\n"
 # define REP_PLAYER_ERR "Repeated player position.\n"
 # define PLAYER_ERR "missing player.\n"
-# define MAP_ERR "missing map.\n"
+# define MAP_ERR "map error.\n"
+# define MISSING_MAP_ERR "missing map.\n"
 #define UNCLOSED_ERR "map is not closed.\n"
 
 // libft
@@ -193,6 +194,7 @@ void	ft_strtrim(char **input, t_free **collector);
 long	ft_atoi(const char *str);
 size_t	words_counts(char const *s, char c);
 char	**ft_split(char const *s, char c, t_free **collector);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
 
 //get_next_line
 
