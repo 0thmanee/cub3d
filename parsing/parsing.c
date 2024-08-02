@@ -216,7 +216,6 @@ void	fill_lines_end(t_data *data, t_free **collector)
 			data->cub3d_map.map_width, collector);
 		i++;
 	}
-	display_infos(data->cub3d_map);
 }
 
 void	parse_map_line(char *line, int i, t_data *data, t_free **collector)
@@ -334,7 +333,10 @@ void	add_map_line(t_data *data, char *line, t_free **collector)
 	char	*tmp_line;
 
 	old_map = data->cub3d_map.map;
-	new_line = ft_substr(line, 0, ft_strlen(line) - 1, collector);
+	if (line[ft_strlen(line) - 1] == '\n')
+		new_line = ft_substr(line, 0, ft_strlen(line) - 1, collector);
+	else
+		new_line = ft_strdup(line, collector);
 	if (!new_line || all_spaces(new_line))
 	{
 		tmp_line = new_line;
