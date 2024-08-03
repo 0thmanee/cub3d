@@ -6,7 +6,7 @@
 /*   By: yasser03 <yasser03@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/03 10:28:50 by yasser03         ###   ########.fr       */
+/*   Updated: 2024/08/03 11:07:07 by yasser03         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ typedef struct s_wall
 	mlx_texture_t *S_texture;
 	mlx_texture_t *E_texture;
 	mlx_texture_t *W_texture;
-	uint32_t *wall_textures;
 	float distanceProjPlane;
 	float wallStripHeiht;
 	float corrected_wall_distance;

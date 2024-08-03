@@ -6,7 +6,7 @@
 /*   By: yasser03 <yasser03@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 09:34:44 by yasser03          #+#    #+#             */
-/*   Updated: 2024/08/03 10:37:04 by yasser03         ###   ########.fr       */
+/*   Updated: 2024/08/03 11:02:33 by yasser03         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ void	textures_init(t_data *data, t_wall *wall)
 	wall->N_texture = mlx_load_png("./textures/wall.png");
 	if (!wall->N_texture)
 		(mlx_terminate(data->mlx_data.mlx), ft_error("mlx error\n", data->ptrs), exit(1));
-	wall->S_texture = mlx_load_png("./textures/wall.png");
+	wall->S_texture = mlx_load_png("./textures/paneling.png");
 	if (!wall->S_texture)
 		(mlx_terminate(data->mlx_data.mlx), ft_error("mlx error\n", data->ptrs), exit(1));
-	wall->E_texture = mlx_load_png("./textures/wall.png");
+	wall->E_texture = mlx_load_png("./textures/hitler.png");
 	if (!wall->E_texture)
 		(mlx_terminate(data->mlx_data.mlx), ft_error("mlx error\n", data->ptrs), exit(1));
-	wall->W_texture = mlx_load_png("./textures/wall.png");
+	wall->W_texture = mlx_load_png("./textures/hitler.png");
 	if (!wall->W_texture)
 		(mlx_terminate(data->mlx_data.mlx), ft_error("mlx error\n", data->ptrs), exit(1));
 	
