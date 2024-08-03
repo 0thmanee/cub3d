@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yasser03 <yasser03@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/02 18:34:56 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/03 10:28:50 by yasser03         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
-
+// # define WINDOW_HEIGHT 540
+// # define WINDOW_WIDTH 960
 #define MINI_MAP_SCALE 0.3
 
 typedef struct s_player
@@ -91,8 +92,11 @@ typedef struct s_map
 
 typedef struct s_wall
 {
+	mlx_texture_t *N_texture;
+	mlx_texture_t *S_texture;
+	mlx_texture_t *E_texture;
+	mlx_texture_t *W_texture;
 	uint32_t *wall_textures;
-	mlx_texture_t *textures;
 	float distanceProjPlane;
 	float wallStripHeiht;
 	float corrected_wall_distance;
@@ -136,7 +140,7 @@ typedef struct s_data
 	t_fov fov;
 	t_ray *rays;
 	t_free **ptrs;
-	t_wall *wall;
+	t_wall wall;
 } t_data;
 
 typedef struct s_line
@@ -189,8 +193,10 @@ void cast_ray(t_data *data, t_ray *ray);
 int wall_hitted(t_data *data, int x, int y);
 
 // walls && textures
-mlx_texture_t *textures(t_data *data);
-void walls_rendering(t_data *data, t_wall *wall);
-void textures_img(t_data *data, t_mlx *mlx_data, uint32_t *textures);
+// mlx_texture_t *textures(t_data *data);
+void			walls_rendering(t_data *data, t_wall *wall);
+void			textures_img(t_data *data, t_mlx *mlx_data, uint32_t *textures);
+void	free_textures(t_wall *wall);
+void	textures_init(t_data *data, t_wall *wall);
 
 #endif

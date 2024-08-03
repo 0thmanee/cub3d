@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yasser03 <yasser03@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:31:13 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/02 19:53:46 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/03 09:38:32 by yasser03         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,19 @@ int main(int ac, char **av)
 {
 	t_data		data;
 	t_free		*ptrs;
-	t_ray		rays;
+	t_ray		rays[WINDOW_WIDTH];
+
 
 	ptrs = NULL;
 	// parse_map(ac, av[1], &ptrs);
 	data = map_init(&ptrs);
-	data.ptrs = &ptrs;
-	data.rays = ft_malloc(data.ptrs, WINDOW_WIDTH * sizeof(t_ray));
+	data.rays = rays;
 	mlx_init_data(&data.mlx_data, data.cub3d_map, &ptrs);
+	textures_init(&data, &data.wall);
+	data.ptrs = &ptrs;
 	mlx_key_hook(data.mlx_data.mlx, &handle_key_hooks, &data);
 	mlx_loop_hook(data.mlx_data.mlx, loop_hook_func, &data);
 	mlx_loop(data.mlx_data.mlx);
+	free_textures(&data.wall);
 	mlx_terminate(data.mlx_data.mlx);
 }

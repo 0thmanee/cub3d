@@ -65,6 +65,7 @@ void handle_key_hooks(mlx_key_data_t keydata, void *param)
 	else if (keydata.key == MLX_KEY_ESCAPE)
 	{
 		ft_free_all(data->ptrs);
+		free_textures(&data->wall);
 		mlx_terminate(data->mlx_data.mlx);
 		exit(0);
 	}
@@ -78,9 +79,9 @@ void	loop_hook_func(void *param)
 	t_data	*data;
 	
 	data = (t_data*)param;
-	// draw_2d_map(data);
+	draw_2d_map(data);
 	cast_rays(data);
-	walls_rendering(data, data->wall);
+	walls_rendering(data, &data->wall);
 	// draw_angle(data);
 	// draw_player(data);
 }
