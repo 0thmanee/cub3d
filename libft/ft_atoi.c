@@ -6,11 +6,11 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:39:17 by obouchta          #+#    #+#             */
-/*   Updated: 2024/04/22 11:39:18 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/02 21:31:04 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "cub3d.h"
 
 long	ft_atoi(const char *str)
 {

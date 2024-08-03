@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/14 05:21:10 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/03 02:43:18 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,9 +207,30 @@ void	free_total(char **total_str);
 
 
 // parsing
-void	parse_data(int ac, char *file, t_data *data, t_free **collector);
-void	ft_error(char *error_msg, t_free **collector);
-t_data	map_init(t_free **collector);
+void		ft_error(char *error_msg, t_free **collector);
+void		display_infos(t_map cub3d_map);
+void		set_texture_path(t_data *data, int direction, char *texture_path);
+void		parse_texture(char *line, t_data *data, int direction, t_free **collector);
+void		set_grb(t_data *data, int direction, char **splited, t_free **collector);
+void 		parse_color(char *line, t_data *data, int direction, t_free **collector);
+int 		invalid_order(int infos_presence[]);
+int 		full_wall(char *line);
+t_directs	get_player_pos(char c);
+void		set_player(t_data *data, char direc, int i, int j);
+int			not_closed(t_data *data, int i, int j);
+char		*ft_realloc_line(char *line, int len, t_free **collector);
+void		fill_lines_end(t_data *data, t_free **collector);
+void		parse_map_line(char *line, int i, t_data *data, t_free **collector);
+int			empty_line(char *line);
+void		parse_map(t_data *data, t_free **collector);
+char		**ft_realloc_map(t_data *data, char *line, t_free **collector);
+int			all_spaces(char *line);
+void		add_map_line(t_data *data, char *line, t_free **collector);
+int			check_info(char *line, int i, t_data *data, t_free **collector);
+void		ead_data(int map_fd, t_data *data, t_free **collector);
+void		check_infos_avalable(int *infos_presence, int bef, t_free **collector);
+void		parse_data(int ac, char *file, t_data *data, t_free **collector);
+void 		read_data(int map_fd, t_data *data, t_free **collector);
 
 // raycasting
 void	mlx_init_data(t_mlx *mlx_data, t_map cub3d_map, t_free **collector);

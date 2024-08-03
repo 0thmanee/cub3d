@@ -1,4 +1,4 @@
-parsing_files = parsing.c
+parsing_files = parsing.c check_validity.c map_processing.c parse_infos.c
 libft_files = ft_atoi.c ft_char_1.c ft_char_2.c ft_malloc.c ft_split.c \
 			ft_str_1.c ft_str_2.c ft_str_3.c get_color.c get_next_line.c
 execution_files = raycasting.c mlx_hooks.c move_player.c draw_2d.c mlx_init.c

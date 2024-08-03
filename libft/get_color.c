@@ -6,11 +6,11 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:09:11 by obouchta          #+#    #+#             */
-/*   Updated: 2024/05/05 18:31:02 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/02 21:31:04 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "cub3d.h"
 
 int	get_rgb(int r, int g, int b)
 {
