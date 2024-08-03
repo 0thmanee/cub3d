@@ -3,51 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   wall_rendering.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasser03 <yasser03@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:27:46 by yboutsli          #+#    #+#             */
-/*   Updated: 2024/08/03 11:12:46 by yasser03         ###   ########.fr       */
+/*   Updated: 2024/08/03 22:56:15 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void wall_init(t_data *data, t_wall *wall)
-{
-	// wall->textures = textures(data);
-	// wall->buffer = (uint32_t *)wall->textures->pixels;
-	// wall->x_factor = wall->textures->width / data->cub3d_map.tile_size;
-}
-
-// float	set_x_coordinates(t_data *data, t_wall *wall, int x)
-// {
-// 	if (data->rays[x].hit_vertical)
-// 		return (fmodf(data->rays[x].wall_hit_y * wall->x_factor, data->wall->textures->width));
-// 	return (fmodf(data->rays[x].wall_hit_x * wall->x_factor, data->wall->textures->width));
-	
-// }
-
-// void set_y_coordinates(t_wall *wall)
-// {
-// 	wall->y_factor = (float)wall->textures->height / wall->wallStripHeiht;
-// 	wall->y_offset = ((float)wall->TOP_wall_pixel - ((float)WINDOW_HEIGHT / 2.0) + (wall->wallStripHeiht / 2.0)) * wall->y_factor;
-// 	if (wall->y_offset < 0)
-// 		wall->y_offset = 0;
-// }
 
 mlx_texture_t	*get_texture(t_data *data, t_wall *wall, t_ray *ray)
 {
-	t_directs	player;
-	player = NORTH;
-	
-	if (player == NORTH)
+	if (ray->hit_vertical)
 	{
-		if (!ray->hit_vertical && ray->ray_angle > 180 && ray->ray_angle <= 360)
-			return (wall->N_texture);
-		else if (!ray->hit_vertical && ray->ray_angle < 180)
-			return (wall->S_texture);
+		if (ray->ray_angle < 0.5 * M_PI || ray->ray_angle > 1.5 * M_PI)
+			return (wall->E_texture);
+		else
+			return (wall->W_texture);
 	}
-	return (wall->W_texture);
+	else
+	{
+		if (ray->ray_angle > 0 && ray->ray_angle < M_PI)
+			return (wall->S_texture);
+		else
+			return (wall->N_texture);
+	}
 }
 void	set_x_coordinates(t_data *data, t_wall *wall, int x)
 {
