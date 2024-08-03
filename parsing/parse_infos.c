@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 21:18:23 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/03 03:20:52 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/03 23:04:32 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@ static int		check_rgb_range(char *nbr)
 	i = 0;
 	while (nbr[i])
 	{
-		if (!ft_isdigit(nbr[i]))
+		if (!ft_isdigit(nbr[i]) && nbr[i] != ' ')
 			return (0);
 		i++;
 	}
 	color = ft_atoi(nbr);
-	return (!(color < -2147483648 || color > 2147483647 || color < 0 || color > 255));
+	if (color < -2147483648 || color > 2147483647 || color < 0 || color > 255)
+		return (0);
+	return (1);
 }
 
 void	set_grb(t_data *data, int direction, char **splited, t_free **collector)
@@ -92,25 +94,29 @@ void parse_color(char *line, t_data *data, int direction, t_free **collector)
 	int		i;
 	int		count;
 	char	**splited;
+	char	last_char;
 
 	if (data->cub3d_map.infos_presence[direction])
 		ft_error(REPETED_ERR, collector);
 	(i = -1, count = 0);
 	while (line[++i])
 	{
-		if ((!ft_isdigit(line[i]) && line[i] != ',' && line[i] != ' ')
-			|| (i == 0 && line[i] == ',')0
-			|| (i == ft_strlen(line) - 1 && line[i] == ',')
-			|| (line[i] == ' ' && ((i > 0 && line[i - 1] == ',') || line[i + 1] == ',')))
-			ft_error("1", collector);
+		while (line[i] && line[i] == ' ')
+			i++;
+		if (!ft_isdigit(line[i]) && line[i] != ',')
+			ft_error(COLOR_ERR, collector);
 		if (line[i] == ',')
-			if ((1 && count++) && (line[i - 1] == ',' || line[i + 1] == ','))
-				ft_error("2", collector);
-		if (count > 2)
-			ft_error("3", collector);
+		{
+			if (last_char == ',')
+				ft_error(COLOR_ERR, collector);
+			count++;
+		}
+		last_char = line[i];
 	}
+	if (count != 2)
+		ft_error(COLOR_ERR, collector);
 	splited = ft_split(line, ',', collector);
-	if (!splited || words_counts(line + i, ',') != 3)
+	if (!splited || words_counts(line, ',') != 3)
 		ft_error(COLOR_ERR, collector);
 	set_grb(data, direction, splited, collector);
 }

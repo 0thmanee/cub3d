@@ -6,11 +6,11 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 20:29:43 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/02 21:31:04 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/03 22:55:40 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 char	*read_file(char *total_str, int fd)
 {

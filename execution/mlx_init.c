@@ -6,11 +6,11 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:45:05 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/02 21:31:04 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/03 22:55:40 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 // const char* mlx_strerror(mlx_errno_t val);
 

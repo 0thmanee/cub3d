@@ -6,11 +6,11 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:47:50 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/02 21:31:04 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/03 22:55:40 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
