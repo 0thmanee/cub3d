@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:31:13 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/04 01:02:14 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/04 19:04:01 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int main(int ac, char **av)
 
 	collector = NULL;
 	parse_data(ac, av[1], &data, &collector);
+	display_infos(data.cub3d_map);
 	data.rays = rays;
 	mlx_init_data(&data.mlx_data, data.cub3d_map, &collector);
 	textures_init(&data, &data.wall);

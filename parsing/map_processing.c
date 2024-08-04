@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 21:21:39 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/04 00:49:19 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/04 19:11:11 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	parse_map_line(char *line, int i, t_data *data, t_free **collector)
 
 	data->cub3d_map.infos_presence[BOTTOM_CLOSED] = full_wall(line);
 	j = 0;
+	printf("line: %s\n", line);
 	while (line[j])
 	{
 		if (line[j] == 'N' || line[j] == 'S' || line[j] == 'W' || line[j] == 'E')
@@ -57,10 +58,7 @@ void	parse_map_line(char *line, int i, t_data *data, t_free **collector)
 				ft_error(REP_PLAYER_ERR, collector);
 			set_player(data, line[j], i, j);
 			if (not_closed(data, i, j))
-			{
-				printf("%c\n", line[j]);
 				ft_error(MAP_ERR, collector);
-			}
 		}
 		else if (line[j] == '0' && not_closed(data, i, j))
 				ft_error(MAP_ERR, collector);
@@ -102,6 +100,7 @@ char	**ft_realloc_map(t_data *data, char *line, t_free **collector)
 	char	**new_map;
 	int		len;
 	
+	data->cub3d_map.map_height++;
 	if (!data->cub3d_map.map)
 	{
 		new_map = ft_malloc(collector, 2 * sizeof(char *));
@@ -119,6 +118,5 @@ char	**ft_realloc_map(t_data *data, char *line, t_free **collector)
 	len = ft_strlen(line);
 	if (len > data->cub3d_map.map_width)
 		data->cub3d_map.map_width = len;
-	data->cub3d_map.map_height++;
 	return (new_map);
 }
