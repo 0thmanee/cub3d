@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 21:21:39 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/03 02:18:08 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/04 00:49:19 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ char	**ft_realloc_map(t_data *data, char *line, t_free **collector)
 	char	**new_map;
 	int		len;
 	
-	data->cub3d_map.map_height++;
 	if (!data->cub3d_map.map)
 	{
 		new_map = ft_malloc(collector, 2 * sizeof(char *));
@@ -120,5 +119,6 @@ char	**ft_realloc_map(t_data *data, char *line, t_free **collector)
 	len = ft_strlen(line);
 	if (len > data->cub3d_map.map_width)
 		data->cub3d_map.map_width = len;
+	data->cub3d_map.map_height++;
 	return (new_map);
 }

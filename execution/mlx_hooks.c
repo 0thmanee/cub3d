@@ -14,15 +14,16 @@
 
 void move_player(t_data *data, int key)
 {
-	int	new_x;
-	int	new_y;
-	int	new_x_size;
-	int	new_y_size;
+	float	new_x;
+	float	new_y;
+	float	new_x_size;
+	float	new_y_size;
 
 	(void)key;
-	(1) && (new_x = data->player.x, new_y = data->player.y);
-	(1) && (new_x_size = data->player.x + data->player.player_size,
-		new_y_size = data->player.y + data->player.player_size);
+	new_x = data->player.x;
+	new_y = data->player.y;
+	new_x_size = data->player.x + data->player.player_size,
+	new_y_size = data->player.y + data->player.player_size;
 	data->player.rotation_angle += (data->player.turn_direction
 		* data->player.rotation_speed);
 	new_x += (data->player.walk_direction * data->player.move_speed
@@ -35,7 +36,9 @@ void move_player(t_data *data, int key)
 		* sin(data->player.rotation_angle));
 	if (!wall_hitted(data, new_x, new_y)
 		&& !wall_hitted(data, new_x_size, new_y_size))
-		(1) && (data->player.x = new_x, data->player.y = new_y);
+	{
+		data->player.x = new_x, data->player.y = new_y;
+	}
 }
 
 void	press_and_release(mlx_key_data_t keydata, int *data, int value)
@@ -56,12 +59,13 @@ void handle_key_hooks(mlx_key_data_t keydata, void *param)
 	else if (keydata.key == MLX_KEY_DOWN || keydata.key == MLX_KEY_S)
 		press_and_release(keydata, &data->player.walk_direction, -1);
 	else if (keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_A)
-		press_and_release(keydata, &data->player.turn_direction, 1);
-	else if (keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_D)
 		press_and_release(keydata, &data->player.turn_direction, -1);
+	else if (keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_D)
+		press_and_release(keydata, &data->player.turn_direction, 1);
 	else if (keydata.key == MLX_KEY_ESCAPE)
 	{
 		ft_free_all(data->collector);
+		free_textures(&data->wall);
 		mlx_terminate(data->mlx_data.mlx);
 		exit(0);
 	}
@@ -76,7 +80,8 @@ void	loop_hook_func(void *param)
 	
 	data = (t_data*)param;
 	draw_2d_map(data);
-	draw_player(data);
-	// draw_angle(data);
 	cast_rays(data);
+	walls_rendering(data, &data->wall);
+	// draw_angle(data);
+	// draw_player(data);
 }

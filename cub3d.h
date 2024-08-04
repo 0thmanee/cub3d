@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/03 02:43:18 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/04 01:02:27 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 # include <limits.h>
 # include "MLX42/include/MLX42/MLX42.h"
 
+#define TILE_SIZE 64
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1080
+#define MINI_MAP_SCALE 0.3
+
 typedef struct s_player
 {
 	int		x;
@@ -33,7 +38,6 @@ typedef struct s_player
 	double	rotation_angle; // in degrees
 	int		move_speed; // in pixels per frame
 	double	rotation_speed; // in degrees per frame, the speed of the rotation
-
 	int	player_size;
 	int	player_head;
 	int	player_direction;
@@ -81,9 +85,26 @@ typedef struct s_map
 	char		**map;
 	int			map_height;
 	int			map_width;
-	int			tile_size;
 	int 		infos_presence[10];
 }	t_map;
+
+typedef struct s_wall
+{
+	mlx_texture_t *N_texture;
+	mlx_texture_t *S_texture;
+	mlx_texture_t *E_texture;
+	mlx_texture_t *W_texture;
+	float distanceProjPlane;
+	float wallStripHeiht;
+	float corrected_wall_distance;
+	int BOTTOM_wall_pixel;
+	int TOP_wall_pixel;
+	float x_offset;
+	float y_offset;
+	float x_factor;
+	float y_factor;
+	uint32_t *buffer;
+} t_wall;
 
 
 typedef enum s_directs
@@ -124,14 +145,16 @@ typedef struct s_free
 	struct s_free	*next;
 }	t_free;
 
-typedef struct	s_data
+typedef struct s_data
 {
-	t_mlx		mlx_data;
-	t_map		cub3d_map;
-	t_player	player;
-	t_fov		fov;
-	t_free		**collector;
-}	t_data;
+	t_mlx mlx_data;
+	t_map cub3d_map;
+	t_player player;
+	t_fov fov;
+	t_ray *rays;
+	t_free **collector;
+	t_wall wall;
+} t_data;
 
 typedef struct	s_line
 {
@@ -245,5 +268,12 @@ void	cast_rays(t_data *data);
 void	draw_line(t_data *data, t_line line, int color);
 void	cast_ray(t_data *data, t_ray *ray);
 int		wall_hitted(t_data *data, int x, int y);
+
+// mlx_texture_t *textures(t_data *data);
+void			walls_rendering(t_data *data, t_wall *wall);
+void			textures_img(t_data *data, t_mlx *mlx_data, uint32_t *textures);
+void	free_textures(t_wall *wall);
+void	textures_init(t_data *data, t_wall *wall);
+
 
 #endif
