@@ -1,17 +1,17 @@
-F 139,99,58
+F 0,0,255
 C 171,154,137
 
-NO textures/simonkraft/bookshelf.xpm
-SO textures/simonkraft/bookshelf_01.xpm
-WE textures/simonkraft/bookshelf_02.xpm
-EA textures/simonkraft/bookshelf_03.xpm
+NO textures/paneling.png
+EA textures/Tileable3g.png
+SO textures/Tileable4c.png
+WE textures/Tileable6.png
 
 1111111111111111111
 1001001001001001001
 1001001001001001001
 1001001001001001001
 1001001000001001001
-100000000S000000001
+100000000N000000001
 1000011111111000001
 1111000000000001111
 1000000101010000001

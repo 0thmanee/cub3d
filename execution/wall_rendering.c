@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall_rendering.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:27:46 by yboutsli          #+#    #+#             */
-/*   Updated: 2024/08/04 01:03:15 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/04 22:51:15 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ mlx_texture_t	*get_texture(t_wall *wall, t_ray *ray)
 			return (wall->N_texture);
 	}
 }
+
 void	set_x_coordinates(t_data *data, t_wall *wall, int x)
 {
 	float	offset;
@@ -64,6 +65,13 @@ uint32_t get_color(t_wall *wall, int texture_width)
 	return (color);
 }
 
+void	floor_ceiling_coloring(t_data *data, int x, int y, int rgb[3])
+{
+	uint32_t	color;
+
+	color = get_rgb(rgb[0], rgb[1], rgb[3]);
+	mlx_put_pixel(data->mlx_data.img, x, y, color);
+}
 void walls_rendering(t_data *data, t_wall *wall)
 {
 	int y;
@@ -71,7 +79,6 @@ void walls_rendering(t_data *data, t_wall *wall)
 	uint32_t color;
 	mlx_texture_t	*texture;
 
-	// wall_init(data, wall);
 	x = -1;
 	while (++x < WINDOW_WIDTH)
 	{
@@ -87,14 +94,16 @@ void walls_rendering(t_data *data, t_wall *wall)
 		set_x_coordinates(data, wall, x);
 		while (++y < WINDOW_HEIGHT)
 		{
-			if (y > wall->TOP_wall_pixel && y < wall->BOTTOM_wall_pixel)
+			if (y < wall->TOP_wall_pixel)
+				floor_ceiling_coloring(data, x, y, data->cub3d_map.ceiling_color);
+			else if (y > wall->TOP_wall_pixel && y < wall->BOTTOM_wall_pixel)
 			{
 				set_y_coordinates(wall, y, texture->height);
 				color = get_color(wall, texture->width);
 				mlx_put_pixel(data->mlx_data.img, x, y, color);
 			}
 			else
-				mlx_put_pixel(data->mlx_data.img, x, y, get_rgb(0, 0, 0));
+				floor_ceiling_coloring(data, x, y, data->cub3d_map.floor_color);
 		}
 	}
 }

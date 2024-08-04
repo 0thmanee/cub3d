@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:31:13 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/04 19:04:01 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/04 22:51:36 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	parse_data(int ac, char *file, t_data *data, t_free **collector)
 	fill_lines_end(data, collector);
 	parse_map(data, collector);
 	check_infos_avalable(data->cub3d_map.infos_presence, 0, collector);
+	while (data->cub3d_map.map[data->cub3d_map.map_height])
+		data->cub3d_map.map_height++;
 }
 
 int main(int ac, char **av)

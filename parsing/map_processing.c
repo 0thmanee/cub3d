@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_processing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 21:21:39 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/04 19:18:19 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/04 22:21:39 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ char	**ft_realloc_map(t_data *data, char *line, t_free **collector)
 	char	**new_map;
 	int		len;
 	
-	data->cub3d_map.map_height++;
 	if (!data->cub3d_map.map)
 	{
 		new_map = ft_malloc(collector, 2 * sizeof(char *));
