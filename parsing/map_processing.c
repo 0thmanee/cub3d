@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 21:21:39 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/04 19:11:11 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/04 19:18:19 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	parse_map_line(char *line, int i, t_data *data, t_free **collector)
 
 	data->cub3d_map.infos_presence[BOTTOM_CLOSED] = full_wall(line);
 	j = 0;
-	printf("line: %s\n", line);
 	while (line[j])
 	{
 		if (line[j] == 'N' || line[j] == 'S' || line[j] == 'W' || line[j] == 'E')
