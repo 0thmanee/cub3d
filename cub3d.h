@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/04 01:05:41 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/04 01:27:25 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #define TILE_SIZE 64
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
-#define MINI_MAP_SCALE 0.2
+#define MINI_MAP_SCALE 0.1
 
 typedef struct s_player
 {
