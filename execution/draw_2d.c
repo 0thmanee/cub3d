@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:44:09 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/04 01:03:15 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/04 01:23:48 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,7 +272,8 @@ void	draw_2d_map(t_data *data)
 		{
 			if (data->cub3d_map.map[i][j] == '1')
 				draw_square(data, i, j, get_rgb(0, 0, 0));
-			else
+			else if (data->cub3d_map.map[i][j] == '0'
+				|| data->cub3d_map.map[i][j] == 'P')
 				draw_square(data, i, j, get_rgb(255, 255, 255));
 			j++;
 		}
