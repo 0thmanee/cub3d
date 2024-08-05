@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:44:09 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/04 01:23:48 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/05 19:48:28 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,8 +215,8 @@ void	cast_ray(t_data *data, t_ray *ray)
 		ray->distance = ray->v_distance;
 		ray->hit_vertical = 1;
 	}	
-	draw_line(data, create_line(data->player.x + data->player.player_head, data->player.y,
-			ray->wall_hit_x, ray->wall_hit_y), data->player.body_color);
+	draw_line(data, create_line(data->player.x + data->player.player_head, data->player.y + data->player.player_head,
+			ray->wall_hit_x, ray->wall_hit_y), data->player.line_color);
 }
 
 
