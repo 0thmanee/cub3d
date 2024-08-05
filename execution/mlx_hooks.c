@@ -12,7 +12,7 @@
 
 #include "../cub3d.h"
 
-void move_player(t_data *data, int key)
+void	move_player(t_data *data, int key)
 {
 	float	new_x;
 	float	new_y;
@@ -26,14 +26,28 @@ void move_player(t_data *data, int key)
 	new_y_size = data->player.y + data->player.player_size;
 	data->player.rotation_angle += (data->player.turn_direction
 		* data->player.rotation_speed);
-	new_x += (data->player.walk_direction * data->player.move_speed
-		* cos(data->player.rotation_angle));
-	new_x_size += (data->player.walk_direction * data->player.move_speed
-		* cos(data->player.rotation_angle));
-	new_y += (data->player.walk_direction * data->player.move_speed
-		* sin(data->player.rotation_angle));
-	new_y_size += (data->player.walk_direction * data->player.move_speed
-		* sin(data->player.rotation_angle));
+	if (data->player.side_direction == 0)
+	{
+		new_x += (data->player.walk_direction * data->player.move_speed
+			* cos(data->player.rotation_angle));
+		new_x_size += (data->player.walk_direction * data->player.move_speed
+			* cos(data->player.rotation_angle));
+		new_y += (data->player.walk_direction * data->player.move_speed
+			* sin(data->player.rotation_angle));
+		new_y_size += (data->player.walk_direction * data->player.move_speed
+			* sin(data->player.rotation_angle));
+	}
+	else
+	{
+		new_x += (data->player.side_direction * data->player.move_speed
+			* cos(data->player.rotation_angle + (M_PI / 2)));
+		new_x_size += (data->player.side_direction * data->player.move_speed
+			* cos(data->player.rotation_angle + (M_PI / 2)));
+		new_y += (data->player.side_direction * data->player.move_speed
+			* sin(data->player.rotation_angle + (M_PI / 2)));
+		new_y_size += (data->player.side_direction * data->player.move_speed
+			* sin(data->player.rotation_angle + (M_PI / 2)));
+	}
 	if (!wall_hitted(data, new_x, new_y)
 		&& !wall_hitted(data, new_x_size, new_y_size))
 	{
@@ -58,10 +72,14 @@ void handle_key_hooks(mlx_key_data_t keydata, void *param)
 		press_and_release(keydata, &data->player.walk_direction, 1);
 	else if (keydata.key == MLX_KEY_DOWN || keydata.key == MLX_KEY_S)
 		press_and_release(keydata, &data->player.walk_direction, -1);
-	else if (keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_A)
+	else if (keydata.key == MLX_KEY_LEFT)
 		press_and_release(keydata, &data->player.turn_direction, -1);
-	else if (keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_D)
+	else if (keydata.key == MLX_KEY_RIGHT)
 		press_and_release(keydata, &data->player.turn_direction, 1);
+	else if (keydata.key == MLX_KEY_D)
+		press_and_release(keydata, &data->player.side_direction, 1);
+	else if (keydata.key == MLX_KEY_A)
+		press_and_release(keydata, &data->player.side_direction, -1);
 	else if (keydata.key == MLX_KEY_ESCAPE)
 	{
 		ft_free_all(data->collector);

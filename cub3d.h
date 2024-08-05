@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/04 22:15:21 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/04 23:53:21 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_player
 	int		line_len;
 	int		body_color;
 	int		line_color;
+	int		side_direction; // -f for left, 1 for right;
 	int		turn_direction; // -1 for left, 1 for right and 0 for no turn
 	int		walk_direction; // -1 for back, 1 for front and 0 for no walk
 	double	rotation_angle; // in degrees
