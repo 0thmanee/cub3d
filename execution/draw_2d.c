@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:44:09 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/05 19:48:28 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/08 02:01:01 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,10 @@ void	init_h_ray(t_data *data, t_ray *ray)
 		ray->h_y_interc += TILE_SIZE;
 	ray->h_x_interc = data->player.x
 		+ (ray->h_y_interc - data->player.y) / tan(ray->ray_angle);
-	ray->h_y_step = TILE_SIZE;
+	ray->h_y_step = (float)TILE_SIZE;
 	if (ray->faces[1])
 		ray->h_y_step *= -1;
-	ray->h_x_step = TILE_SIZE / tan(ray->ray_angle);
+	ray->h_x_step = (float)TILE_SIZE / tan(ray->ray_angle);
 	if (ray->h_x_step > 0 && ray->faces[3])
 		ray->h_x_step *= -1;
 	if (ray->h_x_step < 0 && ray->faces[2])
@@ -127,13 +127,13 @@ void	init_v_ray(t_data *data, t_ray *ray)
 		ray->v_x_interc += TILE_SIZE;
 	ray->v_y_interc = data->player.y
 		+ (ray->v_x_interc - data->player.x) * tan(ray->ray_angle);
-	ray->v_x_step = TILE_SIZE;
+	ray->v_x_step = (float)TILE_SIZE;
 	if (ray->faces[3])
 		ray->v_x_step *= -1;
-	ray->v_y_step = TILE_SIZE * tan(ray->ray_angle);
-	if (ray->v_y_step > 0 && ray->faces[1])
+	ray->v_y_step = (float)TILE_SIZE * tan(ray->ray_angle);
+	if (ray->faces[1] && ray->v_y_step > 0)
 		ray->v_y_step *= -1;
-	if (ray->v_y_step < 0 && ray->faces[0])
+	if (ray->faces[0] && ray->v_y_step < 0)
 		ray->v_y_step *= -1;
 }
 
@@ -144,17 +144,19 @@ void	detect_h_wall(t_data *data, t_ray *ray)
 
 	next_h_hit_x = ray->h_x_interc;
 	next_h_hit_y = ray->h_y_interc;
+	ray->h_found = 0;
 	ray->h_wall_hit_x = 0;
 	ray->h_wall_hit_y = 0;
 	if (ray->faces[1])
 		next_h_hit_y--;
-	while (next_h_hit_x >= 0 && next_h_hit_x < data->mlx_data.win_width
-		&& next_h_hit_y >= 0 && next_h_hit_y < data->mlx_data.win_height)
+	while (next_h_hit_x >= 0 && next_h_hit_x <= data->mlx_data.win_width
+		&& next_h_hit_y >= 0 && next_h_hit_y <= data->mlx_data.win_height)
 	{
 		if (wall_hitted(data, next_h_hit_x, next_h_hit_y))
 		{
 			ray->h_wall_hit_x = next_h_hit_x;
-			 ray->h_wall_hit_y = next_h_hit_y;
+			ray->h_wall_hit_y = next_h_hit_y;
+			ray->h_found = 1;
 			break ;
 		}
 		next_h_hit_x += ray->h_x_step;
@@ -169,6 +171,7 @@ void	detect_v_wall(t_data *data, t_ray *ray)
 
 	next_v_hit_x = ray->v_x_interc;
 	next_v_hit_y = ray->v_y_interc;
+	ray->v_found = 0;
 	ray->v_wall_hit_x = 0;
 	ray->v_wall_hit_y = 0;
 	if (ray->faces[3])
@@ -178,7 +181,9 @@ void	detect_v_wall(t_data *data, t_ray *ray)
 	{
 		if (wall_hitted(data, next_v_hit_x, next_v_hit_y))
 		{
-			(1) && (ray->v_wall_hit_x = next_v_hit_x, ray->v_wall_hit_y = next_v_hit_y);
+			ray->v_wall_hit_x = next_v_hit_x;
+			ray->v_wall_hit_y = next_v_hit_y;
+			ray->v_found = 1;
 			break ;
 		}
 		next_v_hit_x += ray->v_x_step;
@@ -186,21 +191,22 @@ void	detect_v_wall(t_data *data, t_ray *ray)
 	}
 }
 
-void	cast_ray(t_data *data, t_ray *ray)
+void	set_distances(t_data *data, t_ray *ray)
 {
-	if (ray->ray_angle)
-		ray->ray_angle = fmod(ray->ray_angle, 2 * M_PI);
-	if (ray->ray_angle < 0)
-		ray->ray_angle = 2 * M_PI + ray->ray_angle;
-	init_faces_dirs(ray);
-	init_h_ray(data, ray);
-	detect_h_wall(data, ray);
-	init_v_ray(data, ray);
-	detect_v_wall(data, ray);
-	ray->h_distance = sqrt(pow(ray->h_wall_hit_x - data->player.x, 2)
-		+ pow(ray->h_wall_hit_y - data->player.y, 2));
-	ray->v_distance = sqrt(pow(ray->v_wall_hit_x - data->player.x, 2)
-		+ pow(ray->v_wall_hit_y - data->player.y, 2));
+	if (ray->h_found)
+		ray->h_distance = sqrt(pow(ray->h_wall_hit_x - data->player.x, 2)
+			+ pow(ray->h_wall_hit_y - data->player.y, 2));
+	else
+		ray->h_distance = __DBL_MAX__;
+	if (ray->v_found)
+		ray->v_distance = sqrt(pow(ray->v_wall_hit_x - data->player.x, 2)
+			+ pow(ray->v_wall_hit_y - data->player.y, 2));
+	else
+		ray->v_distance = __DBL_MAX__;
+}
+
+void	set_wall_hitted(t_data *data, t_ray *ray)
+{
 	if (ray->h_distance < ray->v_distance)
 	{
 		ray->wall_hit_x = ray->h_wall_hit_x;
@@ -214,7 +220,21 @@ void	cast_ray(t_data *data, t_ray *ray)
 		ray->wall_hit_y = ray->v_wall_hit_y;
 		ray->distance = ray->v_distance;
 		ray->hit_vertical = 1;
-	}	
+	}
+}
+
+void	cast_ray(t_data *data, t_ray *ray)
+{
+	ray->ray_angle = fmod(ray->ray_angle, 2 * M_PI);
+	if (ray->ray_angle < 0)
+		ray->ray_angle += 2 * M_PI;
+	init_faces_dirs(ray);
+	init_h_ray(data, ray);
+	detect_h_wall(data, ray);
+	init_v_ray(data, ray);
+	detect_v_wall(data, ray);
+	set_distances(data, ray);
+	set_wall_hitted(data, ray);
 	draw_line(data, create_line(data->player.x + data->player.player_head, data->player.y + data->player.player_head,
 			ray->wall_hit_x, ray->wall_hit_y), data->player.line_color);
 }
