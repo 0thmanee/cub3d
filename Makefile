@@ -15,6 +15,7 @@ execution_objects = $(addprefix object_files/,$(execution_srcs:.c=.o))
 main_objects = $(addprefix object_files/main/,$(main_srcs:.c=.o))
 
 # CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -fsanitize=undefined
 NAME = cub3d
 LIBMLX = ./MLX42
 HEADERS = -I$(LIBMLX)/include

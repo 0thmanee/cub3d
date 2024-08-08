@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/08 01:53:38 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/08 23:23:51 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #define TILE_SIZE 64
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
-#define MINI_MAP_SCALE 0.5
+#define MINI_MAP_SCALE 1
 
 typedef struct s_player
 {
@@ -68,7 +68,10 @@ typedef struct	s_ray
 	float		v_wall_hit_x;
 	float		v_wall_hit_y;
 	float		v_distance;
-	int			faces[4];
+	int			right;
+	int			left;
+	int			down;
+	int			up;
 	float		wall_hit_x;
 	float		wall_hit_y;
 	float		distance;

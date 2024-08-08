@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:51:20 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/05 03:32:50 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/08 20:15:23 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ void	set_player(t_data *data, char direc, int i, int j)
 		data->player.player_direction = WE;
 	else if (direc == 'E')
 		data->player.player_direction = EA;
-	data->player.y = i * TILE_SIZE + TILE_SIZE / 3;
-	data->player.x = j * TILE_SIZE + TILE_SIZE / 3;
+	data->player.y = i * TILE_SIZE + (float)TILE_SIZE / 3;
+	data->player.x = j * TILE_SIZE + (float)TILE_SIZE / 3;
 	data->player.rotation_angle =
 		get_player_pos(data->cub3d_map.map[i][j]) * (M_PI / 180);
 	data->cub3d_map.map[i][j] = 'P';
 	data->player.turn_direction = 0;
 	data->player.walk_direction = 0;
-	data->player.move_speed = 3;
+	data->player.move_speed = 10;
 	data->player.rotation_speed = 5 * (M_PI / 180);
 	data->player.line_len = 100;
 	data->player.body_color = get_rgb(255, 0, 0);
