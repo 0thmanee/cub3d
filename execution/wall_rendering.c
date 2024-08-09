@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   wall_rendering.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:27:46 by yboutsli          #+#    #+#             */
-/*   Updated: 2024/08/04 22:51:15 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/09 02:26:16 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
 
 mlx_texture_t	*get_texture(t_wall *wall, t_ray *ray)
 {

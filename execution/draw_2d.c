@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:44:09 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/08 23:22:11 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/09 02:13:36 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,18 @@ void	draw_angle(t_data *data)
 
 void	init_faces_dirs(t_ray *ray)
 {
-	ray->up = 0;
-	ray->left = 0;
-	ray->down = (ray->ray_angle > 0) && (ray->ray_angle < M_PI);
+	ray->down = ray->ray_angle > 0
+		&& ray->ray_angle < M_PI;
 	ray->up = !ray->down;
-	ray->right = (ray->ray_angle < 0.5 * M_PI) || (ray->ray_angle > 1.5 * M_PI);
+	ray->right = ray->ray_angle < 0.5 * M_PI
+		|| ray->ray_angle > 1.5 * M_PI;
 	ray->left = !ray->right;
 }
 
 void	init_h_ray(t_data *data, t_ray *ray)
 {
-	ray->h_y_interc = floor(data->player.y / TILE_SIZE) * TILE_SIZE;
+	ray->h_y_interc = floor(data->player.y / TILE_SIZE)
+		* TILE_SIZE;
 	if (ray->down)
 		ray->h_y_interc += TILE_SIZE;
 	ray->h_x_interc = data->player.x
@@ -111,7 +112,7 @@ void	init_h_ray(t_data *data, t_ray *ray)
 	ray->h_y_step = TILE_SIZE;
 	if (ray->up)
 		ray->h_y_step *= -1;
-	ray->h_x_step = (float)ray->h_y_step / tan(ray->ray_angle);
+	ray->h_x_step = TILE_SIZE / tan(ray->ray_angle);
 	if (ray->h_x_step > 0 && ray->left)
 		ray->h_x_step *= -1;
 	if (ray->h_x_step < 0 && ray->right)
@@ -120,7 +121,8 @@ void	init_h_ray(t_data *data, t_ray *ray)
 
 void	init_v_ray(t_data *data, t_ray *ray)
 {
-	ray->v_x_interc = floor(data->player.x / TILE_SIZE) * TILE_SIZE;
+	ray->v_x_interc = floor(data->player.x / TILE_SIZE)
+		* TILE_SIZE;
 	if (ray->right)
 		ray->v_x_interc += TILE_SIZE;
 	ray->v_y_interc = data->player.y
@@ -128,10 +130,10 @@ void	init_v_ray(t_data *data, t_ray *ray)
 	ray->v_x_step = TILE_SIZE;
 	if (ray->left)
 		ray->v_x_step *= -1;
-	ray->v_y_step = ray->v_x_step * tan(ray->ray_angle);
-	if (ray->up && ray->v_y_step > 0)
+	ray->v_y_step = TILE_SIZE * tan(ray->ray_angle);
+	if (ray->v_y_step > 0 && ray->up)
 		ray->v_y_step *= -1;
-	if (ray->down && ray->v_y_step < 0)
+	if (ray->v_y_step < 0 && ray->down)
 		ray->v_y_step *= -1;
 }
 
@@ -139,26 +141,21 @@ void	detect_h_wall(t_data *data, t_ray *ray)
 {
 	float	next_h_hit_x;
 	float	next_h_hit_y;
-	// float	x_to_check;
-	// float	y_to_check;
 
+	ray->h_found = 0;
 	next_h_hit_x = ray->h_x_interc;
 	next_h_hit_y = ray->h_y_interc;
-	ray->h_found = 0;
 	ray->h_wall_hit_x = 0;
 	ray->h_wall_hit_y = 0;
 	if (ray->up)
 		next_h_hit_y--;
-	while (next_h_hit_x >= 0 && next_h_hit_x <= data->mlx_data.win_width
-		&& next_h_hit_y >= 0 && next_h_hit_y <= data->mlx_data.win_height)
+	while (next_h_hit_x >= 0 && next_h_hit_x < data->mlx_data.win_width
+		&& next_h_hit_y >= 0 && next_h_hit_y < data->mlx_data.win_height)
 	{
-		// x_to_check = next_h_hit_x;
-		// y_to_check = next_h_hit_y;
-		// y_to_check -= ray->up;
 		if (wall_hitted(data, next_h_hit_x, next_h_hit_y))
 		{
 			ray->h_wall_hit_x = next_h_hit_x;
-			ray->h_wall_hit_y = next_h_hit_y;
+			 ray->h_wall_hit_y = next_h_hit_y;
 			ray->h_found = 1;
 			break ;
 		}
@@ -171,12 +168,10 @@ void	detect_v_wall(t_data *data, t_ray *ray)
 {
 	float	next_v_hit_x;
 	float	next_v_hit_y;
-	// float	x_to_check;
-	// float	y_to_check;
 
+	ray->v_found = 0;
 	next_v_hit_x = ray->v_x_interc;
 	next_v_hit_y = ray->v_y_interc;
-	ray->v_found = 0;
 	ray->v_wall_hit_x = 0;
 	ray->v_wall_hit_y = 0;
 	if (ray->left)
@@ -184,13 +179,9 @@ void	detect_v_wall(t_data *data, t_ray *ray)
 	while (next_v_hit_x >= 0 && next_v_hit_x < data->mlx_data.win_width
 		&& next_v_hit_y >= 0 && next_v_hit_y < data->mlx_data.win_height)
 	{
-		// x_to_check = next_v_hit_x;
-		// x_to_check -= ray->left;
-		// y_to_check = next_v_hit_y;
 		if (wall_hitted(data, next_v_hit_x, next_v_hit_y))
 		{
-			ray->v_wall_hit_x = next_v_hit_x;
-			ray->v_wall_hit_y = next_v_hit_y;
+			(1) && (ray->v_wall_hit_x = next_v_hit_x, ray->v_wall_hit_y = next_v_hit_y);
 			ray->v_found = 1;
 			break ;
 		}
@@ -213,7 +204,7 @@ void	set_distances(t_data *data, t_ray *ray)
 		ray->v_distance = __DBL_MAX__;
 }
 
-void	set_wall_hitted(t_data *data, t_ray *ray)
+void	set_wall_hitted(t_ray *ray)
 {
 	if (ray->h_distance < ray->v_distance)
 	{
@@ -242,10 +233,11 @@ void	cast_ray(t_data *data, t_ray *ray)
 	init_v_ray(data, ray);
 	detect_v_wall(data, ray);
 	set_distances(data, ray);
-	set_wall_hitted(data, ray);
+	set_wall_hitted(ray);
 	draw_line(data, create_line(data->player.x + data->player.player_head, data->player.y + data->player.player_head,
 			ray->wall_hit_x, ray->wall_hit_y), data->player.line_color);
 }
+
 
 void	cast_rays(t_data *data)
 {
@@ -259,7 +251,6 @@ void	cast_rays(t_data *data)
 	while (i < data->fov.nbr_rays)
 	{
 		data->rays[i].ray_angle = ray_angle;
-		// printf("i: {%d}\t|\t", i);
 		cast_ray(data, &data->rays[i]);
 		ray_angle += (data->fov.fov_angle / data->fov.nbr_rays);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/08 23:23:51 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/09 02:16:02 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,21 @@
 #define TILE_SIZE 64
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
-#define MINI_MAP_SCALE 1
+#define MINI_MAP_SCALE 0
 
 typedef struct s_player
 {
-	float	x;
-	float	y;
+	int		x;
+	int		y;
 	int		line_len;
 	int		body_color;
 	int		line_color;
-	int		side_direction; // -f for left, 1 for right;
 	int		turn_direction; // -1 for left, 1 for right and 0 for no turn
 	int		walk_direction; // -1 for back, 1 for front and 0 for no walk
-	float	rotation_angle; // in degrees
-	float	move_speed; // in pixels per frame
-	float	rotation_speed; // in degrees per frame, the speed of the rotation
+	int		side_direction; // -f for left, 1 for right;
+	double	rotation_angle; // in degrees
+	int		move_speed; // in pixels per frame
+	double	rotation_speed; // in degrees per frame, the speed of the rotation
 	int	player_size;
 	int	player_head;
 	int	player_direction;
@@ -46,7 +46,7 @@ typedef struct s_player
 
 typedef	struct s_fov
 {
-	float	fov_angle;
+	double	fov_angle;
 	int		wall_width;
 	int		nbr_rays;
 }	t_fov;
@@ -68,16 +68,16 @@ typedef struct	s_ray
 	float		v_wall_hit_x;
 	float		v_wall_hit_y;
 	float		v_distance;
-	int			right;
-	int			left;
 	int			down;
 	int			up;
+	int			right;
+	int			left;
 	float		wall_hit_x;
 	float		wall_hit_y;
 	float		distance;
 	float		hit_vertical;
-	int		h_found;
-	int		v_found;
+	int			h_found;
+	int			v_found;
 }	t_ray;
 
 typedef struct s_map
