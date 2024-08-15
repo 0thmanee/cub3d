@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:51:20 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/09 02:14:24 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/15 09:50:36 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	set_player(t_data *data, char direc, int i, int j)
 	data->cub3d_map.map[i][j] = 'P';
 	data->player.turn_direction = 0;
 	data->player.walk_direction = 0;
-	data->player.side_direction = 0;
+	data->player.s_direction = 0;
 	data->player.move_speed = 10;
 	data->player.rotation_speed = 5 * (M_PI / 180);
 	data->player.line_len = 100;

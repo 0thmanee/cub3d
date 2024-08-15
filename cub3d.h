@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/09 02:16:02 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/15 10:14:06 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #define TILE_SIZE 64
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
-#define MINI_MAP_SCALE 0
+#define MINI_MAP_SCALE 0.3
 
 typedef struct s_player
 {
@@ -35,7 +35,7 @@ typedef struct s_player
 	int		line_color;
 	int		turn_direction; // -1 for left, 1 for right and 0 for no turn
 	int		walk_direction; // -1 for back, 1 for front and 0 for no walk
-	int		side_direction; // -f for left, 1 for right;
+	int		s_direction; // side_direction -1 for left, 1 for right;
 	double	rotation_angle; // in degrees
 	int		move_speed; // in pixels per frame
 	double	rotation_speed; // in degrees per frame, the speed of the rotation
@@ -43,6 +43,14 @@ typedef struct s_player
 	int	player_head;
 	int	player_direction;
 }	t_player;
+
+typedef struct s_player_moves
+{
+	float	new_x;
+	float	new_y;
+	float	new_x_size;
+	float	new_y_size;
+}	t_player_moves;
 
 typedef	struct s_fov
 {
@@ -100,9 +108,10 @@ typedef struct s_wall
 	mlx_texture_t *S_texture;
 	mlx_texture_t *E_texture;
 	mlx_texture_t *W_texture;
-	float distanceProjPlane;
+	mlx_texture_t	*texture;
+	float d_p_plane; // distanceProjPlane
 	float wallStripHeiht;
-	float corrected_wall_distance;
+	float c_w_distance; // corrected_wall_distance
 	int BOTTOM_wall_pixel;
 	int TOP_wall_pixel;
 	float x_offset;
@@ -272,14 +281,21 @@ void 	handle_key_hooks(mlx_key_data_t keydata, void* param);
 void	loop_hook_func(void *param);
 void	cast_rays(t_data *data);
 void	draw_line(t_data *data, t_line line, int color);
-void	cast_ray(t_data *data, t_ray *ray);
 int		wall_hitted(t_data *data, int x, int y);
+void	init_h_ray(t_data *data, t_ray *ray);
+void	init_v_ray(t_data *data, t_ray *ray);
+void	detect_h_wall(t_data *data, t_ray *ray);
+void	detect_v_wall(t_data *data, t_ray *ray);
 
 // mlx_texture_t *textures(t_data *data);
 void			walls_rendering(t_data *data, t_wall *wall);
 void			textures_img(t_data *data, t_mlx *mlx_data, uint32_t *textures);
 void	free_textures(t_wall *wall);
 void	textures_init(t_data *data, t_wall *wall);
+void set_y_coordinates(t_wall *wall, int y, int texture_height);
+void	set_x_coordinates(t_data *data, t_wall *wall, int x);
+mlx_texture_t	*get_texture(t_wall *wall, t_ray *ray);
+void	fc_coloring(t_data *data, int x, int y, int rgb[3]);
 
 
 #endif
