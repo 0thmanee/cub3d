@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 09:34:44 by yasser03          #+#    #+#             */
-/*   Updated: 2024/08/15 09:28:41 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/15 20:43:24 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ mlx_texture_t	*textures(t_data *data)
 
 void	textures_init(t_data *data, t_wall *wall)
 {
-	wall->N_texture = mlx_load_png("./textures/paneling.png");
+	wall->N_texture = mlx_load_png(data->cub3d_map.no_texture);
 	if (!wall->N_texture)
 		mlx_err(data);
-	wall->S_texture = mlx_load_png("./textures/Tileable3g.png");
+	wall->S_texture = mlx_load_png(data->cub3d_map.so_texture);
 	if (!wall->S_texture)
 		mlx_err(data);
-	wall->E_texture = mlx_load_png("./textures/Tileable4c.png");
+	wall->E_texture = mlx_load_png(data->cub3d_map.ea_texture);
 	if (!wall->E_texture)
 		mlx_err(data);
-	wall->W_texture = mlx_load_png("./textures/Tileable6.png");
+	wall->W_texture = mlx_load_png(data->cub3d_map.we_texture);
 	if (!wall->W_texture)
 		mlx_err(data);
 }
