@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 09:00:03 by yboutsli          #+#    #+#             */
-/*   Updated: 2024/08/15 09:21:32 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/17 18:54:06 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ mlx_texture_t	*get_texture(t_wall *wall, t_ray *ray)
 	if (ray->hit_vertical)
 	{
 		if (ray->ray_angle < 0.5 * M_PI || ray->ray_angle > 1.5 * M_PI)
-			return (wall->E_texture);
+			return (wall->e_texture);
 		else
-			return (wall->W_texture);
+			return (wall->w_texture);
 	}
 	else
 	{
 		if (ray->ray_angle > 0 && ray->ray_angle < M_PI)
-			return (wall->S_texture);
+			return (wall->s_texture);
 		else
-			return (wall->N_texture);
+			return (wall->n_texture);
 	}
 }
 
@@ -43,8 +43,8 @@ void	set_x_coordinates(t_data *data, t_wall *wall, int x)
 
 void	set_y_coordinates(t_wall *wall, int y, int texture_height)
 {
-	wall->y_factor = (float)texture_height / wall->wallStripHeiht;
-	wall->y_offset = (y - (float)wall->TOP_wall_pixel) * wall->y_factor;
+	wall->y_factor = (float)texture_height / wall->wallstripheiht;
+	wall->y_offset = (y - (float)wall->top_wall_pixel) * wall->y_factor;
 }
 
 void	fc_coloring(t_data *data, int x, int y, int rgb[3])

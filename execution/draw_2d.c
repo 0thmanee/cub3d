@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:44:09 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/16 18:22:30 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/17 18:34:35 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,34 +35,6 @@ void	draw_player(t_data *data)
 	}
 }
 
-void draw_line(t_data *data, t_line line, int color)
-{
-	float dx = abs(line.x2 - line.x1);
-	float dy = abs(line.y2 - line.y1);
-	float sx = (line.x1 < line.x2) ? 1 : -1;
-	float sy = (line.y1 < line.y2) ? 1 : -1;
-	float err = dx - dy;
-
-	while (line.x1 != line.x2 || line.y1 != line.y2)
-	{
-		if (line.y1 >= 0 && line.y1 < data->mlx_data.win_height
-			&& line.x1 >= 0 && line.x1 < data->mlx_data.win_width)
-			mlx_put_pixel(data->mlx_data.img, MINI_MAP_SCALE * line.x1, MINI_MAP_SCALE * line.y1, color);
-		float err2 = 2 * err;
-		if (err2 > -dy)
-		{
-			err -= dy;
-			line.x1 += sx;
-		}
-		if (err2 < dx)
-		{
-			err += dx;
-			line.y1 += sy;
-		}
-	}
-}
-// draw line function to be removed
-
 void	draw_angle(t_data *data)
 {
 	t_line	line1;
@@ -76,7 +48,6 @@ void	draw_angle(t_data *data)
 		* data->player.line_len;
 	line2.x1 = data->player.x;
 	line2.y1 = data->player.y;
-	draw_line(data, line1, get_rgb(0, 0, 0));
 }
 
 void	draw_square(t_data *data, int x, int y, int color)

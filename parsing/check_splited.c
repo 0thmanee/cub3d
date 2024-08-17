@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 18:50:36 by yboutsli          #+#    #+#             */
-/*   Updated: 2024/08/16 18:54:24 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/17 18:13:59 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	check_splited_map(t_data *data, t_free **collector)
 	int	i;
 
 	i = 0;
-    data->cub3d_map.map_height = 0;
+	data->cub3d_map.map_height = 0;
 	while (data->cub3d_map.map[i])
 	{
 		if (empty_line(data->cub3d_map.map[i]))

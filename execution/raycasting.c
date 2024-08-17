@@ -6,22 +6,11 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:49:57 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/16 18:18:59 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/17 18:33:48 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-t_line	create_line(int x1, int y1, int x2, int y2)
-{
-	t_line	line;
-
-	line.x1 = x1;
-	line.y1 = y1;
-	line.x2 = x2;
-	line.y2 = y2;
-	return (line);
-}
 
 static void	init_faces_dirs(t_ray *ray)
 {
@@ -83,8 +72,6 @@ static void	cast_ray(t_data *data, t_ray *ray)
 		color = get_rgb(255, 0, 0);
 	else
 		color = get_rgb(0, 255, 0);
-	draw_line(data, create_line(data->player.x, data->player.y,
-			ray->wall_hit_x, ray->wall_hit_y), color); // to be removed
 }
 
 void	cast_rays(t_data *data)

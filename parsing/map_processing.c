@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 21:21:39 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/16 18:54:51 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/17 18:10:28 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	fill_lines_end(t_data *data, t_free **collector)
 	{
 		if (ft_strlen(data->cub3d_map.map[i]) < data->cub3d_map.map_width)
 			data->cub3d_map.map[i] = ft_realloc_line(data->cub3d_map.map[i],
-			data->cub3d_map.map_width, collector);
+					data->cub3d_map.map_width, collector);
 		i++;
 	}
 }
@@ -51,7 +51,8 @@ void	parse_map_line(char *line, int i, t_data *data, t_free **collector)
 	j = 0;
 	while (line[j])
 	{
-		if (line[j] == 'N' || line[j] == 'S' || line[j] == 'W' || line[j] == 'E')
+		if (line[j] == 'N' || line[j] == 'S'
+			|| line[j] == 'W' || line[j] == 'E')
 		{
 			if (data->cub3d_map.infos_presence[PLAYER])
 				ft_error(REP_PLAYER_ERR, collector);
@@ -60,7 +61,7 @@ void	parse_map_line(char *line, int i, t_data *data, t_free **collector)
 				ft_error(MAP_ERR, collector);
 		}
 		else if (line[j] == '0' && not_closed(data, i, j))
-				ft_error(MAP_ERR, collector);
+			ft_error(MAP_ERR, collector);
 		else if (line[j] != '0' && line[j] != '1' && line[j] != ' ')
 			ft_error(INVALID_ERR, collector);
 		j++;
@@ -87,7 +88,7 @@ char	**ft_realloc_map(t_data *data, char *line, t_free **collector)
 	size_t	old_size;
 	char	**new_map;
 	int		len;
-	
+
 	if (!data->cub3d_map.map)
 	{
 		new_map = ft_malloc(collector, 2 * sizeof(char *));

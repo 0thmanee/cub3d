@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:51:20 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/16 18:49:58 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/17 17:51:36 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	set_player(t_data *data, char direc, int i, int j)
 		data->player.player_direction = EA;
 	data->player.y = i * TILE_SIZE + TILE_SIZE / 2;
 	data->player.x = j * TILE_SIZE + TILE_SIZE / 2;
-	data->player.rotation_angle =
-		get_player_pos(data->cub3d_map.map[i][j]) * (M_PI / 180);
+	data->player.rotation_angle
+		= get_player_pos(data->cub3d_map.map[i][j]) * (M_PI / 180);
 	data->cub3d_map.map[i][j] = 'P';
 	data->player.turn_direction = 0;
 	data->player.walk_direction = 0;
@@ -100,14 +100,15 @@ void	check_infos_avalable(int *infos_presence, int bef, t_free **collector)
 		ft_error(UNCLOSED_ERR, collector);
 }
 
-void read_data(int map_fd, t_data *data, t_free **collector)
+void	read_data(int map_fd, t_data *data, t_free **collector)
 {
 	char	*line;
 	char	*n_line;
 	int		i;
 
 	data->cub3d_map.map = NULL;
-	(data->cub3d_map.map_height = 0, data->cub3d_map.map_width = 0);
+	data->cub3d_map.map_height = 0;
+	data->cub3d_map.map_width = 0;
 	line = get_next_line(map_fd);
 	while (line)
 	{

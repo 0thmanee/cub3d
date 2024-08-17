@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 20:29:43 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/03 22:55:40 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/17 18:14:23 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	free_total(char **total_str)
 char	*get_next_line(int fd)
 {
 	static t_next_line	total_data;
-	char			*line;
+	char				*line;
 
 	if (total_data.end_file != 1)
 	{

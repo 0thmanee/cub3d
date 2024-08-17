@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:27:46 by yboutsli          #+#    #+#             */
-/*   Updated: 2024/08/16 11:44:58 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/17 18:53:30 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ uint32_t	get_color(t_wall *wall, int texture_width)
 	uint8_t		blue;
 	uint8_t		alpha;
 
-	if ((int)(wall->texture->width * wall->texture->height) <= (((int)(wall->y_offset) * texture_width) + (int)(wall->x_offset)))
+	if ((int)(wall->texture->width * wall->texture->height)
+		<= (((int)(wall->y_offset) * texture_width)
+		+ (int)(wall->x_offset)))
 		return (0);
 	color = wall->buffer[((int)(wall->y_offset) * texture_width)
 		+ (int)(wall->x_offset)];
@@ -40,10 +42,10 @@ void	walls_init(t_data *data, t_wall *wall, int x)
 	wall->d_p_plane = (WINDOW_WIDTH / 2) / tan(data->fov.fov_angle / 2);
 	wall->c_w_distance = data->rays[x].distance
 		* cos(data->rays[x].ray_angle - data->player.rotation_angle);
-	wall->wallStripHeiht = (TILE_SIZE / wall->c_w_distance) * wall->d_p_plane;
-	wall->BOTTOM_wall_pixel = ((WINDOW_HEIGHT / 2)
-			+ (wall->wallStripHeiht / 2));
-	wall->TOP_wall_pixel = ((WINDOW_HEIGHT / 2) - (wall->wallStripHeiht / 2));
+	wall->wallstripheiht = (TILE_SIZE / wall->c_w_distance) * wall->d_p_plane;
+	wall->bottom_wall_pixel = ((WINDOW_HEIGHT / 2)
+			+ (wall->wallstripheiht / 2));
+	wall->top_wall_pixel = ((WINDOW_HEIGHT / 2) - (wall->wallstripheiht / 2));
 }
 
 void	walls_rendering(t_data *data, t_wall *wall)
@@ -60,9 +62,9 @@ void	walls_rendering(t_data *data, t_wall *wall)
 		set_x_coordinates(data, wall, x);
 		while (++y < WINDOW_HEIGHT)
 		{
-			if (y < wall->TOP_wall_pixel)
+			if (y < wall->top_wall_pixel)
 				fc_coloring(data, x, y, data->cub3d_map.ceiling_color);
-			else if (y > wall->TOP_wall_pixel && y < wall->BOTTOM_wall_pixel)
+			else if (y > wall->top_wall_pixel && y < wall->bottom_wall_pixel)
 			{
 				set_y_coordinates(wall, y, wall->texture->height);
 				color = get_color(wall, wall->texture->width);

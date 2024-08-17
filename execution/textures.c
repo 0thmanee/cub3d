@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 09:34:44 by yasser03          #+#    #+#             */
-/*   Updated: 2024/08/16 11:40:14 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/17 18:54:06 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,28 @@ mlx_texture_t	*textures(t_data *data)
 
 void	textures_init(t_data *data, t_wall *wall)
 {
-	wall->N_texture = mlx_load_png(data->cub3d_map.no_texture);
-	if (!wall->N_texture)
+	wall->n_texture = mlx_load_png(data->cub3d_map.no_texture);
+	if (!wall->n_texture)
 		mlx_err(data);
-	wall->S_texture = mlx_load_png(data->cub3d_map.so_texture);
-	if (!wall->S_texture)
+	wall->s_texture = mlx_load_png(data->cub3d_map.so_texture);
+	if (!wall->s_texture)
 		mlx_err(data);
-	wall->E_texture = mlx_load_png(data->cub3d_map.ea_texture);
-	if (!wall->E_texture)
+	wall->e_texture = mlx_load_png(data->cub3d_map.ea_texture);
+	if (!wall->e_texture)
 		mlx_err(data);
-	wall->W_texture = mlx_load_png(data->cub3d_map.we_texture);
-	if (!wall->W_texture)
+	wall->w_texture = mlx_load_png(data->cub3d_map.we_texture);
+	if (!wall->w_texture)
 		mlx_err(data);
 }
 
 void	free_textures(t_wall *wall)
 {
-	if (wall->N_texture)
-		mlx_delete_texture(wall->N_texture);
-	if (wall->S_texture)
-		mlx_delete_texture(wall->S_texture);
-	if (wall->E_texture)
-		mlx_delete_texture(wall->E_texture);
-	if (wall->W_texture)
-		mlx_delete_texture(wall->W_texture);
+	if (wall->n_texture)
+		mlx_delete_texture(wall->n_texture);
+	if (wall->s_texture)
+		mlx_delete_texture(wall->s_texture);
+	if (wall->e_texture)
+		mlx_delete_texture(wall->e_texture);
+	if (wall->w_texture)
+		mlx_delete_texture(wall->w_texture);
 }
