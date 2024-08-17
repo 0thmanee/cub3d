@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/15 10:14:06 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/17 16:36:45 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,18 @@
 # include <math.h>
 # include <fcntl.h>
 # include <limits.h>
-# include "MLX42/include/MLX42/MLX42.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 
 #define TILE_SIZE 64
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
-#define MINI_MAP_SCALE 0.3
+
+#define MINI_MAP_SCALE 0.1
 
 typedef struct s_player
 {
-	int		x;
-	int		y;
+	float		x;
+	float		y;
 	int		line_len;
 	int		body_color;
 	int		line_color;
@@ -269,6 +270,7 @@ void		ead_data(int map_fd, t_data *data, t_free **collector);
 void		check_infos_avalable(int *infos_presence, int bef, t_free **collector);
 void		parse_data(int ac, char *file, t_data *data, t_free **collector);
 void 		read_data(int map_fd, t_data *data, t_free **collector);
+void		check_splited_map(t_data *data, t_free **collector);
 
 // raycasting
 void	mlx_init_data(t_mlx *mlx_data, t_map cub3d_map, t_free **collector);
@@ -281,7 +283,8 @@ void 	handle_key_hooks(mlx_key_data_t keydata, void* param);
 void	loop_hook_func(void *param);
 void	cast_rays(t_data *data);
 void	draw_line(t_data *data, t_line line, int color);
-int		wall_hitted(t_data *data, int x, int y);
+int		wall_hitted1(t_data *data, int x, int y);
+int		wall_hitted2(t_data *data, int x, int y);
 void	init_h_ray(t_data *data, t_ray *ray);
 void	init_v_ray(t_data *data, t_ray *ray);
 void	detect_h_wall(t_data *data, t_ray *ray);

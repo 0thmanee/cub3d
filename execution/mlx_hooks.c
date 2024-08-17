@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:50:37 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/15 09:55:19 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/17 16:36:37 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,6 @@ void	loop_hook_func(void *param)
 	cast_rays(data);
 	walls_rendering(data, &data->wall);
 	draw_2d_map(data);
-	draw_angle(data);
 	draw_player(data);
+	draw_angle(data);
 }

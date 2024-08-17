@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:31:13 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/04 22:51:36 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:53:41 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,9 @@ void	parse_data(int ac, char *file, t_data *data, t_free **collector)
 	i = 0;
 	check_infos_avalable(data->cub3d_map.infos_presence, 1, collector);
 	fill_lines_end(data, collector);
+	check_splited_map(data, collector);
 	parse_map(data, collector);
 	check_infos_avalable(data->cub3d_map.infos_presence, 0, collector);
-	while (data->cub3d_map.map[data->cub3d_map.map_height])
-		data->cub3d_map.map_height++;
 }
 
 int main(int ac, char **av)
@@ -75,12 +74,12 @@ int main(int ac, char **av)
 	t_ray		rays[WINDOW_WIDTH];
 
 	collector = NULL;
+	data.collector = &collector;
 	parse_data(ac, av[1], &data, &collector);
 	display_infos(data.cub3d_map);
 	data.rays = rays;
 	mlx_init_data(&data.mlx_data, data.cub3d_map, &collector);
 	textures_init(&data, &data.wall);
-	data.collector = &collector;
 	mlx_key_hook(data.mlx_data.mlx, &handle_key_hooks, &data);
 	mlx_loop_hook(data.mlx_data.mlx, loop_hook_func, &data);
 	mlx_loop(data.mlx_data.mlx);

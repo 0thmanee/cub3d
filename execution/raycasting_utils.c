@@ -6,16 +6,43 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 10:02:24 by yboutsli          #+#    #+#             */
-/*   Updated: 2024/08/15 10:10:40 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/17 16:34:37 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	wall_hitted(t_data *data, int x, int y)
+int	wall_hitted1(t_data *data, int x, int y)
 {
 	if (data->cub3d_map.map[(y / TILE_SIZE)][x / TILE_SIZE] == '1')
 		return (1);
+	return (0);
+}
+
+
+int	wall_hitted2(t_data *data, int x, int y)
+{
+	int	i;
+	int	j;
+
+	i = y - data->player.player_size / 2;
+	while (i < y + data->player.player_size / 2)
+	{
+		j = x - data->player.player_size / 2;
+		while (j < x + data->player.player_size / 2)
+		{
+			if (i >= 0 && i < data->mlx_data.win_height
+				&& j >= 0 && j < data->mlx_data.win_width)
+			{
+				if (data->cub3d_map.map[(i / TILE_SIZE)][j / TILE_SIZE] == '1')
+					return (1);
+			}
+			else
+				return (1);
+			j++;
+		}
+		i++;
+	}
 	return (0);
 }
 
@@ -65,12 +92,16 @@ void	detect_h_wall(t_data *data, t_ray *ray)
 	next_h_hit_y = ray->h_y_interc;
 	ray->h_wall_hit_x = 0;
 	ray->h_wall_hit_y = 0;
-	if (ray->up)
-		next_h_hit_y--;
+	float x_c = next_h_hit_x;
+	float y_c = next_h_hit_y;
 	while (next_h_hit_x >= 0 && next_h_hit_x < data->mlx_data.win_width
 		&& next_h_hit_y >= 0 && next_h_hit_y < data->mlx_data.win_height)
 	{
-		if (wall_hitted(data, next_h_hit_x, next_h_hit_y))
+		x_c = next_h_hit_x;
+		y_c = next_h_hit_y;
+		if (ray->up)
+			y_c--;
+		if (wall_hitted1(data, x_c, y_c))
 		{
 			ray->h_wall_hit_x = next_h_hit_x;
 			ray->h_wall_hit_y = next_h_hit_y;
@@ -92,12 +123,16 @@ void	detect_v_wall(t_data *data, t_ray *ray)
 	next_v_hit_y = ray->v_y_interc;
 	ray->v_wall_hit_x = 0;
 	ray->v_wall_hit_y = 0;
-	if (ray->left)
-		next_v_hit_x--;
+	float x_c = next_v_hit_x;
+	float y_c = next_v_hit_y;
 	while (next_v_hit_x >= 0 && next_v_hit_x < data->mlx_data.win_width
 		&& next_v_hit_y >= 0 && next_v_hit_y < data->mlx_data.win_height)
 	{
-		if (wall_hitted(data, next_v_hit_x, next_v_hit_y))
+		x_c = next_v_hit_x;
+		y_c = next_v_hit_y;
+		if (ray->left)
+			x_c--;
+		if (wall_hitted1(data, x_c, y_c))
 		{
 			ray->v_wall_hit_x = next_v_hit_x;
 			ray->v_wall_hit_y = next_v_hit_y;

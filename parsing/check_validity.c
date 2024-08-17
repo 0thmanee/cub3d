@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_validity.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 21:19:18 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/04 19:17:56 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:38:38 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int full_wall(char *line)
 
 int	not_closed(t_data *data, int i, int j)
 {
+	// printf("==== %d ===\n", data->cub3d_map.map_height);
 	return (i == 0 || j == 0 || i == data->cub3d_map.map_height - 1
 		|| j == ft_strlen(data->cub3d_map.map[i]) - 1
 		|| data->cub3d_map.map[i - 1][j] == ' '

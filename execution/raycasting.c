@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:49:57 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/15 10:14:20 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:18:59 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ static void	set_wall_hitted(t_ray *ray)
 
 static void	cast_ray(t_data *data, t_ray *ray)
 {
+	uint32_t	color;
+
 	ray->ray_angle = fmod(ray->ray_angle, 2.0 * M_PI);
 	if (ray->ray_angle < 0)
 		ray->ray_angle += 2.0 * M_PI;
@@ -77,8 +79,12 @@ static void	cast_ray(t_data *data, t_ray *ray)
 	detect_v_wall(data, ray);
 	set_distances(data, ray);
 	set_wall_hitted(ray);
-	draw_line(data, create_line(data->player.x + data->player.player_head, data->player.y + data->player.player_head,
-			ray->wall_hit_x, ray->wall_hit_y), data->player.line_color); // to be removed
+	if (ray->hit_vertical)
+		color = get_rgb(255, 0, 0);
+	else
+		color = get_rgb(0, 255, 0);
+	draw_line(data, create_line(data->player.x, data->player.y,
+			ray->wall_hit_x, ray->wall_hit_y), color); // to be removed
 }
 
 void	cast_rays(t_data *data)

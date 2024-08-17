@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 21:21:39 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/04 22:21:39 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:54:51 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,6 @@ void	parse_map(t_data *data, t_free **collector)
 	i = 1;
 	while (data->cub3d_map.map[i])
 	{
-		if (empty_line(data->cub3d_map.map[i]))
-		{
-			data->cub3d_map.map[i++] = NULL;
-			while (data->cub3d_map.map[i])
-			{
-				if (!empty_line(data->cub3d_map.map[i]))
-					ft_error(MAP_ERR, collector);
-				i++;
-			}
-			break ;
-		}
 		parse_map_line(data->cub3d_map.map[i], i, data, collector);
 		i++;
 	}

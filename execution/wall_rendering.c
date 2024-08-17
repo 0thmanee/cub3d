@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:27:46 by yboutsli          #+#    #+#             */
-/*   Updated: 2024/08/15 09:18:19 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/16 11:44:58 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ uint32_t	get_color(t_wall *wall, int texture_width)
 	uint8_t		blue;
 	uint8_t		alpha;
 
+	if ((int)(wall->texture->width * wall->texture->height) <= (((int)(wall->y_offset) * texture_width) + (int)(wall->x_offset)))
+		return (0);
 	color = wall->buffer[((int)(wall->y_offset) * texture_width)
 		+ (int)(wall->x_offset)];
 	alpha = (color >> 24) & 0xFF;

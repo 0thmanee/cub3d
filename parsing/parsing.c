@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:51:20 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/15 09:50:36 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:49:58 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	set_player(t_data *data, char direc, int i, int j)
 		data->player.player_direction = WE;
 	else if (direc == 'E')
 		data->player.player_direction = EA;
-	data->player.y = i * TILE_SIZE;
-	data->player.x = j * TILE_SIZE;
+	data->player.y = i * TILE_SIZE + TILE_SIZE / 2;
+	data->player.x = j * TILE_SIZE + TILE_SIZE / 2;
 	data->player.rotation_angle =
 		get_player_pos(data->cub3d_map.map[i][j]) * (M_PI / 180);
 	data->cub3d_map.map[i][j] = 'P';
