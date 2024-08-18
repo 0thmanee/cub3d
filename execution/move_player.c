@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 19:27:05 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/17 18:34:05 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/18 16:23:35 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static void	move_player_init(t_data *data, t_player_moves *move)
 {
 	move->new_x = data->player.x;
 	move->new_y = data->player.y;
+	move->new_x_size = 0;
+	move->new_y_size = 0;
 	data->player.rotation_angle += (data->player.turn_direction
 			* data->player.rotation_speed);
 }

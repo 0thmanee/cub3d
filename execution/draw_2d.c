@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:44:09 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/17 18:34:35 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/18 16:18:17 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,38 +16,25 @@ void	draw_player(t_data *data)
 {
 	int		i;
 	int		j;
+	int		x;
+	int		y;
 	int		color;
 
 	color = data->player.body_color;
 	i = data->player.y - data->player.player_size / 2;
-	while (i < data->player.y + data->player.player_size / 2)
+	y = 0;
+	while (y < data->player.player_size)
 	{
 		j = data->player.x - data->player.player_size / 2;
-		while (j < data->player.x + data->player.player_size / 2)
+		x = 0;
+		while (x < data->player.player_size)
 		{
-			if (i >= 0 && i < data->mlx_data.win_height
-				&& j >= 0 && j < data->mlx_data.win_width)
 				mlx_put_pixel(data->mlx_data.img,
-					MINI_MAP_SCALE * j, MINI_MAP_SCALE * i, color);
-			j++;
+					MINI_MAP_SCALE * (j + x), MINI_MAP_SCALE * (i + y), color);
+			x++;
 		}
-		i++;
+		y++;
 	}
-}
-
-void	draw_angle(t_data *data)
-{
-	t_line	line1;
-	t_line	line2;
-
-	line1.x1 = data->player.x;
-	line1.y1 = data->player.y;
-	line1.x2 = line1.x1 + cos(data->player.rotation_angle)
-		* data->player.line_len;
-	line1.y2 = line1.y1 + sin(data->player.rotation_angle)
-		* data->player.line_len;
-	line2.x1 = data->player.x;
-	line2.y1 = data->player.y;
 }
 
 void	draw_square(t_data *data, int x, int y, int color)

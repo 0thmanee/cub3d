@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:31:13 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/17 18:54:00 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:25:34 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	main(int ac, char **av)
 	textures_init(&data, &data.wall);
 	mlx_key_hook(data.mlx_data.mlx, &handle_key_hooks, &data);
 	mlx_loop_hook(data.mlx_data.mlx, loop_hook_func, &data);
+	mlx_cursor_hook(data.mlx_data.mlx, cursor_func, &data);
 	mlx_loop(data.mlx_data.mlx);
 	free_textures(&data.wall);
 	mlx_terminate(data.mlx_data.mlx);

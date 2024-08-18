@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:51:20 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/17 17:51:36 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:54:15 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	set_player(t_data *data, char direc, int i, int j)
 	data->player.turn_direction = 0;
 	data->player.walk_direction = 0;
 	data->player.s_direction = 0;
-	data->player.move_speed = 10;
+	data->player.move_speed = MOVE_SPEED;
 	data->player.rotation_speed = 5 * (M_PI / 180);
 	data->player.line_len = 100;
 	data->player.body_color = get_rgb(255, 0, 0);

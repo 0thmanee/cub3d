@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 10:02:24 by yboutsli          #+#    #+#             */
-/*   Updated: 2024/08/17 18:32:31 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/18 16:01:37 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	wall_hitted2(t_data *data, int x, int y)
 				if (data->cub3d_map.map[(i / TILE_SIZE)][j / TILE_SIZE] == '1')
 					return (1);
 			}
-			else
-				return (1);
 			j++;
 		}
 		i++;

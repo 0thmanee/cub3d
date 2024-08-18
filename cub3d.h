@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/17 18:55:58 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/18 19:13:58 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 
 # define TILE_SIZE 64
+# define MOVE_SPEED 5
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
-# define MINI_MAP_SCALE 0.1
+# define MOUSE_TURN 8
+# define MINI_MAP_SCALE 0.2
 
 # define ARGS_ERR "invalid number of arguments.\n"
 # define EXTN_ERR "invalid file extension.\n"
@@ -311,4 +313,9 @@ void		set_y_coordinates(t_wall *wall, int y, int texture_height);
 void		set_x_coordinates(t_data *data, t_wall *wall, int x);
 t_mlx_tex	*get_texture(t_wall *wall, t_ray *ray);
 void		fc_coloring(t_data *data, int x, int y, int rgb[3]);
+
+// other
+void	cursor_func(double xpos, double ypos, void* param);
+t_line	create_line(int x1, int y1, int x2, int y2);
+void draw_line(t_data *data, t_line line, int color);
 #endif
