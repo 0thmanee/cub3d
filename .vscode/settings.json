@@ -9,6 +9,7 @@
 		"string": "cpp",
 		"iostream": "cpp",
 		"ostream": "cpp",
-		"complex": "c"
+		"complex": "c",
+		"cub3d_bonus.h": "c"
 	}
 }

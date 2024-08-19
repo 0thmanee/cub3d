@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:44:09 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/18 16:18:17 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:47:37 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ void	draw_player(t_data *data)
 		x = 0;
 		while (x < data->player.player_size)
 		{
-				mlx_put_pixel(data->mlx_data.img,
-					MINI_MAP_SCALE * (j + x), MINI_MAP_SCALE * (i + y), color);
+			mlx_put_pixel(data->mlx_data.img,
+				MINI_MAP_SCALE * (j + x),
+				MINI_MAP_SCALE * (i + y), color);
 			x++;
 		}
 		y++;

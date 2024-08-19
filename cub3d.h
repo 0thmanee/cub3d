@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/18 19:13:58 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:19:55 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
 # define MOUSE_TURN 8
-# define MINI_MAP_SCALE 0.2
+# define MINI_MAP_SCALE 0.5
 
 # define ARGS_ERR "invalid number of arguments.\n"
 # define EXTN_ERR "invalid file extension.\n"
@@ -286,12 +286,12 @@ void		parse_data(int ac, char *file, t_data *data, t_free **collector);
 void		read_data(int map_fd, t_data *data, t_free **collector);
 void		check_splited_map(t_data *data, t_free **collector);
 
+// void		draw_2d_map(t_data *data);
+// void		draw_player(t_data *data);
+
 // raycasting
 void		mlx_init_data(t_mlx *mlx_data, t_map cub3d_map, t_free **collector);
 void		draw_square(t_data *data, int x, int y, int color);
-void		draw_2d_map(t_data *data);
-void		draw_player(t_data *data);
-void		draw_angle(t_data *data);
 void		move_player(t_data *data, int key);
 void		handle_key_hooks(mlx_key_data_t keydata, void *param);
 void		loop_hook_func(void *param);
@@ -304,7 +304,10 @@ void		init_v_ray(t_data *data, t_ray *ray);
 void		detect_h_wall(t_data *data, t_ray *ray);
 void		detect_v_wall(t_data *data, t_ray *ray);
 
-// mlx_texture_t *textures(t_data *data);
+// t_line	create_line(int x1, int y1, int x2, int y2);
+// void		draw_line(t_data *data, t_line line, int color);
+
+// walls && textures
 void		walls_rendering(t_data *data, t_wall *wall);
 void		textures_img(t_data *data, t_mlx *mlx_data, uint32_t *textures);
 void		free_textures(t_wall *wall);
@@ -314,8 +317,4 @@ void		set_x_coordinates(t_data *data, t_wall *wall, int x);
 t_mlx_tex	*get_texture(t_wall *wall, t_ray *ray);
 void		fc_coloring(t_data *data, int x, int y, int rgb[3]);
 
-// other
-void	cursor_func(double xpos, double ypos, void* param);
-t_line	create_line(int x1, int y1, int x2, int y2);
-void draw_line(t_data *data, t_line line, int color);
 #endif
