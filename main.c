@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:31:13 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/19 16:23:23 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/20 16:54:20 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	main(int ac, char **av)
 	mlx_init_data(&data.mlx_data, data.cub3d_map, &collector);
 	textures_init(&data, &data.wall);
 	mlx_key_hook(data.mlx_data.mlx, &handle_key_hooks, &data);
+	mlx_close_hook(data.mlx_data.mlx, &ft_close, &data);
 	mlx_loop_hook(data.mlx_data.mlx, loop_hook_func, &data);
 	mlx_loop(data.mlx_data.mlx);
 	free_textures(&data.wall);

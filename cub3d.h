@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/19 16:19:55 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/20 16:51:52 by obouchta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,6 +294,7 @@ void		mlx_init_data(t_mlx *mlx_data, t_map cub3d_map, t_free **collector);
 void		draw_square(t_data *data, int x, int y, int color);
 void		move_player(t_data *data, int key);
 void		handle_key_hooks(mlx_key_data_t keydata, void *param);
+void		ft_close(void *param);
 void		loop_hook_func(void *param);
 void		cast_rays(t_data *data);
 void		draw_line(t_data *data, t_line line, int color);
