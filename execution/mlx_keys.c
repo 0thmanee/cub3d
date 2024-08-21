@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:50:37 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/20 16:51:40 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:09:57 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,4 @@ void	handle_key_hooks(mlx_key_data_t keydata, void *param)
 	else
 		return ;
 	move_player(data, keydata.key);
-}
-
-void	loop_hook_func(void *param)
-{
-	t_data	*data;
-
-	data = (t_data *)param;
-	cast_rays(data);
-	walls_rendering(data, &data->wall);
 }

@@ -6,11 +6,21 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:29:15 by yboutsli          #+#    #+#             */
-/*   Updated: 2024/08/21 09:46:31 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:09:45 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
+
+void	loop_hook_func(void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	cast_rays(data);
+	walls_rendering(data, &data->wall);
+	draw_mini_map(data);
+}
 
 void	ft_error(char *error_msg, t_free **collector)
 {

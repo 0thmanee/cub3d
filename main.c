@@ -6,11 +6,20 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:31:13 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/21 09:46:29 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:36:51 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	loop_hook_func(void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	cast_rays(data);
+	walls_rendering(data, &data->wall);
+}
 
 void	ft_error(char *error_msg, t_free **collector)
 {

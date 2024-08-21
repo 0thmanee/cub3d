@@ -10,6 +10,7 @@
 		"iostream": "cpp",
 		"ostream": "cpp",
 		"complex": "c",
-		"cub3d_bonus.h": "c"
+		"cub3d_bonus.h": "c",
+		"stdio.h": "c"
 	}
 }
