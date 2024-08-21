@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/20 16:51:52 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/21 09:46:51 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 # define MAP_ERR "map error.\n"
 # define MISSING_MAP_ERR "missing map.\n"
 # define UNCLOSED_ERR "map is not closed.\n"
+# define WINDOW_ERROR "incorrect height or width\n" 
 
 typedef struct s_player
 {

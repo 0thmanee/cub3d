@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obouchta <obouchta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:31:13 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/20 16:54:20 by obouchta         ###   ########.fr       */
+/*   Updated: 2024/08/21 09:46:29 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ int	main(int ac, char **av)
 	t_free		*collector;
 	t_ray		rays[WINDOW_WIDTH];
 
+	if (WINDOW_HEIGHT <= 0 || WINDOW_WIDTH <= 0
+		|| WINDOW_WIDTH > 2560 || WINDOW_HEIGHT > 1395)
+	{
+		write(2, WINDOW_ERROR, 26);
+		exit(1);
+	}
 	collector = NULL;
 	data.collector = &collector;
 	parse_data(ac, av[1], &data, &collector);
