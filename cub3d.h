@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/21 20:21:25 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/22 09:17:44 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,7 +298,7 @@ void		handle_key_hooks(mlx_key_data_t keydata, void *param);
 void		ft_close(void *param);
 void		loop_hook_func(void *param);
 void		cast_rays(t_data *data);
-void		draw_line(t_data *data, t_line line, int color);
+// void		draw_line(t_data *data, t_line line, int color);
 int			wall_hitted1(t_data *data, int x, int y);
 int			wall_hitted2(t_data *data, int x, int y);
 void		init_h_ray(t_data *data, t_ray *ray);

@@ -1,10 +1,10 @@
 F 0,0,255
 C 171,154,137
 
-NO textures/paneling.png
-EA textures/Tileable3g.png
-SO textures/Tileable4c.png
-WE textures/Tileable6.png
+NO textures/MultibrickD.png
+EA textures/wall.png
+SO textures/BookshelfL.png
+WE textures/TilesL.png
 
 1111111111111111111
 1001001001001001001

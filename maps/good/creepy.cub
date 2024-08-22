@@ -1,7 +1,7 @@
-NO textures/Stone1L.png
-EA textures/Stone1L.png
-SO textures/Stone1L.png
-WE textures/Stone1L.png
+NO textures/MultibrickD.png
+EA textures/wall.png
+SO textures/BookshelfL.png
+WE textures/TilesL.png
 
 C 35,19,73
 F 15,6,40

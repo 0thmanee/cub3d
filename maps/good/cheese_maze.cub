@@ -1,13 +1,7 @@
-    WE    we.xpm
-
-
-EA ea     .xpm
-
-
-NO no.xpm
-
-
-SO so.xpm
+NO textures/MultibrickD.png
+EA textures/wall.png
+SO textures/BookshelfL.png
+WE textures/TilesL.png
 
 
 C 25,204,   0
