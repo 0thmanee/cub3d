@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 09:00:03 by yboutsli          #+#    #+#             */
-/*   Updated: 2024/08/17 18:54:06 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/23 20:27:49 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ void	fc_coloring(t_data *data, int x, int y, int rgb[3])
 {
 	uint32_t	color;
 
-	color = get_rgb(rgb[0], rgb[1], rgb[3]);
+	color = get_rgb(rgb[0], rgb[1], rgb[2]);
 	mlx_put_pixel(data->mlx_data.img, x, y, color);
 }

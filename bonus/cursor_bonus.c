@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cursor.c                                           :+:      :+:    :+:   */
+/*   cursor_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:52:34 by yboutsli          #+#    #+#             */
-/*   Updated: 2024/08/18 19:29:15 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/23 20:52:44 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	cursor_func(double xpos, double ypos, void *param)
 {

@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 18:34:29 by yboutsli          #+#    #+#             */
-/*   Updated: 2024/08/22 11:18:57 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/23 20:07:54 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	draw_map_init(t_mini_map *mini, t_data *data)
 	{
 		j = -1;
 		while (++j < M_MAP_HEIGHT)
-			mlx_put_pixel(data->mlx_data.img, i, j, 0x00FF);
+			mlx_put_pixel(data->mlx_data.img, i, j,
+				get_rgb(0, 0, 0));
 	}
 }
 
@@ -71,7 +72,8 @@ void	draw_mini_map(t_data *data)
 				&& mini.map_x < data->cub3d_map.map_width)
 			{
 				if (data->cub3d_map.map[mini.map_y][mini.map_x] != '1')
-					mlx_put_pixel(data->mlx_data.img, mini.x, mini.y, 0xFFFF);
+					mlx_put_pixel(data->mlx_data.img, mini.x,
+						mini.y, get_rgb(255, 255, 255));
 			}
 			mini.x++;
 		}

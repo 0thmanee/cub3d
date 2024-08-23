@@ -6,7 +6,7 @@
 /*   By: yboutsli <yboutsli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:29:45 by obouchta          #+#    #+#             */
-/*   Updated: 2024/08/22 09:17:44 by yboutsli         ###   ########.fr       */
+/*   Updated: 2024/08/23 20:58:20 by yboutsli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 
 # define TILE_SIZE 64
-# define MOVE_SPEED 5
+# define MOVE_SPEED 3
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
-# define MOUSE_TURN 8
+# define MOUSE_TURN 5
 # define MINI_MAP_SCALE 0.5
 
 # define ARGS_ERR "invalid number of arguments.\n"

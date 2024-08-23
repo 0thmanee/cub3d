@@ -22,7 +22,7 @@ execution_objects = $(addprefix object_files/,$(execution_srcs:.c=.o))
 main_object = $(addprefix object_files/main/,$(main_srcs:.c=.o))
 bonus_objects = $(addprefix object_files/,$(bonus_srcs:.c=.o))
 
-CFLAGS =  -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS =  -Wall -Wextra -Werror
 NAME = cub3d
 LIBMLX = ../MLX42
 HEADERS = -I$(LIBMLX)/include
@@ -38,7 +38,7 @@ bonus: $(parsing_objects) $(libft_objects) $(execution_objects) $(bonus_objects)
 	@cc $(CFLAGS) $^ $(LIBS) $(HEADERS) -o $(NAME)
 	@printf "\033[32m[ ✔ ] %s\n\033[0m" "Program Created"
 
-object_files/bonus/%.o: bonus/%.c cub3d.h cub3d_bonus.h
+object_files/bonus/%.o: bonus/%.c cub3d.h ./bonus/cub3d_bonus.h
 	@mkdir -p object_files/bonus
 	@cc $(CFLAGS) -c $< -I . -o $@ $(HEADERS)
 
